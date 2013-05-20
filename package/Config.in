@@ -4,6 +4,10 @@ source "package/busybox/Config.in"
 
 # Audio and video applications
 source "package/multimedia/Config.in"
+# thirdparty
+menu "thirdparty"
+source "package/thirdparty/Config.in"
+endmenu
 
 menu "Compressors and decompressors"
 source "package/bzip2/Config.in"
