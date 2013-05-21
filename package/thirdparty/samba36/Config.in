@@ -1,0 +1,24 @@
+config BR2_PACKAGE_SAMBA36
+	bool "samba 3.6"
+	select BR2_PACKAGE_LIBICONV if !BR2_ENABLE_LOCALE
+	help
+	  Provides print services to all manner of SMB/CIFS clients,
+	  including the numerous versions of Microsoft Windows
+	  operating systems.
+
+	  http://www.samba.org/
+
+	  NOTE: A complete Samba install takes over 50MB of space,
+		so choose only the components you need.
+
+config BR2_PACKAGE_SAMBA36_AVAHI
+	bool "support avahi"
+	default y
+	depends on BR2_PACKAGE_SAMBA36
+	depends on BR2_PACKAGE_AVAHI_DAEMON
+	depends on BR2_PACKAGE_DBUS
+	help
+	  Include support for avahi
+
+comment "support avahi - disabled (requires avahi-daemon/dbus)"
+	depends on !BR2_PACKAGE_AVAHI_DAEMON || !BR2_PACKAGE_DBUS

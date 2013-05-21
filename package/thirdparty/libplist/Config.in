@@ -1,0 +1,8 @@
+config BR2_PACKAGE_LIBPLIST
+        bool "libplist"
+        depends on BR2_PACKAGE_LIBXML2
+        help
+          LIBPLIST is a client for manipulating Apple Property List (.plist) files
+
+          http://cgit.sukimashita.com/libplist.git
+
