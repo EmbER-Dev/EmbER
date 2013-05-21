@@ -5,6 +5,12 @@ source "package/busybox/Config.in"
 # Audio and video applications
 source "package/multimedia/Config.in"
 
+# AMLogic libs and programs
+source "package/amlogic/Config.in"
+
+#Non-buildroot libs and programs
+source "package/thirdparty/Config.in"
+
 menu "Compressors and decompressors"
 source "package/bzip2/Config.in"
 if BR2_PACKAGE_BUSYBOX_SHOW_OTHERS
