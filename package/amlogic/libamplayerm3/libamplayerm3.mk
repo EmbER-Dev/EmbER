@@ -55,4 +55,4 @@ define LIBAMPLAYERM3_INSTALL_TARGET_CMDS
   STAGING="$(TARGET_DIR)/usr" PREFIX="$(STAGING_DIR)/usr" -C $(@D)/amplayer install
 endef
 
-$(eval $(call generic-package,package/amlogic,libamplayerm3))
+$(eval $(generic-package))

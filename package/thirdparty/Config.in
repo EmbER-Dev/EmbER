@@ -26,5 +26,4 @@ source "package/thirdparty/xios-skin/Config.in"
 source "package/thirdparty/tlbb-skin/Config.in"
 source "package/thirdparty/boblight/Config.in"
 source "package/thirdparty/samba36/Config.in"
-
 endmenu

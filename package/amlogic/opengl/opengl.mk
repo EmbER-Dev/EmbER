@@ -5,8 +5,8 @@
 #############################################################
 OPENGL_VERSION:=0.9.9
 OPENGL_SOURCE=opengl-$(AMADEC_VERSION).tar.gz
-OPENGL_SITE=./package/amlogic/opengl/src
-OPENGL_SITE_METHOD=local
+OPENGL_SITE=$(TOPDIR)/package/amlogic/opengl/src
+OPENGL_SITE_METHOD = local
 OPENGL_INSTALL_STAGING=YES
 
 define OPENGL_INSTALL_STAGING_CMDS
@@ -24,4 +24,4 @@ define OPENGL_INSTALL_TARGET_CMDS
 	cd $(TARGET_DIR)/usr/lib; mv libGLESv2.so.2.0 libGLESv2.so
 endef
 
-$(eval $(call generic-package,package/amlogic,opengl))
+$(eval $(generic-package))
