@@ -10,6 +10,7 @@ OPENSSL_LICENSE = OpenSSL or SSLeay
 OPENSSL_LICENSE_FILES = LICENSE
 OPENSSL_INSTALL_STAGING = YES
 OPENSSL_DEPENDENCIES = zlib
+HOST_OPENSSL_DEPENDENCIES = host-zlib
 OPENSSL_TARGET_ARCH = generic32
 OPENSSL_CFLAGS = $(TARGET_CFLAGS)
 
@@ -22,20 +23,19 @@ endif
 
 OPENSSL_PRE_CONFIGURE_HOOKS += OPENSSL_DISABLE_APPS
 
-ifeq ($(BR2_PACKAGE_OPENSSL_OCF),y)
+ifeq ($(BR2_PACKAGE_CRYPTODEV_LINUX),y)
+	OPENSSL_CFLAGS += -DHAVE_CRYPTODEV -DUSE_CRYPTODEV_DIGESTS
+	OPENSSL_DEPENDENCIES += cryptodev-linux
+endif
+
+ifeq ($(BR2_PACKAGE_OCF_LINUX),y)
 	OPENSSL_CFLAGS += -DHAVE_CRYPTODEV -DUSE_CRYPTODEV_DIGESTS
 	OPENSSL_DEPENDENCIES += ocf-linux
 endif
 
 # Some architectures are optimized in OpenSSL
 ifeq ($(ARCH),arm)
-ifneq ($(BR2_generic_arm),y)
-ifneq ($(BR2_arm610),y)
-ifneq ($(BR2_arm710),y)
 	OPENSSL_TARGET_ARCH = armv4
-endif
-endif
-endif
 endif
 ifeq ($(ARCH),powerpc)
 # 4xx cores seem to have trouble with openssl's ASM optimizations
@@ -51,6 +51,18 @@ endif
 ifeq ($(BR2_x86_i386),y)
 	OPENSSL_TARGET_ARCH = generic32 386
 endif
+
+define HOST_OPENSSL_CONFIGURE_CMDS
+	(cd $(@D); \
+		$(HOST_CONFIGURE_OPTS) \
+		./config \
+		--prefix=/usr \
+		--openssldir=/etc/ssl \
+		--libdir=/lib \
+		shared \
+		no-zlib \
+	)
+endef
 
 define OPENSSL_CONFIGURE_CMDS
 	(cd $(@D); \
@@ -75,12 +87,20 @@ define OPENSSL_CONFIGURE_CMDS
 	$(SED) "s:-O[0-9]:$(OPENSSL_CFLAGS):" $(@D)/Makefile
 endef
 
+define HOST_OPENSSL_BUILD_CMDS
+	$(MAKE1) -C $(@D)
+endef
+
 define OPENSSL_BUILD_CMDS
 	$(MAKE1) -C $(@D)
 endef
 
 define OPENSSL_INSTALL_STAGING_CMDS
 	$(MAKE1) -C $(@D) INSTALL_PREFIX=$(STAGING_DIR) install
+endef
+
+define HOST_OPENSSL_INSTALL_CMDS
+	$(MAKE1) -C $(@D) INSTALL_PREFIX=$(HOST_DIR) install
 endef
 
 define OPENSSL_INSTALL_TARGET_CMDS
@@ -130,3 +150,4 @@ define OPENSSL_UNINSTALL_CMDS
 endef
 
 $(eval $(generic-package))
+$(eval $(host-generic-package))

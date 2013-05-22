@@ -97,7 +97,15 @@ choice
 		depends on !BR2_x86_i386
 		depends on !BR2_avr32
 		depends on !BR2_xtensa
+		depends on !BR2_arc
 endchoice
+
+config BR2_PTHREAD_DEBUG
+	bool "Thread library debugging"
+	depends on BR2_PTHREADS || BR2_PTHREADS_OLD || BR2_PTHREADS_NATIVE
+	select BR2_TOOLCHAIN_HAS_THREADS_DEBUG
+	help
+	  Build the thread library with debugging enabled.
 
 source "toolchain/elf2flt/Config.in"
 

@@ -4,7 +4,7 @@
 #
 #############################################################
 
-GNUTLS_VERSION = 3.1.8
+GNUTLS_VERSION = 3.1.9
 GNUTLS_SOURCE = gnutls-$(GNUTLS_VERSION).tar.xz
 GNUTLS_SITE = ftp://ftp.gnutls.org/gcrypt/gnutls/v3.1
 GNUTLS_LICENSE = GPLv3+ LGPLv3
@@ -23,6 +23,11 @@ GNUTLS_CONF_OPT += $(if $(BR2_TOOLCHAIN_HAS_THREADS),--with-libpthread-prefix=$(
 # libidn support for nommu must exclude the crywrap wrapper (uses fork)
 GNUTLS_CONF_OPT += $(if $(BR2_USE_MMU),,--disable-crywrap)
 GNUTLS_DEPENDENCIES += $(if $(BR2_PACKAGE_LIBIDN),libidn)
+
+ifeq ($(BR2_PACKAGE_CRYPTODEV_LINUX),y)
+	GNUTLS_CONF_OPT += --enable-cryptodev
+	GNUTLS_DEPENDENCIES += cryptodev-linux
+endif
 
 # Some examples in doc/examples use wchar
 define GNUTLS_DISABLE_DOCS

@@ -4,17 +4,27 @@
 #
 #############################################################
 
-DOSFSTOOLS_VERSION = 3.0.12
-DOSFSTOOLS_SITE = http://fossies.org/linux/misc/
+DOSFSTOOLS_VERSION = 3.0.16
+DOSFSTOOLS_SITE = http://fossies.org/linux/misc
 DOSFSTOOLS_LICENSE = GPLv3+
 DOSFSTOOLS_LICENSE_FILES = COPYING
+DOSFSTOOLS_LDFLAGS = $(TARGET_LDFLAGS)
+
+# Avoid target dosfstools dependencies, no host-libiconv
+HOST_DOSFSTOOLS_DEPENDENCIES =
+
+ifneq ($(BR2_ENABLE_LOCALE),y)
+DOSFSTOOLS_DEPENDENCIES += libiconv
+DOSFSTOOLS_LDFLAGS += -liconv
+endif
+
 MKDOSFS_BINARY = mkdosfs
 DOSFSCK_BINARY = dosfsck
 DOSFSLABEL_BINARY = dosfslabel
 
 define DOSFSTOOLS_BUILD_CMDS
-	$(MAKE) CFLAGS="$(TARGET_CFLAGS)" LDFLAGS="$(TARGET_LDFLAGS)" \
-		CC="$(TARGET_CC)" -C $(@D)
+	$(MAKE) CFLAGS="$(TARGET_CFLAGS)" CC="$(TARGET_CC)" \
+		LDFLAGS="$(DOSFSTOOLS_LDFLAGS)" -C $(@D)
 endef
 
 DOSFSTOOLS_INSTALL_BIN_FILES_$(BR2_PACKAGE_DOSFSTOOLS_MKDOSFS)+=$(MKDOSFS_BINARY)
@@ -36,4 +46,13 @@ define DOSFSTOOLS_CLEAN_CMDS
 	-$(MAKE) -C $(@D) clean
 endef
 
+define HOST_DOSFSTOOLS_BUILD_CMDS
+	$(MAKE) $(HOST_CONFIGURE_OPTS) -C $(@D)
+endef
+
+define HOST_DOSFSTOOLS_INSTALL_CMDS
+	$(MAKE) -C $(@D) $(HOST_CONFIGURE_OPTS) PREFIX=$(HOST_DIR)/usr install
+endef
+
 $(eval $(generic-package))
+$(eval $(host-generic-package))

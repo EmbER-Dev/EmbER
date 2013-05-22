@@ -17,6 +17,9 @@ UCLIBC_VERSION:=$(call qstrip,$(BR2_UCLIBC_VERSION_STRING))
 ifeq ($(BR2_UCLIBC_VERSION_SNAPSHOT),y)
 UCLIBC_SITE:=http://www.uclibc.org/downloads/snapshots
 UCLIBC_DIR:=$(TOOLCHAIN_DIR)/uClibc
+else ifeq ($(findstring arc,$(UCLIBC_VERSION)),arc)
+UCLIBC_SITE:=$(BR2_ARC_SITE)
+UCLIBC_DIR:=$(TOOLCHAIN_DIR)/uClibc-$(UCLIBC_VERSION)
 else
 UCLIBC_SITE:=http://www.uclibc.org/downloads
 UCLIBC_DIR:=$(TOOLCHAIN_DIR)/uClibc-$(UCLIBC_VERSION)
@@ -31,6 +34,7 @@ UCLIBC_TARGET_ARCH:=$(shell $(SHELL) -c "echo $(ARCH) | sed \
 		-e 's/-.*//' \
 		-e 's/i.86/i386/' \
 		-e 's/sparc.*/sparc/' \
+		-e 's/arc.*/arc/g' \
 		-e 's/arm.*/arm/g' \
 		-e 's/m68k.*/m68k/' \
 		-e 's/ppc/powerpc/g' \
@@ -62,8 +66,8 @@ UCLIBC_LOCALES = $(foreach locale,$(GENERATE_LOCALE),\
 endif
 
 $(DL_DIR)/$(UCLIBC_SOURCE):
-	$(call MESSAGE,"Downloading uClibc")
-	$(call DOWNLOAD,$(UCLIBC_SITE)/$(UCLIBC_SOURCE))
+	$(Q)$(call MESSAGE,"Downloading uClibc")
+	$(call DOWNLOAD,$(UCLIBC_SITE:/=)/$(UCLIBC_SOURCE))
 
 uclibc-unpacked: $(UCLIBC_DIR)/.unpacked
 $(UCLIBC_DIR)/.unpacked: $(DL_DIR)/$(UCLIBC_SOURCE)
@@ -129,6 +133,9 @@ endif
 ifeq ($(BR2_ARM_OABI),y)
 	/bin/echo "CONFIG_ARM_OABI=y" >> $(UCLIBC_DIR)/.oldconfig
 	/bin/echo "# CONFIG_ARM_EABI is not set" >> $(UCLIBC_DIR)/.oldconfig
+endif
+ifeq ($(BR2_fa526)$(BR2_strongarm),y)
+	$(SED) 's,USE_BX=y,# USE_BX is not set,' $(UCLIBC_DIR)/.oldconfig
 endif
 endif
 ifeq ($(UCLIBC_TARGET_ARCH),mips)
@@ -397,6 +404,17 @@ ifeq ($(BR2_CCACHE),y)
 $(UCLIBC_DIR)/.config: | host-ccache
 endif
 
+# For ARC, libgcc is always included, even when -nostdlib is given. This
+# is related to some small pieces of code that are not always generated
+# by the compiler; a call to libgcc is used in those cases instead.
+#
+# During the initial stages of building the toolchain, this is a problem,
+# as libgcc does not exist yet. The ARC compiler supports -really-nostdlib
+# to override the default behavior.
+ifeq ($(BR2_arc),y)
+REALLY_NOSTDLIB=-really-nostdlib
+endif
+
 $(UCLIBC_DIR)/.configured: $(LINUX_HEADERS_DIR)/.configured $(UCLIBC_DIR)/.config
 	$(Q)$(call MESSAGE,"Installing uClibc headers")
 	$(MAKE1) -C $(UCLIBC_DIR) \
@@ -415,8 +433,8 @@ $(UCLIBC_DIR)/.configured: $(LINUX_HEADERS_DIR)/.configured $(UCLIBC_DIR)/.confi
 		cp -pLR $(LINUX_HEADERS_DIR)/include/* \
 			$(TOOLCHAIN_DIR)/uClibc_dev/usr/include/; \
 	fi
-	$(TARGET_CROSS)gcc -nostdlib -nostartfiles -shared -x c /dev/null -o $(TOOLCHAIN_DIR)/uClibc_dev/usr/lib/libc.so
-	$(TARGET_CROSS)gcc -nostdlib -nostartfiles -shared -x c /dev/null -o $(TOOLCHAIN_DIR)/uClibc_dev/usr/lib/libm.so
+	$(TARGET_CROSS)gcc -nostdlib $(REALLY_NOSTDLIB) -nostartfiles -shared -x c /dev/null -o $(TOOLCHAIN_DIR)/uClibc_dev/usr/lib/libc.so
+	$(TARGET_CROSS)gcc -nostdlib $(REALLY_NOSTDLIB) -nostartfiles -shared -x c /dev/null -o $(TOOLCHAIN_DIR)/uClibc_dev/usr/lib/libm.so
 	cp -pLR $(UCLIBC_DIR)/lib/crt[1in].o $(TOOLCHAIN_DIR)/uClibc_dev/usr/lib/
 	touch $@
 

@@ -17,6 +17,12 @@ QT_SITE    = http://releases.qt-project.org/qt4/source
 QT_DEPENDENCIES = host-pkgconf
 QT_INSTALL_STAGING = YES
 
+QT_LICENSE = LGPLv2.1 with exceptions or GPLv3
+ifneq ($(BR2_PACKAGE_QT_LICENSE_APPROVED),y)
+QT_LICENSE += or Digia Qt Commercial license
+endif
+QT_LICENSE_FILES = LICENSE.LGPL LGPL_EXCEPTION.txt LICENSE.GPL3
+
 ifeq ($(BR2_PACKAGE_QT_LICENSE_APPROVED),y)
 QT_CONFIGURE_OPTS += -opensource -confirm-license
 endif
@@ -498,6 +504,7 @@ define QT_CONFIGURE_CMDS
 		-no-separate-debug-info \
 		-prefix /usr \
 		-plugindir /usr/lib/qt/plugins \
+		-importdir /usr/lib/qt/imports \
 		-hostprefix $(STAGING_DIR) \
 		-fast \
 		-no-rpath \
@@ -610,6 +617,14 @@ define QT_INSTALL_TARGET_PLUGINS
 	fi
 endef
 
+# Import installation
+define QT_INSTALL_TARGET_IMPORTS
+	if [ -d $(STAGING_DIR)/usr/lib/qt/imports/ ] ; then \
+		mkdir -p $(TARGET_DIR)/usr/lib/qt/imports ; \
+		cp -dpfr $(STAGING_DIR)/usr/lib/qt/imports/* $(TARGET_DIR)/usr/lib/qt/imports ; \
+	fi
+endef
+
 # Fonts installation
 ifneq ($(QT_FONTS),)
 define QT_INSTALL_TARGET_FONTS
@@ -628,6 +643,7 @@ endif
 define QT_INSTALL_TARGET_CMDS
 	$(QT_INSTALL_TARGET_LIBS)
 	$(QT_INSTALL_TARGET_PLUGINS)
+	$(QT_INSTALL_TARGET_IMPORTS)
 	$(QT_INSTALL_TARGET_FONTS)
 	$(QT_INSTALL_TARGET_FONTS_TTF)
 endef
