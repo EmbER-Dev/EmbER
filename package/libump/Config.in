@@ -1,0 +1,8 @@
+config BR2_PACKAGE_LIBUMP
+    bool "libump"
+    select BR2_PACKAGE_XPROTO_DRI2PROTO
+    select BR2_PACKAGE_LIBDRM
+    select BR2_PACKAGE_XLIB_XFIXES
+    help
+	mali libump
+	https://github.com/mortaromarcello/libump

@@ -885,4 +885,10 @@ source "package/vim/Config.in"
 endif
 endmenu
 
+menu "Mali"
+source "package/driver_gpu_mali/Config.in"
+source "package/xdriver_xf86-video-mali/Config.in"
+source "package/libump/Config.in"
+endmenu
+
 endmenu

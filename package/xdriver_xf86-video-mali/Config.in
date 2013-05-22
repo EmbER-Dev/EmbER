@@ -1,0 +1,15 @@
+config BR2_PACKAGE_XDRIVER_XF86_VIDEO_MALI
+    bool "xf86-video-mali"
+    select BR2_PACKAGE_DRIVER_GPU_MALI
+    select BR2_PACKAGE_LIBUMP
+    select BR2_PACKAGE_XORG7
+    select BR2_PACKAGE_XSERVER_XORG_SERVER_MODULAR
+    select BR2_PACKAGE_XLIB_LIBX11
+    select BR2_PACKAGE_XLIB_LIBXRANDR
+    select BR2_PACKAGE_XLIB_LIBXRENDER
+    select BR2_PACKAGE_XPROTO_RANDRPROTO
+    select BR2_PACKAGE_XPROTO_RENDERPROTO
+    select BR2_PACKAGE_XPROTO_VIDEOPROTO
+    help
+      xf86 video mali lib
+      https://github.com/mortaromarcello/xf86-video-mali
