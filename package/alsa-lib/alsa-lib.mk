@@ -93,3 +93,4 @@ define ALSA_LIB_UNINSTALL_STAGING_CMDS
 endef
 
 $(eval $(autotools-package))
+$(eval $(host-autotools-package))
