@@ -3,11 +3,17 @@
 # libamplayer
 #
 #############################################################
-LIBAMPLAYERM3_VERSION:=e690701dbe22a79a2ed55953031713013e5d7d7e
-LIBAMPLAYERM3_SITE=git://github.com/Pivosgroup/libamplayer-m3.git
+LIBAMPLAYERM3_VERSION:=4e428c7a65ef2db6a5a0a0c8cd467c2807a16c95
+LIBAMPLAYERM3_SITE=git://github.com/Stane1983/libamplayer-m3.git
 LIBAMPLAYERM3_INSTALL_STAGING=YES
 LIBAMPLAYERM3_INSTALL_TARGET=YES
 LIBAMPLAYERM3_SITE_METHOD=git
+
+ifeq ($(BR2_BOARD_TYPE_AMLOGIC_M6),y)
+FIRMWARE_FOLDER=firmware-m6
+else
+FIRMWARE_FOLDER=firmware
+endif
 
 ifeq ($(BR2_PACKAGE_LIBAMPLAYERM3),y)
 # actually required for amavutils and amffmpeg
@@ -46,7 +52,7 @@ define LIBAMPLAYERM3_INSTALL_TARGET_CMDS
  $(call AMFFMPEG_INSTALL_TARGET_CMDS)
 
  mkdir -p $(TARGET_DIR)/lib/firmware
- cp -rf $(@D)/amadec/firmware/*.bin $(TARGET_DIR)/lib/firmware
+ cp -rf $(@D)/amadec/$(FIRMWARE_FOLDER)/*.bin $(TARGET_DIR)/lib/firmware
  cp -f $(STAGING_DIR)/usr/lib/libamadec.so $(TARGET_DIR)/usr/lib/
 
  cp -f $(STAGING_DIR)/usr/lib/libamcodec.so.* $(TARGET_DIR)/usr/lib/
@@ -55,4 +61,4 @@ define LIBAMPLAYERM3_INSTALL_TARGET_CMDS
   STAGING="$(TARGET_DIR)/usr" PREFIX="$(STAGING_DIR)/usr" -C $(@D)/amplayer install
 endef
 
-$(eval $(generic-package))
+$(eval $(call generic-package))

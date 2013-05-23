@@ -1,5 +1,4 @@
 config BR2_PACKAGE_LIBAMPLAYERM3
-	depends on BR2_BOARD_TYPE_AMLOGIC_M3
         bool "libamplayerm3"
         help
           amlogic media player library for M3.
