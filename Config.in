@@ -2,6 +2,7 @@
 
 mainmenu "Buildroot $BR2_VERSION Configuration"
 
+
 config BR2_HAVE_DOT_CONFIG
 	bool
 	default y
@@ -21,6 +22,7 @@ config BR2_HOSTARCH_NEEDS_IA32_LIBS
 	bool
 
 source "arch/Config.in"
+
 
 menu "Build options"
 
@@ -280,6 +282,10 @@ config BR2_DEBUG_3
 endchoice
 endif
 
+config BR2_BOARD_TYPE_AMLOGIC_M6
+	bool "Amlogic Board M6/MX"
+	default n
+
 choice
 	prompt "strip command for binaries on target"
 	default BR2_STRIP_strip
@@ -453,6 +459,7 @@ config BR2_GLOBAL_PATCH_DIR
 	  then all *.patch files in the directory will be applied.
 
 endmenu
+
 
 source "toolchain/Config.in"
 
