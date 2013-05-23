@@ -33,6 +33,10 @@ ifeq ($(BR2_PACKAGE_LIBAMPLAYERM3),y)
 XBMC_DEPENDENCIES += libamplayerm3
 endif
 
+ifeq ($(BR2_PACKAGE_LIBAMPLAYERM6),y)
+XBMC_DEPENDENCIES += libamplayerm6
+endif
+
 ifneq ($(BR2_XBMC_REMOTE_CONF),)
 XBMC_REMOTE_CONF = $(BR2_XBMC_REMOTE_CONF)
 else
