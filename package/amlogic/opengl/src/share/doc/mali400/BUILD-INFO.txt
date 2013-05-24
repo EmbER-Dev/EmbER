@@ -1,0 +1,256 @@
+Format-Version: 0.1
+Files-Pattern: *
+License-Type: protected
+Theme: harkdkernel
+License-Text: Odroid CLICK-WRAP LIMITED LICENSE AGREEMENT FOR APPLICATION DEVELOPERS ("Agreement") Hardkernel 2013-02-07
+ <p>
+  This Agreement is a legally binding contract between you - either an 
+  individual or a legal entity - (hereinafter referred to as "Licensee") 
+  and ST-Ericsson SA, a company incorporated under the laws of 
+  South Korea (hereinafter referred to as "Hardkernel"). 
+ </p>
+ <p>
+  IMPORTANT - PLEASE READ THE FOLLOWING AGREEMENT CAREFULLY. THIS IS A 
+  LEGALLY BINDING AGREEMENT. BY CLICKING THE "ACCEPT" BUTTON BELOW, OR 
+  BY DOWNLOADING OR INSTALLING OR OTHERWISE USING THE SOFTWARE, YOU 
+  AGREE TO BE BOUND BY THE TERMS OF THIS AGREEMENT. IF YOU DO NOT AGREE 
+  TO THE TERMS OF THIS AGREEMENT OR ARE NOT AUTHORISED TO ACCEPT AND 
+  AGREE TO THE TERMS OF THE AGREEMENT, DO NOT DOWNLOAD, INSTALL OR 
+  OTHERWISE USE THE SOFTWARE. 
+ </p>
+ <p>
+  Hardkernel and Licensee are each hereinafter also referred to as the 
+  "Party" and, collectively, as the "Parties." 
+ </p>
+ <h2>
+  1 DEFINITIONS 
+ </h2>
+ <p>
+  1.1 Wherever used in this Agreement, the following terms shall have 
+  the meanings set forth below: 
+ </p>
+ <p>
+  "Licensee's Applications" means applications and other software 
+  developed by Licensee which are intended to interface with and/or run 
+  on the Snowball Kit.
+ </p>
+ <p>
+  "Limited License Purpose" shall mean the limited license granted under Article 2.1 below.
+ </p>
+ <p>
+  "Snowball Kit" means the hardware products "SKY-S9500-ULP-Cxy" 
+  where x and y are integers between "0" and "9".
+ </p>
+ <p>
+  "Software" shall mean the ST-Ericsson's software for the A9500 
+  platform delivered in binary or in source for the related header 
+  files, including any copies and new releases thereof. 
+ </p>
+ <p>
+  1.2 Other capitalized expressions used in this Agreement shall have 
+  the meanings respectively assigned to them elsewhere in this 
+  Agreement. 
+ </p>
+ <p>
+  1.3 Words indicating the singular only also include the plural and 
+  vice-versa, where the context so requires. 
+ </p>
+ <p>
+  1.4 The headings of the Articles in this Agreement are for convenience 
+  only and shall not affect the interpretation of this Agreement. 
+ </p>
+ <h2>2 LICENSE GRANT</h2>
+ <p>
+  2.1 Subject to the terms and conditions in this Agreement, STEricsson 
+  hereby grants to Licensee a non-exclusive, non-transferable, limited 
+  license to use and reproduce the Software solely to the extent 
+  required in order to (i) develop Licensee's Applications that 
+  interface with and/or run with the Snowball Kit; and (ii) integrate 
+  the Software with Licensee Application and/or third party software; 
+  and (iii) conduct development testing of the Licensee's Applications' 
+  or third party software operation in conjunction with the Snowball Kit 
+  and/or Licensee's demonstration of such Licensee's Applications in 
+  conjunction with the Snowball Kit (hereinafter "Limited License 
+  Purpose"). The Licensee is entitled to flash the Software on a 
+  commercial product containg the Snowball Kit. The aforesaid license to 
+  the Software is provided that all and any use of the Software is 
+  solely and exclusively used on the Snowball Kit. 
+ </p>
+ <p>
+  2.2 Some portion of the Software might contain Open Source 
+  Software. Such Open Source Software might be subject to Open Source 
+  Terms applicable for each such portion, as further specified in the 
+  Software. Such Open Source Software is supplied to Licensee solely 
+  under the applicable Open Source Terms and is not subject to the terms 
+  of this Agreement. 
+ </p>
+ <p>
+  2.3 Licensee shall not, and shall not permit any third party to alter, 
+  change, modify, adapt, decompile, disassemble, compile or reverse 
+  engineer or remove or circumvent any protection or other restrictive 
+  technology mechanism of the the Software and/or any and all parts 
+  thereof, or otherwise use, sub-license, assign or pledge the Software 
+  and/or any and all parts thereof other than what is expressly 
+  permitted in accordance with this Agreement. 
+ </p>
+ <p>
+  2.4 ST-Ericsson shall retain on behalf of itself or the original owner 
+  all right title and interest to any ST-Ericsson Intellectual Property 
+  Rights, including but not limited to any patents, trademarks, 
+  copyrights, and trade secret rights, and title to copies of any and 
+  all media bearing the Software or the Snowball Kit and/or any and all 
+  parts thereof, and the Licensee acquires no interest under this 
+  Agreement to any ST-Ericsson Intellectual Property Rights or other 
+  rights other than the Limited License Purpose expressly set forth in 
+  this Article 2. 
+ </p>
+ <p>
+  2.5 Notwithstanding anything to the contrary herein, nothing contained 
+  hereunder shall be construed as conferring any right, license or 
+  immunity, either directly or by implication, estoppel or otherwise to 
+  Licensee or any third party: (i) under any intellectual property 
+  rights of any third party; specifically, without limiting the 
+  generality of the foregoing, the sale and use of the Products are not 
+  licensed under any patents of Telefonaktiebolaget LM Ericsson, or any 
+  affiliates of such company; (ii) under any intellectual property 
+  rights of STEricsson other than explicitly granted under in this 
+  Agreement; or (iii) with respect to any trademark, trade or brand 
+  name, a corporate name of ST-Ericsson, or any other name or mark, or 
+  contraction abbreviation or simulation thereof. 
+ </p>
+ <h2>3 DELIVERY</h2>
+ <p>
+  3.1 All deliveries of the Software are EX-WORKS (Incoterms 2000) at 
+  ST-Ericsson's indicated facility. 
+ </p>
+ <h2>4 NO REPRESENTATIONS OR WARRANTIES</h2>
+ <p>
+  4.1 The Software is delivered "as is" and all representations and
+  warranties, express or implied, are hereby disclaimed, including, but
+  not limited to that:
+ </p>
+ <p>
+  a) the Software or any part thereof is accurate or reliable for any
+  purposes whatsoever; and
+ </p>
+ <p>
+  b) the use of the Software does not infringe any rights that may be
+  held by a third party in respect of any such information.
+ </p>
+ <p>
+  4.2 Licensee acknowledges and agrees that any use of the Software
+  and/or the Snowball Kit, or any other part thereof, or any use of
+  Licensee's Applications is at Licensee's sole risk.
+ </p>
+ <h2>5 WARRANTY DISCLAIMER AND GENERAL LIMITATION OF LIABILITY</h2>
+ <p>
+  5.1 THE SOFTWARE AND/OR SNOWBALL KIT AND ANY AND ALL PARTS THEREOF ARE 
+  PROVIDED "AS IS". ST-ERICSSON MAKES NO REPRESENTATIONS OR WARRANTIES 
+  WITH RESPECT TO THE SOFTWARE AND/OR SNOWBALL KIT AND OR PARTS THEREOF 
+  WHETHER EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO, IMPLIED 
+  WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR 
+  PURPOSE. SPECIFICALLY, WITHOUT LIMITING THE GENERALITY OF THE 
+  FOREGOING, ST-ERICSSON MAKES NO REPRESENTATION OR WARRANTY THAT (I) 
+  THE USE OF THE SOFTWARE AND/OR SNOWBALL KIT AND OR PARTS THEREOF WILL 
+  BE UNINTERRUPTED OR ERROR FREE, AND OR (II) ANY USE AND OR 
+  DISTRIBUTION OF THE SOFTWARE AND/OR SNOWBALL KIT AND OR PARTS THEREOF, 
+  WHETHER INTEGRATED INTO OTHER EQUIPMENT OR NOT, ARE FREE FROM 
+  INFRINGEMENT OF ANY THIRD PARTY INTELLECTUAL PROPERTY RIGHTS, AND IT 
+  SHALL BE THE SOLE RESPONSIBILITY OF LICENSEE TO MAKE SUCH 
+  DETERMINATION AS IS NECESSARY WITH RESPECT TO THE ACQUISITION OF 
+  LICENSES UNDER PATENTS AND OTHER INTELLECTUAL PROPERTY RIGHTS OF THIRD 
+  PARTIES. CONSEQUENTLY, IN NO EVENT SHALL ST-ERICSSON, ITS AFFILIATES 
+  OR THEIR SUPPLIERS BE LIABLE TO LICENSEE FOR ANY LOSS OR DAMAGES 
+  (WHETHER DIRECT, INDRECT OR CONSEQUENTIAL) ARISING FROM ANY USE AND OR 
+  DISTRIBUTION OF THE SOFTWARE AND/OR SNOWBALL KIT AND OR PARTS THEREOF, 
+  WHETHER INTEGRATED INTO OTHER EQUIPMENT OR NOT, AND OR ARISING BY 
+  REASON OF THE FACT THAT THE SOFTWARE AND/OR SNOWBALL KIT AND OR ANY 
+  PARTS THEREOF ARE DEFECTIVE OR NON-CONFORMING AND OR ARISING FROM THIS 
+  AGREEMENT AND OR ANY BREACH THEREOF. 
+ </p>
+ <p>
+  5.2 THE PARTIES AGREE THAT ANY RIGHTS AND REMEDIES THE LICENSEE MAY 
+  HAVE AND OR ANY OBLIGATIONS THAT ST-ERICSSON MAY HAVE ACCORDING TO LAW 
+  OR OTHERWISE WITH RESPECT TO ERRORS AND DEFECTS IN THE SOFTWARE AND/OR 
+  OTHER DELIVERABLES AND/OR IN ANY PART THEREOF SHALL HEREBY BE 
+  DISCLAIMED. 
+ </p>
+ <h2>
+  6 TERMINATION 
+ </h2>
+ <p>
+  6.1 The license and this Agreement are effective until terminated. 
+ </p>
+ <p>
+  6.2 Licensee agrees that each of the terms and conditions set out in 
+  this Agreement are material and that failure of Licensee to comply 
+  with these terms and conditions shall constitute sufficient cause for 
+  ST-Ericsson to terminate this Agreement. The aforesaid is without any 
+  prejudice to other rights ST-Ericsson may have in case of breach of 
+  this Agreement. 
+ </p>
+ <p>
+  6.3 In the event of termination of this Agreement Licensee shall 
+  immediately destroy all copies of the Software, including all portions 
+  and derivatives thereof. 
+ </p>
+ <h2>
+  7 EXPORT CONTROL 
+ </h2>
+ <p>
+  7.1 Licensee recognizes that the Software or any parts thereof may be 
+  subject to import and export regulations in certain 
+  countries. Licensee agrees that it will not knowingly export, 
+  re-export or import products, technology or Software, or any parts 
+  thereof, of ST-Ericsson, directly or indirectly, to any country to the 
+  extent export to such country at the time of export requires an export 
+  license or other governmental approval under any export control laws 
+  and regulations, without first obtaining such license or approval. 
+ </p>
+ <h2>
+  8 COMPLIANCE WITH LAWS 
+ </h2>
+ <p>
+  8.1 Licensee agrees not to use the Software in violation of, and to 
+  comply with any and all applicable law, statute, ordinance or other 
+  regulation. 
+ </p>
+ <h2>
+  9 ENTIRE AGREEMENT 
+ </h2>
+ <p>
+  9.1 This is the entire agreement between Licensee and ST-Ericsson on 
+  the subject matter of this Agreement, and supersedes all 
+  representations, undertakings and agreements previously made between 
+  the Parties with respect to the subject matter of this Agreement. 
+ </p>
+ <h2>
+  10 SEVERABILITY 
+ </h2>
+ <p>
+  10.1 If a court or agency of competent jurisdiction holds any term of 
+  this Agreement invalid, illegal, or unenforceable for any reason, the 
+  remainder of this Agreement shall be valid and enforceable and such 
+  term shall be substituted by a valid and enforceable provision so as 
+  to the best accomplish the objectives of such provision in this 
+  Agreement. 
+ </p>
+ <h2>
+  11 GOVERNING LAW AND JURISDICTION 
+ </h2>
+ <p>
+  11.1 This Agreement shall be governed by and construed in accordance 
+  with the laws of Switzerland, without regard to its conflict of laws 
+  rules. The application of The United Nations Convention of Contracts 
+  for the International Sale of Goods is explicitly excluded. 
+ </p>
+ <p>
+  11.2 Any and all disputes, differences or questions arising out of or 
+  in connection with this Agreement shall be under the exclusive 
+  jurisdiction of the Swiss courts and the venue shall be Geneva. 
+ </p>
+ <p>
+  11.3 Notwithstanding the aforesaid, nothing in this Article 11 shall 
+  prevent the Parties from seeking any interim or final injunctive or 
+  equitable relief by a court of competent jurisdiction.
+ </p>

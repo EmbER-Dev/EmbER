@@ -25,8 +25,7 @@ typedef enum
 	FBDEV_PIXMAP_DEFAULT = 0,
 	FBDEV_PIXMAP_SUPPORTS_UMP = (1<<0),
 	FBDEV_PIXMAP_ALPHA_FORMAT_PRE = (1<<1),
-	FBDEV_PIXMAP_COLORSPACE_sRGB = (1<<2),
-	FBDEV_PIXMAP_EGL_MEMORY = (1<<3)        /* EGL allocates/frees this memory */
+	FBDEV_PIXMAP_COLORSPACE_sRGB = (1<<2)
 } fbdev_pixmap_flags;
 
 typedef struct fbdev_window

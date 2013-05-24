@@ -48,19 +48,15 @@ typedef enum
 {
 	UMP_MSYNC_CLEAN = 0 ,
 	UMP_MSYNC_CLEAN_AND_INVALIDATE = 1,
-#if UNIFIED_MEMORY_PROVIDER_VERSION > 2
 	UMP_MSYNC_INVALIDATE = 2,
-#endif
 	UMP_MSYNC_READOUT_CACHE_ENABLED = 128,
 } ump_cpu_msync_op;
 
-#if UNIFIED_MEMORY_PROVIDER_VERSION > 2
 typedef enum
 {
 	UMP_READ = 1,
 	UMP_READ_WRITE = 3,
 } ump_lock_usage;
-#endif /* UNIFIED_MEMORY_PROVIDER_VERSION */
 
 /** Flushing cache for an ump_handle.
  * The function will always CLEAN_AND_INVALIDATE as long as the \a op is not UMP_MSYNC_READOUT_CACHE_ENABLED.
@@ -69,7 +65,7 @@ typedef enum
  * Return value is 1 if cache is enabled, and 0 if it is disabled for the given allocation.*/
 UMP_API_EXPORT int ump_cpu_msync_now(ump_handle mem, ump_cpu_msync_op op, void* address, int size);
 
-#if UNIFIED_MEMORY_PROVIDER_VERSION > 2
+
 typedef enum
 {
 	UMP_USED_BY_CPU = 0,
@@ -104,7 +100,7 @@ UMP_API_EXPORT int ump_unlock( ump_handle mem );
 
 /** Unlocking buffer. Let other users lock the buffer for their usage */
 UMP_API_EXPORT int ump_unlock_secure_id( ump_secure_id ump_id );
-#endif /* UNIFIED_MEMORY_PROVIDER_VERSION */
+
 
 #ifdef __cplusplus
 }
