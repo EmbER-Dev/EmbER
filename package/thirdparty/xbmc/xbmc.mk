@@ -10,7 +10,7 @@ XBMC_SITE = git://github.com/j1nx/xbmc.git
 XBMC_INSTALL_STAGING = YES
 XBMC_INSTALL_TARGET = YES
 
-XBMC_DEPENDENCIES = host-lzo sdl_image
+XBMC_DEPENDENCIES = host-lzo host-sdl_image
 
 XBMC_CONF_OPT+= --enable-neon --enable-gles --disable-sdl --disable-x11 --disable-xrandr \
   --disable-projectm --enable-debug --disable-joystick --with-cpu=cortex-a9 \
@@ -64,9 +64,11 @@ define XBMC_INSTALL_ETC
   cp -f package/thirdparty/xbmc/nobs.xml $(TARGET_DIR)/usr/share/xbmc/system/keymaps/
 endef
 
+ifneq ($(XBMC_REMOTE_CONF),"")
 define XBMC_INSTALL_REMOTE_CONF
   cp -f package/thirdparty/xbmc/etc/xbmc/$(XBMC_REMOTE_CONF) $(TARGET_DIR)/etc/xbmc/remote.conf
 endef
+endif
 
 define XBMC_INSTALL_SPLASH
   cp -f package/thirdparty/xbmc/tlbb_splash.png $(TARGET_DIR)/usr/share/xbmc/media/Splash.png
