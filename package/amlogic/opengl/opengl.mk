@@ -3,7 +3,7 @@
 # opengl
 #
 #############################################################
-OPENGL_VERSION:=r3p2-rel01rel1
+OPENGL_VERSION:=apiv17
 OPENGL_SOURCE=opengl-$(AMADEC_VERSION).tar.gz
 OPENGL_SITE=$(TOPDIR)/package/amlogic/opengl/src/
 OPENGL_SITE_METHOD=local
