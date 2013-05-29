@@ -3,10 +3,10 @@
 # opengl
 #
 #############################################################
-OPENGL_VERSION:=apiv17
-OPENGL_SOURCE=opengl-$(AMADEC_VERSION).tar.gz
-OPENGL_SITE=$(TOPDIR)/package/amlogic/opengl/src/
-OPENGL_SITE_METHOD=local
+OPENGL_VERSION=apiv17
+OPENGL_SOURCE=opengl-$(OPENGL_VERSION).tar
+OPENGL_SITE=$(TOPDIR)/package/amlogic/opengl/
+OPENGL_SITE_METHOD=file
 OPENGL_INSTALL_STAGING=YES
 OPENGL_INSTALL_TARGET=YES
 
