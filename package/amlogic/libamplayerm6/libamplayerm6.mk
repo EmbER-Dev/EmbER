@@ -52,6 +52,7 @@ define LIBAMPLAYERM6_INSTALL_TARGET_CMDS
  cp -f $(STAGING_DIR)/usr/lib/libamadec.so $(TARGET_DIR)/usr/lib/
 
  cp -f $(STAGING_DIR)/usr/lib/libamcodec.so.* $(TARGET_DIR)/usr/lib/
+ cd $(TARGET_DIR)/usr/lib/; ln -s libamcodec.so.0.0 libamcodec.so
  cp -f $(STAGING_DIR)/usr/lib/libamplayer.so $(TARGET_DIR)/usr/lib/
  $(MAKE) CC="$(TARGET_CC)" LD="$(TARGET_LD)" INSTALL_DIR="$(TARGET_DIR)/usr/lib" \
   STAGING="$(TARGET_DIR)/usr" PREFIX="$(STAGING_DIR)/usr" -C $(@D)/amplayer install
