@@ -9,6 +9,8 @@ SDL_IMAGE_SOURCE = SDL_image-$(SDL_IMAGE_VERSION).tar.gz
 SDL_IMAGE_SITE = http://www.libsdl.org/projects/SDL_image/release
 SDL_IMAGE_INSTALL_STAGING = YES
 
+HOST_SDL_IMAGE_DEPENDENCIES=host-libpng host-sdl host-libjpeg host-tiff
+
 SDL_IMAGE_CONF_OPT = --with-sdl-prefix=$(STAGING_DIR)/usr \
 		--with-sdl-exec-prefix=$(STAGING_DIR)/usr \
 		--disable-sdltest \
@@ -35,7 +37,7 @@ HOST_SDL_IMAGE_CONF_OPT:=--with-sdl-prefix=$(HOST_DIR)/usr \
                 --disable-static \
                 --disable-jpg-shared \
                 --disable-png-shared \
-                --disable-tif-shared
+                --disable-tif-shared 
 
 SDL_IMAGE_DEPENDENCIES = sdl \
 	$(if $(BR2_PACKAGE_SDL_IMAGE_JPEG),jpeg) \
