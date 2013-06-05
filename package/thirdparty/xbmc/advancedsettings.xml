@@ -26,4 +26,9 @@
     <setting>input.remoteaskeyboard</setting>
     <setting>audiooutput.guisoundmode</setting>
   </hidesettings>
+
+  <video>
+    <subsdelayrange>60</subsdelayrange>
+    <audiodelayrange>60</audiodelayrange>
+  </video>
 </advancedsettings>
