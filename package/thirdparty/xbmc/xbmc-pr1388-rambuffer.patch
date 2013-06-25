@@ -74,10 +74,12 @@ diff --git a/xbmc/cores/dvdplayer/DVDPlayer.cpp b/xbmc/cores/dvdplayer/DVDPlayer
 index 1fdb4d9..36cd81c 100644
 --- a/xbmc/cores/dvdplayer/DVDPlayer.cpp
 +++ b/xbmc/cores/dvdplayer/DVDPlayer.cpp
-@@ -420,6 +420,7 @@ void CSelectionStreams::Update(CDVDInputStream* input, CDVDDemux* demuxer)
+@@ -420,8 +420,9 @@ void CSelectionStreams::Update(CDVDInputStream* input, CDVDDemux* demuxer)
    m_offset_pts = 0.0;
    m_playSpeed = DVD_PLAYSPEED_NORMAL;
    m_caching = CACHESTATE_DONE;
+   m_HasVideo = false;
+   m_HasAudio = false;
 +  m_readrate = 0;
  
    memset(&m_SpeedState, 0, sizeof(m_SpeedState));
