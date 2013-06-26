@@ -23,6 +23,7 @@ define AMFFMPEG_CONFIGURE_CMDS
 		--host-cc="$(HOSTCC)" \
 		--arch=$(BR2_ARCH) \
 		--prefix=/usr \
+		--extra-cflags="-mfloat-abi=hard -mfpu=neon -march=armv7-a $(AMFFMPEG_EXTRA_INCLUDES)" \
 		$(AMFFMPEG_EXTRA_LDFLAGS) \
 		$(AMFFMPEG_CONF_OPT) \
   )
