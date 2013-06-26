@@ -3,8 +3,8 @@
 # libamplayer
 #
 #############################################################
-LIBAMPLAYERM6_VERSION=b0b63382d005e7cf71e1a717ec301b9e63649999
-LIBAMPLAYERM6_SITE=git://github.com/nspierbundel/libamplayer-m6.git
+LIBAMPLAYERM6_VERSION=5b1324b964c7f289d0ac05cb69b937d3d9c9cf55
+LIBAMPLAYERM6_SITE=git://github.com/wjb/libamplayer-m6.git
 LIBAMPLAYERM6_INSTALL_STAGING=YES
 LIBAMPLAYERM6_INSTALL_TARGET=YES
 LIBAMPLAYERM6_SITE_METHOD=git
