@@ -240,6 +240,7 @@ def main():
 	f.write('       delete("/tmp/aml_logo.img"));\n')
         f.write('show_progress(0.018000, 0);\n')
         f.write('unmount("/system");\n')
+        f.write('set_bootloader_env("upgrade_step", "1");\n')
         if options.boardname == "xiosm3" or options.boardname == "stvmc" or options.boardname == "f16ref" or options.boardname == "stvmx":
           f.write('ifelse\n')
           f.write('(\n')
