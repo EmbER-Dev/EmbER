@@ -29,12 +29,12 @@
 #####################################################################
 ## global variables
 # wpa_supplicant variables
-WPA_SUP_BIN="/sbin/wpa_supplicant"
+WPA_SUP_BIN="/usr/sbin/wpa_supplicant"
 WPA_SUP_PNAME="wpa_supplicant"
 WPA_SUP_PIDFILE="/var/run/wpa_supplicant.${WPA_IFACE}.pid"
 
 # wpa_cli variables
-WPA_CLI_BIN="/sbin/wpa_cli"
+WPA_CLI_BIN="/usr/sbin/wpa_cli"
 WPA_CLI_PNAME="wpa_cli"
 WPA_CLI_PIDFILE="/var/run/wpa_action.${WPA_IFACE}.pid"
 WPA_CLI_TIMESTAMP="/var/run/wpa_action.${WPA_IFACE}.timestamp"
