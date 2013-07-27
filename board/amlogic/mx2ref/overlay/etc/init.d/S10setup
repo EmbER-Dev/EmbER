@@ -55,8 +55,10 @@ if [ "X$1" = "Xstart" ]; then
     fi
   done
 
+  USERDATA="/dev/data"
+
   mkdir -p /tmp/userdata
-  mount -t yaffs2 $USERDATA /tmp/userdata
+  mount -t ext4 $USERDATA /tmp/userdata
   mkdir -p /tmp/userdata/xios/root
   mount -o bind /tmp/userdata/xios/root /root
   #
