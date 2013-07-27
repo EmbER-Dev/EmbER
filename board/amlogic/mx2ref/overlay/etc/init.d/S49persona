@@ -41,7 +41,8 @@ if [ "X$1" = "Xstart" ]; then
         echo $SCRIPTNAME": USERDATA not mounted. Attempting to mount"
         mkdir -p /media/USERDATA
         bin/mount -o rw,sync,noatime $USERDATA_DISK /media/USERDATA
-        USERDATA_MNTPT=`grep $USERDATA_DISK /proc/mounts | cut -d " " -f 2 | grep '/media'`
+        USERDATA_MNTPT=/media/USERDATA
+        #USERDATA_MNTPT=`grep $USERDATA_DISK /proc/mounts | cut -d " " -f 2 | grep '/media'`
         echo $SCRIPTNAME": USERDATA mounted at "$USERDATA_MNTPT
       fi
       echo $SCRIPTNAME": Checking USERDATA for xbmc-data folder"
