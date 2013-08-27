@@ -4,9 +4,9 @@
 #
 #################################################################################
 
-XBMC_VERSION = 8e80554d9eb7a6b4b4b04452a9dab6dc73d23344
+XBMC_VERSION = 660283bbc85e687f68be996eb677ce6acd0ce491
 XBMC_SITE_METHOD = git
-XBMC_SITE = git://github.com/wjb/xbmc.git
+XBMC_SITE = git://github.com/croniccorey/xbmc.git
 XBMC_INSTALL_STAGING = YES
 XBMC_INSTALL_TARGET = YES
 
