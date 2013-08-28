@@ -1,0 +1,15 @@
+diff --git a/wpa_supplicant/Makefile b/wpa_supplicant/Makefile
+index 4afcf60..5141799 100644
+--- a/wpa_supplicant/Makefile	2013-01-12 16:42:53.000000000 +0100
++++ b/wpa_supplicant/Makefile	2013-08-28 00:03:49.314870738 +0200
+@@ -6,8 +6,8 @@
+ CFLAGS = -MMD -O2 -Wall -g
+ endif
+ 
+-export LIBDIR ?= /usr/local/lib/
+-export BINDIR ?= /usr/local/sbin/
++export LIBDIR ?= /usr/lib
++export BINDIR ?= /usr/sbin
+ PKG_CONFIG ?= pkg-config
+ 
+ CFLAGS += -I../src

@@ -233,8 +233,8 @@ init_wpa_supplicant () {
 				;;
 		esac
 	else
-		WPA_SUP_OPTIONS="$WPA_SUP_OPTIONS -D wext"
-		wpa_msg verbose "wpa-driver wext (default)"
+		WPA_SUP_OPTIONS="$WPA_SUP_OPTIONS -D nl80211"
+		wpa_msg verbose "wpa-driver nl80211 (default)"
 	fi
 
 	if [ -n "$IF_WPA_DEBUG_LEVEL" ]; then
