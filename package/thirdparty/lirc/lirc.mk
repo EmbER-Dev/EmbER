@@ -1,14 +1,12 @@
-LIRC_VERSION = 0.8.7
-LIRC_SOURCE = lirc-$(LIRC_VERSION).tar.gz
-LIRC_SITE = http://$(BR2_SOURCEFORGE_MIRROR).dl.sourceforge.net/sourceforge/lirc
+LIRC_VERSION = 0.9.0
+LIRC_SITE = http://downloads.sourceforge.net/project/lirc/LIRC/$(LIRC_VERSION)
 LIRC_INSTALL_STAGING = YES
 LIRC_INSTALL_TARGET = YES
-LIRC_DEPENDENCIES = linux26
 LIRC_MAKE=$(MAKE1)
 
-LIRC_CONF_OPT += --with-kerneldir=$(LINUX26_DIR)
+LIRC_CONF_OPT += --with-kerneldir=$(LINUX_DIR)
 LIRC_CONF_OPT += --with-driver=all
-LIRC_CONF_OPT += --with-moduledir="/lib/modules/$(LINUX26_VERSION_PROBED)/misc"
+LIRC_CONF_OPT += --with-moduledir="/lib/modules/$(LINUX_VERSION_PROBED)/misc"
 
 # hack to avoid mknod (requires root). This will be populated automatically.
 LIRC_CONF_OPT += ac_cv_path_mknod=$(shell which echo)
@@ -26,11 +24,13 @@ endif
 
 #work-around for hard-coded depmod
 define LIRC_DEPMOD
-$(HOST_DIR)/usr/sbin/depmod -b $(TARGET_DIR) -a $(LINUX26_VERSION_PROBED)
+$(HOST_DIR)/usr/sbin/depmod -b $(TARGET_DIR) -a $(LINUX_VERSION_PROBED)
 endef
 
 define LIRC_REMOVE_BROKEN_DRIVERS
 sed -i 's/lirc_wpc8769l//' $(@D)/drivers/Makefile
+sed -i 's/lirc_atiusb//' $(@D)/drivers/Makefile
+sed -i 's/lirc_i2c//' $(@D)/drivers/Makefile
 endef
 
 define LIRC_INSTALL_ETC
