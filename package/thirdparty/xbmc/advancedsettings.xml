@@ -24,7 +24,6 @@
     <setting>audiooutput.passthroughdevice</setting>
     <setting>audiooutput.custompassthrough</setting>
     <setting>input.remoteaskeyboard</setting>
-    <setting>audiooutput.guisoundmode</setting>
   </hidesettings>
 
   <video>
