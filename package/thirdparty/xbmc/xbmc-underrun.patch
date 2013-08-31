@@ -1,0 +1,34 @@
+From 660283bbc85e687f68be996eb677ce6acd0ce491 Mon Sep 17 00:00:00 2001
+From: croniccorey <cronmod.dev@gmail.com>
+Date: Mon, 26 Aug 2013 10:24:09 -0400
+Subject: [PATCH] AE: Add some tweaks to hopefully fix under-runs
+
+---
+ xbmc/cores/AudioEngine/Sinks/AESinkALSA.cpp | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/xbmc/cores/AudioEngine/Sinks/AESinkALSA.cpp b/xbmc/cores/AudioEngine/Sinks/AESinkALSA.cpp
+index e08a335..a906d8d 100644
+--- a/xbmc/cores/AudioEngine/Sinks/AESinkALSA.cpp
++++ b/xbmc/cores/AudioEngine/Sinks/AESinkALSA.cpp
+@@ -384,7 +384,7 @@ bool CAESinkALSA::InitializeHW(AEAudioFormat &format)
+    will cause problems with menu sounds. Buffer will be increased
+    after those are fixed.
+   */
+-  periodSize  = std::min(periodSize, (snd_pcm_uframes_t) sampleRate / 20);
++  periodSize  = std::min(periodSize, (snd_pcm_uframes_t) sampleRate / 40);
+   bufferSize  = std::min(bufferSize, (snd_pcm_uframes_t) sampleRate / 5);
+ #if defined(HAS_AMLPLAYER) || defined(HAS_LIBAMCODEC)
+   // must be pot for pivos.
+@@ -395,7 +395,7 @@ bool CAESinkALSA::InitializeHW(AEAudioFormat &format)
+    According to upstream we should set buffer size first - so make sure it is always at least
+    4x period size to not get underruns (some systems seem to have issues with only 2 periods)
+   */
+-  periodSize = std::min(periodSize, bufferSize / 4);
++  periodSize = std::min(periodSize, bufferSize / 8);
+ #if defined(HAS_AMLPLAYER) || defined(HAS_LIBAMCODEC)
+   // must be pot for pivos.
+   periodSize = CheckNP2(periodSize);
+-- 
+1.8.4
+
