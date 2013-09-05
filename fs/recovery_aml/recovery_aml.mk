@@ -28,8 +28,8 @@ define ROOTFS_RECOVERY_AML_CMD
  pushd $(BINARIES_DIR)/aml_recovery/ >/dev/null && \
  zip -m -q -r -y $(BINARIES_DIR)/aml_recovery/update-unsigned.zip aml_logo.img uImage META-INF system && \
  popd >/dev/null && \
- echo "Signing update.img..." && \
- pushd fs/recovery_aml/ >/dev/null; java -Xmx1024m -jar signapk.jar -w testkey.x509.pem testkey.pk8 $(BINARIES_DIR)/aml_recovery/update-unsigned.zip $(BINARIES_DIR)/update.img && \
+ echo "Signing update.zip..." && \
+ pushd fs/recovery_aml/ >/dev/null; java -Xmx1024m -jar signapk.jar -w testkey.x509.pem testkey.pk8 $(BINARIES_DIR)/aml_recovery/update-unsigned.zip $(BINARIES_DIR)/$(BR2_TARGET_ROOTFS_RECOVERY_AML_BOARDNAME)-$(shell date -u +%0d%^b%Y-%H%M%S)-update.zip && \
  rm -rf $(BINARIES_DIR)/aml_recovery; rm -f $(TARGET_DIR)/usr.sqsh
 endef
 

@@ -1,8 +1,8 @@
-#############################################################
+################################################################################
 #
 # openssl
 #
-#############################################################
+################################################################################
 
 OPENSSL_VERSION = 1.0.1e
 OPENSSL_SITE = http://www.openssl.org/source
@@ -85,6 +85,7 @@ define OPENSSL_CONFIGURE_CMDS
 	)
 	$(SED) "s:-march=[-a-z0-9] ::" -e "s:-mcpu=[-a-z0-9] ::g" $(@D)/Makefile
 	$(SED) "s:-O[0-9]:$(OPENSSL_CFLAGS):" $(@D)/Makefile
+	$(SED) "s: build_tests::" $(@D)/Makefile
 endef
 
 define HOST_OPENSSL_BUILD_CMDS
@@ -105,21 +106,9 @@ endef
 
 define OPENSSL_INSTALL_TARGET_CMDS
 	$(MAKE1) -C $(@D) INSTALL_PREFIX=$(TARGET_DIR) install
-endef
-
-define OPENSSL_REMOVE_DEV_FILES
 	rm -rf $(TARGET_DIR)/usr/lib/ssl
-endef
-
-ifneq ($(BR2_HAVE_DEVFILES),y)
-OPENSSL_POST_INSTALL_TARGET_HOOKS += OPENSSL_REMOVE_DEV_FILES
-endif
-
-define OPENSSL_INSTALL_FIXUPS
 	rm -f $(TARGET_DIR)/usr/bin/c_rehash
 endef
-
-OPENSSL_POST_INSTALL_TARGET_HOOKS += OPENSSL_INSTALL_FIXUPS
 
 ifneq ($(BR2_PREFER_STATIC_LIB),y)
 

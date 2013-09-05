@@ -34,6 +34,9 @@ patchdir=${2-../kernel-patches}
 shift 2
 patchpattern=${@-*}
 
+# use a well defined sorting order
+export LC_COLLATE=C
+
 if [ ! -d "${builddir}" ] ; then
     echo "Aborting.  '${builddir}' is not a directory."
     exit 1
@@ -77,7 +80,7 @@ function apply_patch {
     echo ""
     echo "Applying $patch using ${type}: "
 	echo $patch >> ${builddir}/.applied_patches_list
-    ${uncomp} "${path}/$patch" | patch -g0 -p1 -E -d "${builddir}"
+    ${uncomp} "${path}/$patch" | patch -g0 -p1 -E -d "${builddir}" -t
     if [ $? != 0 ] ; then
         echo "Patch failed!  Please fix ${patch}!"
 	exit 1

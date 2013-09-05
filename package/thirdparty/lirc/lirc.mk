@@ -42,4 +42,3 @@ LIRC_POST_INSTALL_TARGET_HOOKS += LIRC_DEPMOD
 LIRC_POST_INSTALL_TARGET_HOOKS += LIRC_INSTALL_ETC
 
 $(eval $(call autotools-package,package/thirdparty,lirc))
-
