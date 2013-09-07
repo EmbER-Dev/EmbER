@@ -14,6 +14,22 @@ ifeq ($(BR2_TARGET_ROOTFS_RECOVERY_AML_WIPE_USERDATA_CONDITIONAL),y)
   RECOVERY_AML_ARGS += -c
 endif
 
+ifeq ($(BR2_TARGET_ROOTFS_RECOVERY_AML_UPDATE_ZIP_NAME_FULL_DATETIME),y)
+  UPDATE_ZIP = $(BR2_TARGET_ROOTFS_RECOVERY_AML_BOARDNAME)-$(shell date -u %0d%^b%Y-%H%M%S)-update.zip
+endif
+ifeq ($(BR2_TARGET_ROOTFS_RECOVERY_AML_UPDATE_ZIP_NAME_SHORT_DATE),y)
+  UPDATE_ZIP = $(BR2_TARGET_ROOTFS_RECOVERY_AML_BOARDNAME)-$(shell date -u +%Y%m%d)-update.zip
+endif
+ifeq ($(BR2_TARGET_ROOTFS_RECOVERY_AML_UPDATE_ZIP_NAME_BOARDNAME_UPDATE_ZIP),y)
+  UPDATE_ZIP = $(BR2_TARGET_ROOTFS_RECOVERY_AML_BOARDNAME)-update.zip
+endif
+ifeq ($(BR2_TARGET_ROOTFS_RECOVERY_AML_UPDATE_ZIP_NAME_UPDATE_ZIP),y)
+  UPDATE_ZIP = update.zip
+endif
+ifeq ($(BR2_TARGET_ROOTFS_RECOVERY_AML_UPDATE_ZIP_NAME_CUSTOM),y)
+  UPDATE_ZIP = $(BR2_TARGET_ROOTFS_RECOVERY_AML_UPDATE_ZIP_NAME_CUSTOM_STRING)-update.zip
+endif
+
 define ROOTFS_RECOVERY_AML_CMD
  mkdir -p $(BINARIES_DIR)/aml_recovery/system && \
  tar -C $(BINARIES_DIR)/aml_recovery/system -xf $(BINARIES_DIR)/rootfs.tar && \
@@ -28,8 +44,8 @@ define ROOTFS_RECOVERY_AML_CMD
  pushd $(BINARIES_DIR)/aml_recovery/ >/dev/null && \
  zip -m -q -r -y $(BINARIES_DIR)/aml_recovery/update-unsigned.zip aml_logo.img uImage META-INF system && \
  popd >/dev/null && \
- echo "Signing update.zip..." && \
- pushd fs/recovery_aml/ >/dev/null; java -Xmx1024m -jar signapk.jar -w testkey.x509.pem testkey.pk8 $(BINARIES_DIR)/aml_recovery/update-unsigned.zip $(BINARIES_DIR)/$(BR2_TARGET_ROOTFS_RECOVERY_AML_BOARDNAME)-$(shell date -u +%0d%^b%Y-%H%M%S)-update.zip && \
+ echo "Signing $(UPDATE_ZIP)..." && \
+ pushd fs/recovery_aml/ >/dev/null; java -Xmx1024m -jar signapk.jar -w testkey.x509.pem testkey.pk8 $(BINARIES_DIR)/aml_recovery/update-unsigned.zip $(BINARIES_DIR)/$(UPDATE_ZIP) && \
  rm -rf $(BINARIES_DIR)/aml_recovery; rm -f $(TARGET_DIR)/usr.sqsh
 endef
 
