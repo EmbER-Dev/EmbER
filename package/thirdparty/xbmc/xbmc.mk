@@ -4,9 +4,10 @@
 #
 #################################################################################
 
-XBMC_VERSION = e173f6f5117e1774fb731abbed1b7541c1ae10dd
+# This repo is temporary for testing purposes 
+XBMC_VERSION = fedd4b1ba928d6b3458b3ac7659c06788ff51402
 XBMC_SITE_METHOD = git
-XBMC_SITE = git://github.com/croniccorey/xbmc.git
+XBMC_SITE = git://github.com/CronMod/J1nx-xbmc.git
 XBMC_INSTALL_STAGING = YES
 XBMC_INSTALL_TARGET = YES
 
