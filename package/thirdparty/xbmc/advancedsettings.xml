@@ -23,7 +23,7 @@
     <setting>audiooutput.customdevice</setting>
     <setting>audiooutput.passthroughdevice</setting>
     <setting>audiooutput.custompassthrough</setting>
-    <setting>audiooutput.trudhdpassthrough</setting>
+    <setting>audiooutput.truhdpassthrough</setting>
     <setting>audiooutput.dtshdpassthrough</setting>
     <setting>input.remoteaskeyboard</setting>
   </hidesettings>
