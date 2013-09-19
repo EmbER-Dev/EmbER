@@ -4,7 +4,7 @@
 #
 #################################################################################
 
-XBMC_VERSION = 1396ba0989c3ea63dd119b0fd7464163d563c9c2
+XBMC_VERSION = 0f71878e6b7d29368828a5d4e712fafa4620d671
 XBMC_SITE_METHOD = git
 XBMC_SITE = git://github.com/croniccorey/xbmc.git
 XBMC_INSTALL_STAGING = YES
