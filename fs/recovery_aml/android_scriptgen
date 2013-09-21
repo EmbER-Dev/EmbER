@@ -202,11 +202,13 @@ def main():
         print "Creating symlinks..."
         script.MakeSymlinks(symlinks)
         f = open(options.outputfile, 'w')
-        if options.boardname == "mx2ref" or options.boardname == "g18ref":
+        if options.boardname == "mx2ref" or options.boardname == "g18ref" or options.boardname == "g02ref":
           f.write('assert(getprop("ro.build.product") == "mx2ref" ||\n')
           f.write('       getprop("ro.product.device") == "mx2ref"||\n')
           f.write('       getprop("ro.build.product") == "g18ref" ||\n')
-          f.write('       getprop("ro.product.device") == "g18ref");\n')
+          f.write('       getprop("ro.product.device") == "g18ref"||\n')
+          f.write('       getprop("ro.build.product") == "g02ref" ||\n')
+          f.write('       getprop("ro.product.device") == "g02ref");\n')
         else:
           f.write('assert(getprop("ro.build.product") == "%s" ||\n' % options.boardname)
           f.write('       getprop("ro.product.device") == "%s");\n' % options.boardname)
