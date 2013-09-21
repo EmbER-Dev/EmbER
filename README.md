@@ -9,8 +9,7 @@ This branch will be oriented to products I'm working with.
 
 List of actively maintained devices:
 
-G02REF, G18REF, and MX2REF.
-Defconfig: mx_linux_g18-mx2_defconfig
+G02REF, G18REF, and MX2REF (mx_linux_g02-g18-mx2_defconfig)
 
 ATV1200 + More (TODO)
 
