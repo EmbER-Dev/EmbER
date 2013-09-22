@@ -6,7 +6,8 @@
 case "$1" in
   start)
         echo "Starting XBMC..."
-	export LD_LIBRARY_PATH=/usr/lib:/usr/lib/mysql:/lib        
+	export LD_LIBRARY_PATH=/usr/lib:/usr/lib/mysql:/lib
+	export GCONV_PATH=/usr/lib/gconv
 	export XBMC_HOME=/usr/share/xbmc
         REMOTECONF=/etc/xbmc/remote.conf
         if [ -f /root/.xbmc/remote.conf ]; then

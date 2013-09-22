@@ -81,6 +81,19 @@ copy_toolchain_lib_root = \
  \
 	echo -n
 
+# Function for Linaro toolchains that copies gconv libs to target
+# TODO: Part of path (usr/lib/arm-linux-gnueabihf) is hardcoded. Rewrite it ASAP!
+# Expects 1 param:
+# $1: toolchain root
+copy_toolchain_gconv = \
+	BASE_DIR="$(strip $1)"; \
+	if [ -d $${BASE_DIR}usr/lib/arm-linux-gnueabihf/gconv ] ; then \
+	    mkdir -p $(TARGET_DIR)/usr/lib/gconv ; \
+	    cp -r $${BASE_DIR}usr/lib/arm-linux-gnueabihf/gconv/* $(TARGET_DIR)/usr/lib/gconv ; \
+	fi; \
+ \
+	echo -n
+
 #
 # Copy the full external toolchain sysroot directory to the staging
 # dir. The operation of this function is rendered a little bit
