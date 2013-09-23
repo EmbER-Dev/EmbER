@@ -62,8 +62,10 @@ if [ "X$1" = "Xstart" ]; then
   mkdir -p /tmp/userdata/xios/root
   mount -o bind /tmp/userdata/xios/root /root
   #
-  echo "S10setup: remount / ro"
-  mount -o remount,ro /
+  # Remounting the system RO will cause issues with some addons
+  #
+  # echo "S10setup: remount / ro"
+  # mount -o remount,ro /
   #
   # we startup as performance, then switch to ondemand (kernel bug) and
   # if m1 or m3, limit to 600Mhz to keep audio hw from stalling.
