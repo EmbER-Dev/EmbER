@@ -4,7 +4,7 @@
 #
 #################################################################################
 
-XBMC_VERSION = d2af39740a4a1c4495fb7bb42cd29c5a441371a2
+XBMC_VERSION = 835ab7678a2207c34d304cd6c8edea55c8aca298
 XBMC_SITE_METHOD = git
 XBMC_SITE = git://github.com/CoreTech-Development/xbmc.git
 XBMC_INSTALL_STAGING = YES
