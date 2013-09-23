@@ -103,10 +103,26 @@ config BR2_TOOLCHAIN_EXTERNAL_LINARO_2013_04
 
 	  To use this toolchain, you must disable soft float usage.
 
-comment "Linaro toolchains available for Cortex-A{5,7,8,9,15} and the EABIhf ABI"
+config BR2_TOOLCHAIN_EXTERNAL_LINARO_2012_03
+	bool "Linaro 2012.03"
+	depends on BR2_arm
+	depends on BR2_GCC_TARGET_ARCH = "armv7-a"
+	depends on BR2_HOSTARCH = "x86_64" || BR2_HOSTARCH = "x86"
+	depends on BR2_ARM_EABI
+	select BR2_TOOLCHAIN_EXTERNAL_GLIBC
+	select BR2_TOOLCHAIN_HAS_NATIVE_RPC
+	select BR2_INSTALL_LIBSTDCPP
+	select BR2_HOSTARCH_NEEDS_IA32_LIBS
+	help
+	  Linaro toolchain for the ARM architecture. It uses Linaro
+	  GCC 2012.03 (based on gcc 4.6), Linaro GDB 2012.02 and
+	  eglibc 2.13. It generates code that runs on all
+	  Cortex-A profile devices, but tuned for the Cortex-A9.
+
+comment "Linaro toolchains available for Cortex-A{5,7,8,9,15} and the EABI and EABIhf ABI"
 	depends on BR2_arm
 	depends on BR2_GCC_TARGET_ARCH != "armv7-a"
-	depends on !BR2_ARM_EABIHF
+	depends on !BR2_ARM_EABIHF || !BR2_ARM_EABI
 
 config BR2_TOOLCHAIN_EXTERNAL_CODESOURCERY_ARM201305
 	bool "Sourcery CodeBench ARM 2013.05"
@@ -845,6 +861,7 @@ config BR2_TOOLCHAIN_EXTERNAL_PREFIX
 	default "arm-linux-gnueabihf"	 if BR2_TOOLCHAIN_EXTERNAL_LINARO_2013_06
 	default "arm-linux-gnueabihf"	 if BR2_TOOLCHAIN_EXTERNAL_LINARO_2013_05
 	default "arm-linux-gnueabihf"	 if BR2_TOOLCHAIN_EXTERNAL_LINARO_2013_04
+	default "arm-linux-gnueabi"     if BR2_TOOLCHAIN_EXTERNAL_LINARO_2012_03
 	default "arm-none-linux-gnueabi" if BR2_TOOLCHAIN_EXTERNAL_CODESOURCERY_ARM201109
 	default "arm-none-linux-gnueabi" if BR2_TOOLCHAIN_EXTERNAL_CODESOURCERY_ARM201203
 	default "arm-none-linux-gnueabi" if BR2_TOOLCHAIN_EXTERNAL_CODESOURCERY_ARM201305
@@ -887,7 +904,8 @@ config BR2_TOOLCHAIN_EXTERNAL_UCLIBC
 
 config BR2_TOOLCHAIN_EXTERNAL_LINARO_GCONV
 	bool "Copy GCONV libraries to target"
-	depends on BR2_TOOLCHAIN_EXTERNAL_LINARO_2013_04 \
+	depends on BR2_TOOLCHAIN_EXTERNAL_LINARO_2012_03 \
+		  || BR2_TOOLCHAIN_EXTERNAL_LINARO_2013_04 \
 		  || BR2_TOOLCHAIN_EXTERNAL_LINARO_2013_05 \
 		  || BR2_TOOLCHAIN_EXTERNAL_LINARO_2013_06 \
 		  || BR2_TOOLCHAIN_EXTERNAL_LINARO_2013_07 \
