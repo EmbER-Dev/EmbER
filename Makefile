@@ -355,6 +355,13 @@ TARGETS+=target-generatelocales
 endif
 endif
 
+# For setting password, has to be called before filesystem is made
+# and after overlay files are copied
+ROOT_PWD := $(call qstrip,$(BR2_TARGET_GENERIC_ROOT_PASSWD))
+ifneq ($(ROOT_PWD),)
+TARGETS+=target-makepassword
+endif
+
 ifeq ($(BR2_ECLIPSE_REGISTER),y)
 TARGETS+=toolchain-eclipse-register
 endif
@@ -571,6 +578,25 @@ target-generatelocales: host-localedef
 			$${locale} ; \
 	done
 endif
+
+###
+# Setting root password
+#
+# We have to do this that way because shadow gets overwritten
+# on each make (overlay files copy)
+###
+
+TARGET_ROOT_PASSWD := $(call qstrip,$(BR2_TARGET_GENERIC_ROOT_PASSWD))
+TARGET_PASSWD_METHOD := $(call qstrip,$(BR2_TARGET_GENERIC_PASSWD_METHOD))
+ifneq ($(TARGET_ROOT_PASSWD),)
+TARGET_ROOT_PASSWD_HASH = $(shell mkpasswd -m "$(TARGET_PASSWD_METHOD)" "$(TARGET_ROOT_PASSWD)")
+
+target-makepassword:
+	$(SED) 's,^root:[^:]*:,root:$(TARGET_ROOT_PASSWD_HASH):,' $(TARGET_DIR)/etc/shadow
+
+endif
+
+### Setting root password
 
 target-post-image:
 	@$(foreach s, $(call qstrip,$(BR2_ROOTFS_POST_IMAGE_SCRIPT)), \
