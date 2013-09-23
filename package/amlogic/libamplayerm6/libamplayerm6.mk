@@ -4,7 +4,7 @@
 #
 #############################################################
 LIBAMPLAYERM6_VERSION=5b1324b964c7f289d0ac05cb69b937d3d9c9cf55
-LIBAMPLAYERM6_SITE=git://github.com/wjb/libamplayer-m6.git
+LIBAMPLAYERM6_SITE=git://github.com/CoreTech-Development/libamplayer-m6.git
 LIBAMPLAYERM6_INSTALL_STAGING=YES
 LIBAMPLAYERM6_INSTALL_TARGET=YES
 LIBAMPLAYERM6_SITE_METHOD=git
