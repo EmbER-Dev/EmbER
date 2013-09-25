@@ -286,6 +286,10 @@ config BR2_BOARD_TYPE_AMLOGIC_M6
 	bool "Amlogic Board M6/MX"
 	default n
 
+config BR2_BOARD_TYPE_AMLOGIC_M3
+	bool "Amlogic Board M3"
+	default n
+
 choice
 	prompt "strip command for binaries on target"
 	default BR2_STRIP_strip
