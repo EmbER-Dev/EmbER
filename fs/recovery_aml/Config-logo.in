@@ -1,0 +1,34 @@
+
+menu "Boot logo options" 
+
+config BR2_TARGET_ROOTFS_RECOVERY_AML_LOGO
+       string "Bootloader logo (Windows bitmap, up to 1280x720px)
+       depends on BR2_TARGET_ROOTFS_RECOVERY_AML
+       default ""
+       help
+	  Replaces default black logo which is shown on boot.
+
+config BR2_TARGET_ROOTFS_RECOVERY_AML_IMGPACK
+      bool "Use imgpack tool to pack images that will be stored to logo partition
+      depends on BR2_BOARD_TYPE_AMLOGIC_M6
+      help
+	Logo partition is newly introduced partition used on MX U-Boot. It stores
+	packed bitmap images
+
+config BR2_TARGET_ROOTFS_RECOVERY_AML_IMGPACK_CUSTOM
+      string "Specify path to custom img_pack folder"
+      depends on BR2_TARGET_ROOTFS_RECOVERY_AML_IMGPACK
+      default ""
+      help
+	Custom images for Logo partition. For reference see fs/recovery_aml/img_pack.
+	We should only be interested in changing 'bootup' file, which is basically
+	Windows Bitmap file format with resolution 1280x720px or 1920x1080px
+
+config BR2_TARGET_ROOTFS_RECOVERY_RECOVERY_IMG
+       string "Flash recovery image using file specified"
+       depends on BR2_TARGET_ROOTFS_RECOVERY_AML
+       default ""
+       help
+	  Flash selected recovery image
+
+endmenu

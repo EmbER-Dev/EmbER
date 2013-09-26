@@ -1,0 +1,51 @@
+
+menu "Advanced options"
+      depends on BR2_TARGET_ROOTFS_RECOVERY_AML
+
+choice
+      prompt "Memory type"
+      default BR2_TARGET_ROOTFS_RECOVERY_AML_ADV_EMMC if BR2_BOARD_TYPE_AMLOGIC_M6
+      default BR2_TARGET_ROOTFS_RECOVERY_AML_ADV_MTD if BR2_BOARD_TYPE_AMLOGIC_M3
+      
+config BR2_TARGET_ROOTFS_RECOVERY_AML_ADV_EMMC
+      bool "EMMC"
+      
+config BR2_TARGET_ROOTFS_RECOVERY_AML_ADV_MTD
+      bool "MTD"
+
+endchoice
+
+choice
+     prompt "File system for system and data partition"
+     default BR2_TARGET_ROOTFS_RECOVERY_AML_ADV_FS_EXT4 if BR2_BOARD_TYPE_AMLOGIC_M6
+     default BR2_TARGET_ROOTFS_RECOVERY_AML_ADV_FS_YAFFS2 if BR2_BOARD_TYPE_AMLOGIC_M3
+     
+config BR2_TARGET_ROOTFS_RECOVERY_AML_ADV_FS_EXT4
+     bool "ext4"
+
+config BR2_TARGET_ROOTFS_RECOVERY_AML_ADV_FS_YAFFS2
+     bool "yaffs2"
+
+endchoice
+
+config BR2_TARGET_ROOTFS_RECOVERY_AML_ADV_PATH_SYSTEM
+      string "Path to system partition in recovery"
+      default "/dev/block/system" if BR2_BOARD_TYPE_AMLOGIC_M6
+      default "system" if BR2_BOARD_TYPE_AMLOGIC_M3
+
+config BR2_TARGET_ROOTFS_RECOVERY_AML_ADV_PATH_DATA
+      string "Path to data (userdata) partition in recovery"
+      default "/dev/block/data" if BR2_BOARD_TYPE_AMLOGIC_M6
+      default "userdata" if BR2_BOARD_TYPE_AMLOGIC_M3
+
+config BR2_TARGET_ROOTFS_RECOVERY_AML_ADV_NFTL
+      bool "Board have NFTL (media) partition"
+      default n if BR2_BOARD_TYPE_AMLOGIC_M6
+      default y if BR2_BOARD_TYPE_AMLOGIC_M3
+      
+config BR2_TARGET_ROOTFS_RECOVERY_AML_ADV_NFTL_PATH
+      string "Path to NFTL (media) partition"
+      depends on BR2_TARGET_ROOTFS_RECOVERY_AML_ADV_NFTL
+      default "/dev/block/avnftl4"
+
+endmenu

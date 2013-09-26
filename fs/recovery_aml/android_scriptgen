@@ -162,6 +162,20 @@ def main():
                       help=" wipe userdata partition during install if previous linux install")
   parser.add_option("-b", "--boardname", dest="boardname",
                       help=" check ro.product.board against boardname")
+  parser.add_option("-l", "--logo_partition", dest="logo_partition", action="store_true",
+                      help=" apply logo to logo partition")
+  parser.add_option("-r", "--recovery", dest="recovery", action="store_true",
+                      help=" install recovery.img file on recovery partition")
+  parser.add_option("-m", "--memory", dest="memory",
+                      help=" memory type, EMMC or MTD")
+  parser.add_option("-s", "--system-partition", dest="system_partition",
+                      help=" system partition location")
+  parser.add_option("-d", "--data-partition", dest="data_partition",
+                      help=" data partition location")
+  parser.add_option("-f", "--file-system", dest="file_system",
+                      help=" file system for system and data partitions")
+  parser.add_option("-n", "--nftl-partition", dest="nftl_partition",
+                      help=" NFTL partition location (does not have it if empty)")
   (options, args) = parser.parse_args()
 
   script = edify_generator.EdifyGenerator(3, OPTIONS.info_dict)
@@ -215,7 +229,7 @@ def main():
         f.write('show_progress(0.500000, 3);\n')
         f.write('ui_print("Installing MX Linux");\n')
         if options.wipeuserdataconditional:
-          f.write('mount("ext4", "EMMC", "/dev/block/system", "/system");\n')
+          f.write('mount("%s", "%s", "%s", "/system");\n' % (options.file_system, options.memory, options.system_partition))
           f.write('ifelse\n')
           f.write('(\n')
           f.write('  is_file_exist("system/etc/issue") != "file_not_exit",\n')
@@ -226,17 +240,17 @@ def main():
           f.write('  (\n')
           f.write('    ui_print("Wiping Userdata");\n')
           f.write('    unmount("/system");\n')
-          f.write('    format("ext4", "EMMC", "/dev/block/data", "0", "/data");\n')
+          f.write('    format("%s", "%s", "%s", "0", "/data");\n' % (options.file_system, options.memory, options.data_partition))
           f.write('  )\n')
           f.write(');\n')
         elif options.wipeuserdata:
-          f.write('format("ext4", "EMMC", "/dev/block/data", "0", "/data");\n')
+          f.write('format("%s", "%s", "%s", "0", "/data");\n' % (options.file_system, options.memory, options.data_partition))
         f.write('assert(package_extract_file("uImage", "/tmp/boot.img"),\n')
         f.write('    write_raw_image("/tmp/boot.img", "boot"),\n')
         f.write('    delete("/tmp/boot.img"));\n')
         f.write('show_progress(0.020000, 0);\n')
-        f.write('format("ext4", "EMMC", "/dev/block/system", "0", "/system");\n')
-        f.write('mount("ext4", "EMMC", "/dev/block/system", "/system");\n')
+        f.write('format("%s", "%s", "%s", "0", "/system");\n' % (options.file_system, options.memory, options.system_partition))
+        f.write('mount("%s", "%s", "%s", "/system");\n' % (options.file_system, options.memory, options.system_partition))
         f.write('show_progress(0.300000, 60);\n')
         f.write('ui_print("Copying Files");\n')
         f.write('package_extract_dir("system", "/system");\n')
@@ -244,21 +258,27 @@ def main():
         f.write('assert(package_extract_file("aml_logo.img", "/tmp/aml_logo.img"),\n')
         f.write('       write_raw_image("/tmp/aml_logo.img", "aml_logo"),\n')
         f.write('       delete("/tmp/aml_logo.img"));\n')
+        if options.logo_partition:
+          f.write('assert(package_extract_file("logo.img", "/tmp/logo.img"),\n')
+          f.write('       write_raw_image("/tmp/logo.img", "logo"),\n')
+          f.write('       delete("/tmp/logo.img"));\n')
+        if options.recovery:
+          f.write('assert(package_extract_file("recovery.img", "/tmp/recovery.img"),\n')
+          f.write('       write_raw_image("/tmp/recovery.img", "recovery"),\n')
+          f.write('       delete("/tmp/recovery.img"));\n')	  
         f.write('show_progress(0.018000, 0);\n')
         f.write('unmount("/system");\n')
-        f.write('set_bootloader_env("upgrade_step", "1");\n')
         f.write('ui_print("MX Linux Installed Successfully");\n')
-        f.write('show_progress(0.100000, 0);\n')
-        if options.boardname == "xiosm3" or options.boardname == "stvmc" or options.boardname == "f16ref" or options.boardname == "stvmx":
+        if options.nftl_partition != "none":
           f.write('ifelse\n')
           f.write('(\n')
-          f.write('  mount("vfat","none","/dev/block/avnftl4p1","/data"),\n')
+          f.write('  mount("vfat","none","%sp1","/data"),\n' % options.nftl_partition)
           f.write('  (\n')
           f.write('    unmount("/data");\n')
           f.write('  ),\n')
           f.write('  (\n')
-          f.write('    run_program("/sbin/sh","-c","/sbin/busybox fdisk /dev/block/avnftl4 < /etc/fdisk.media.cmd");\n')
-          f.write('    run_program("/sbin/busybox","mkfs.vfat","-n","Extra","/dev/block/avnftl4p1");\n')
+          f.write('    run_program("/sbin/sh","-c","/sbin/busybox fdisk %s < /etc/fdisk.media.cmd");\n' % options.nftl_partition)
+          f.write('    run_program("/sbin/busybox","mkfs.vfat","-n","Extra","%sp1");\n' % options.nftl_partition)
           f.write('  )\n')
           f.write(');\n')
         f.close()

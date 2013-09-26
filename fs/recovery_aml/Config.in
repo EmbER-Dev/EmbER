@@ -1,7 +1,7 @@
 config BR2_TARGET_ROOTFS_RECOVERY_AML
 	bool "AMLogic Recovery Image"
-	select BR2_TARGET_ROOTFS_TAR_AML
-	select BR2_PACKAGE_RECOVERY_REBOOT
+        select BR2_TARGET_ROOTFS_TAR_AML
+        select BR2_PACKAGE_RECOVERY_REBOOT
 	help
 	  Image ready for flashing via android's recovery partition
 
@@ -9,50 +9,47 @@ config BR2_TARGET_ROOTFS_RECOVERY_AML_BOARDNAME
 	string "default_name"
 	depends on BR2_TARGET_ROOTFS_RECOVERY_AML
 	help
-	  Name of the Android board (ro.product.board)
+	 Name of the Android board (ro.product.board)
 
 choice
-	prompt "Update package file name"
-	default BR2_TARGET_ROOTFS_RECOVERY_AML_UPDATE_ZIP_NAME_FULL_DATETIME
-	depends on BR2_TARGET_ROOTFS_RECOVERY_AML
-	help
-	  Choose how update package will be named
+      prompt "Update package file name"
+      default BR2_TARGET_ROOTFS_RECOVERY_AML_UPDATE_ZIP_NAME_FULL_DATETIME
+      depends on BR2_TARGET_ROOTFS_RECOVERY_AML
+      help
+	Choose how update package will be named
 
 config BR2_TARGET_ROOTFS_RECOVERY_AML_UPDATE_ZIP_NAME_FULL_DATETIME
-	bool "Boardname-DDMMMYYYY-hhmmss-update.zip"
+      bool "Boardname-DDMMMYYYY-hhmmss-update.zip"
       
 config BR2_TARGET_ROOTFS_RECOVERY_AML_UPDATE_ZIP_NAME_SHORT_DATE
-	bool "Boardname-YYMMDD-update.zip
+      bool "Boardname-YYMMDD-update.zip
 
 config BR2_TARGET_ROOTFS_RECOVERY_AML_UPDATE_ZIP_NAME_BOARDNAME_UPDATE_ZIP
-	bool "Boardname-update.zip"
+      bool "Boardname-update.zip"
       
 config BR2_TARGET_ROOTFS_RECOVERY_AML_UPDATE_ZIP_NAME_UPDATE_ZIP
-	bool "update.zip"
-
-config BR2_TARGET_ROOTFS_RECOVERY_AML_UPDATE_ZIP_NAME_CUSTOM
-	bool "custom-update.zip"
+      bool "update.zip"
 
 endchoice
-
-config BR2_TARGET_ROOTFS_RECOVERY_AML_UPDATE_ZIP_NAME_CUSTOM_STRING
-	string "custom-update.zip"
-	depends on BR2_TARGET_ROOTFS_RECOVERY_AML_UPDATE_ZIP_NAME_CUSTOM
 
 choice
-	prompt "Erase Userdata"
-	default BR2_TARGET_ROOTFS_RECOVERY_AML_WIPE_USERDATA_CONDITIONAL
-	depends on BR2_TARGET_ROOTFS_RECOVERY_AML
-	help
-	  Whether to wipe the userdata partition
+        prompt "Erase Userdata"
+        default BR2_TARGET_ROOTFS_RECOVERY_AML_WIPE_USERDATA_CONDITIONAL
+        depends on BR2_TARGET_ROOTFS_RECOVERY_AML
+        help
+          Whether to wipe the userdata partition
 
 config BR2_TARGET_ROOTFS_RECOVERY_AML_WIPE_USERDATA_CONDITIONAL
-	bool "yes if previous install was not linux"
+       bool "yes if previous install was not linux"
 
 config BR2_TARGET_ROOTFS_RECOVERY_AML_WIPE_USERDATA
-	bool "yes"
+       bool "yes"
 
 config BR2_TARGET_ROOTFS_RECOVERY_AML_WIPE_USERDATA_NEVER
-	bool "no"
+       bool "no"
 
 endchoice
+
+source "fs/recovery_aml/Config-logo.in"
+
+source "fs/recovery_aml/Config-advanced.in"
