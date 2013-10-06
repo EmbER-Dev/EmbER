@@ -37,6 +37,7 @@ endef
 define TZDATA_INSTALL_TARGET_CMDS
 	mkdir -p $(TARGET_DIR)/usr/share/zoneinfo
 	cp -a $(@D)/_output/* $(TARGET_DIR)/usr/share/zoneinfo
+	cp -a $(@D)/*.tab $(TARGET_DIR)/usr/share/zoneinfo
 	cd $(TARGET_DIR)/usr/share/zoneinfo;    \
 	for zone in posix/*; do                 \
 	    ln -sfn "$${zone}" "$${zone##*/}";    \
