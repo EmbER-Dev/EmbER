@@ -160,7 +160,7 @@ def main():
                       help=" wipe userdata partition during install")
   parser.add_option("-c", "--wipe-userdata-conditional", dest="wipeuserdataconditional", action="store_true",
                       help=" wipe userdata partition during install if previous linux install")
-  parser.add_option("-b", "--boardname", dest="boardname",
+  parser.add_option("-b", "--boardnames", dest="boardnames",
                       help=" check ro.product.board against boardname")
   parser.add_option("-l", "--logo_partition", dest="logo_partition", action="store_true",
                       help=" apply logo to logo partition")
@@ -216,16 +216,19 @@ def main():
         print "Creating symlinks..."
         script.MakeSymlinks(symlinks)
         f = open(options.outputfile, 'w')
-        if options.boardname == "mx2ref" or options.boardname == "g18ref" or options.boardname == "g02ref":
-          f.write('assert(getprop("ro.build.product") == "mx2ref" ||\n')
-          f.write('       getprop("ro.product.device") == "mx2ref"||\n')
-          f.write('       getprop("ro.build.product") == "g18ref" ||\n')
-          f.write('       getprop("ro.product.device") == "g18ref"||\n')
-          f.write('       getprop("ro.build.product") == "g02ref" ||\n')
-          f.write('       getprop("ro.product.device") == "g02ref");\n')
+        if options.boardnames.find(" ") == -1:
+          f.write('assert(getprop("ro.build.product") == "%s" ||\n' % options.boardnames)
+          f.write('       getprop("ro.product.device") == "%s");\n' % options.boardnames)
         else:
-          f.write('assert(getprop("ro.build.product") == "%s" ||\n' % options.boardname)
-          f.write('       getprop("ro.product.device") == "%s");\n' % options.boardname)
+          f.write('assert(\n')
+          boards = options.boardnames.split()
+          for brdNo in xrange(len(boards)):
+            f.write('       getprop("ro.build.product") == "%s" ||\n' % boards[brdNo])
+            f.write('       getprop("ro.product.device") == "%s"'  % boards[brdNo])
+            if brdNo < len(boards)-1:
+              f.write(' ||\n')
+            else:
+              f.write(');\n')
         f.write('show_progress(0.500000, 3);\n')
         f.write('ui_print("Installing MX Linux");\n')
         if options.wipeuserdataconditional:

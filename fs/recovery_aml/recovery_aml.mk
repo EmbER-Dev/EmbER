@@ -6,7 +6,7 @@
 
 ROOTFS_RECOVERY_AML_DEPENDENCIES = linux rootfs-tar_aml host-python
 
-RECOVERY_AML_ARGS = -b $(BR2_TARGET_ROOTFS_RECOVERY_AML_BOARDNAME)
+RECOVERY_AML_ARGS = -b '$(BR2_TARGET_ROOTFS_RECOVERY_AML_BOARDNAME)'
 ifeq ($(BR2_TARGET_ROOTFS_RECOVERY_AML_WIPE_USERDATA),y)
   RECOVERY_AML_ARGS += -w
 endif
@@ -137,7 +137,7 @@ ROOTFS_RECOVERY_AML_CMD += \
     zip -m -q -r -y $(BINARIES_DIR)/aml_recovery/update-unsigned.zip $(ADDITIONAL_FILES) uImage META-INF system && \
     popd >/dev/null && \
     echo "Signing $(UPDATE_ZIP)..." && \
-    pushd fs/recovery_aml/ >/dev/null; java -Xmx1024m -jar signapk.jar -w testkey.x509.pem testkey.pk8 $(BINARIES_DIR)/aml_recovery/update-unsigned.zip $(BINARIES_DIR)/$(UPDATE_ZIP) && \
+    pushd fs/recovery_aml/ >/dev/null; java -Xmx1024m -jar signapk.jar -w testkey.x509.pem testkey.pk8 $(BINARIES_DIR)/aml_recovery/update-unsigned.zip '$(BINARIES_DIR)/$(UPDATE_ZIP)' && \
     rm -rf $(BINARIES_DIR)/aml_recovery; rm -f $(TARGET_DIR)/usr.sqsh
 
 $(eval $(call ROOTFS_TARGET,recovery_aml))
