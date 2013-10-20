@@ -6,11 +6,18 @@ config BR2_TARGET_ROOTFS_RECOVERY_AML
 	  Image ready for flashing via android's recovery partition
 
 config BR2_TARGET_ROOTFS_RECOVERY_AML_BOARDNAME
-	string "default_name"
+	string "board name(s)"
 	depends on BR2_TARGET_ROOTFS_RECOVERY_AML
 	help
 	  Name of the Android board(s) (ro.product.board)
 	  This option can contain multiple board names separated by space
+
+config BR2_TARGET_ROOTFS_RECOVERY_AML_UPDATE_ZIP_PREFIX
+      string "Update package file name prefix (overrides boardname)"
+      depends on BR2_TARGET_ROOTFS_RECOVERY_AML
+      help
+        Prefix to use for building update zip file name
+        Default is to use BR2_TARGET_ROOTFS_RECOVERY_AML_BOARDNAME
 
 choice
 	prompt "Update package file name"
