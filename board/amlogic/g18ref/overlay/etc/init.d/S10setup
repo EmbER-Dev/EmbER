@@ -38,6 +38,14 @@ if [ "X$1" = "Xstart" ]; then
   echo "S10setup: mount /data partition"
   mount -t ext4 $USERDATA /root
 
+  # Move existing data to new location (Compatibility fix for coming from older builds)
+  if [ -e /root/xios ]; then
+    echo "S10setup: Move userdata to correct location"
+    rm -rf /root/.xbmc
+    mv /root/xios/.xbmc /root/
+    sync
+  fi
+
   # Boot with performance, then switch to ondemand (kernel bug)
   CPU=/sys/devices/system/cpu
   for i in $CPU/cpu0/cpufreq $CPU/cpu1/cpufreq; do
