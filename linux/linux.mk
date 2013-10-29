@@ -160,8 +160,8 @@ $(if $(wildcard $(KERNEL_SOURCE_CONFIG)),,)
 KERNEL_SOURCE_CONFIG = $(LINUX_DIR)/customer/configs/$(call qstrip,$(BR2_LINUX_KERNEL_DEFCONFIG))_defconfig
 endif
 $(if $(wildcard $(KERNEL_SOURCE_CONFIG)),,$(fatal Kernel defconfig does not exist! Check your confguration!))
-ifeq ($(wildcard $(KERNEL_SOURCE_CONFIG)),,)
-KERNEL_SOURCE_CONFIG = $(LINUX_DIR)/customer/configs/$(call qstrip,$(BR2_LINUX_KERNEL_DEFCONFIG))_defconfig
+else ifeq ($(BR2_LINUX_KERNEL_USE_CUSTOM_CONFIG),y)
+KERNEL_SOURCE_CONFIG = $(BR2_LINUX_KERNEL_CUSTOM_CONFIG_FILE)
 endif
 
 define LINUX_CONFIGURE_CMDS
