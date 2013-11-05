@@ -11,9 +11,9 @@ List of actively maintained devices:
 
 G18REF/MX2REF (mx_linux_g18-mx2_defconfig)
 
-ATV1200 (mx_linux_atv1200_defconfig) {WIP}
+ATV106 (mx_linux_atv106_defconfig)
 
-ATV106 (mx_linux_atv106_defconfig) {WIP}
+ATV1200 (mx_linux_atv1200_defconfig) {WIP}
 
 C150 (mx_linux_c150_defconfig) {WIP}
 
