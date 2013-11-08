@@ -8,7 +8,6 @@
   </pvr>
 
   <hidesettings>
-    <setting>lookandfeel.soundskin</setting>
     <setting>videoplayer.rendermethod</setting>
     <setting>videoplayer.adjustrefreshrate</setting>
     <setting>videoplayer.pauseafterrefreshchange</setting>
