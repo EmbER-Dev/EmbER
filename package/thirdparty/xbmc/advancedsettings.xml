@@ -33,10 +33,7 @@
     <audiodelayrange>60</audiodelayrange>
   </video>
 
-  <!-- Fix HD playback issues -->
   <network>
-    <!-- 104857600B = 100MB x 3 = 300MB max buffer -->
-    <cachemembuffersize>104857600</cachemembuffersize>
     <!-- 144Mbit/s max network bandwidth -->
     <readbufferfactor>4.0</readbufferfactor>
     <!-- Allow caching for all network streams -->
