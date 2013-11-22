@@ -4,7 +4,7 @@
 #
 #################################################################################
 
-XBMC_VERSION = 743525a65867d6e7774d566b76f5e84cdf296656
+XBMC_VERSION = 9883333071f824de0e4b968af5ca310bcd987446
 XBMC_SITE_METHOD = git
 XBMC_SITE = git://github.com/CoreTech-Development/xbmc.git
 XBMC_INSTALL_STAGING = YES
@@ -13,7 +13,7 @@ XBMC_INSTALL_TARGET = YES
 XBMC_DEPENDENCIES = host-lzo host-sdl_image
 
 XBMC_CONF_OPT+= --enable-neon --enable-gles --disable-sdl --disable-x11 --disable-xrandr \
-  --disable-projectm --enable-debug --disable-joystick --with-cpu=cortex-a9 \
+  --disable-projectm --enable-debug --disable-joystick --with-cpu=cortex-a9 --enable-m6 \
   --enable-codec=amcodec
 ifneq ($(BR2_CCACHE),y)
 XBMC_CONF_OPT+= --disable-ccache
