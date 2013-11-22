@@ -3,7 +3,7 @@
 # libnfs
 #
 #############################################################
-LIBNFS_VERSION = 3d574b1eab581b59afce94a85853ec47e7ef404e
+LIBNFS_VERSION = 1e7a5136dec5673bd3612a06b11ce2afaf8cf31a
 LIBNFS_SITE = git://github.com/sahlberg/libnfs.git
 LIBNFS_INSTALL_STAGING = YES
 LIBNFS_INSTALL_TARGET = YES
