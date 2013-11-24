@@ -1,6 +1,0 @@
-config BR2_PACKAGE_LIBAMPLAYERM6
-        depends on BR2_BOARD_TYPE_AMLOGIC_M6
-        bool "libamplayerm6"
-        help
-          amlogic media player library for M6
-
