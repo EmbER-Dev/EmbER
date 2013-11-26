@@ -43,7 +43,7 @@ if [ "X$1" = "Xstart" ]; then
   CPU=/sys/devices/system/cpu
   for i in $CPU/cpu0/cpufreq $CPU/cpu1/cpufreq; do
     echo "S10setup: set cpu scaling governor"
-    echo "ondemand" > $i/scaling_governor
+    echo "lagfree" > $i/scaling_governor
     # If M1 or M3, limit to 600Mhz to keep audio hw from stalling
     echo "S10setup: set cpu scaling min/max"
     # This may not be necessacry for M6 devices (TODO: Test freq lower then 600Mhz on M6)
