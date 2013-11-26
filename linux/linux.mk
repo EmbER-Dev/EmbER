@@ -4,6 +4,10 @@
 #
 ################################################################################
 
+ifeq ($(BR2_PREBUILT_LINUX),y)
+include linux/linux.pre.mk
+else
+
 LINUX_VERSION = $(call qstrip,$(BR2_LINUX_KERNEL_VERSION))
 LINUX_LICENSE = GPLv2
 LINUX_LICENSE_FILES = COPYING
@@ -341,4 +345,5 @@ $(error No kernel configuration file specified, check your BR2_LINUX_KERNEL_CUST
 endif
 endif
 
+endif
 endif

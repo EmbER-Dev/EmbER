@@ -6,7 +6,9 @@ config BR2_LINUX_KERNEL
 	  Enable this option if you want to build a Linux kernel for
 	  your embedded device
 
-if BR2_LINUX_KERNEL
+source "linux/Config.pre.in"
+
+if BR2_LINUX_KERNEL && !BR2_PREBUILT_LINUX
 
 #
 # Version selection. We provide the choice between:
