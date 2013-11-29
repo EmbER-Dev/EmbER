@@ -4,23 +4,19 @@
 #
 
 xbmc_pre() {
-    if [ "X$1" = "Xstart" ]; then
-      if [ -f /root/.xbmc/S94xbmc-pre ]; then
-          echo "S94xbmc-pre:"
-          /root/.xbmc/S94xbmc-pre
-          echo "S94xbmc-pre: done"
-      fi
+    if [ -f /root/.xbmc/S94xbmc-pre ]; then
+        echo "S94xbmc-pre:"
+        /root/.xbmc/S94xbmc-pre
+        echo "S94xbmc-pre: done"
     fi
 }
 
 xbmc_post() {
-    if [ "X$1" = "Xstart" ]; then
-        if [ -f /root/.xbmc/S96xbmc-post ]; then
-            echo "S96xbmc-post:"
-            /root/.xbmc/S96xbmc-post
-            echo "S96xbmc-post: done"
-        fi
-    fi
+      if [ -f /root/.xbmc/S96xbmc-post ]; then
+          echo "S96xbmc-post:"
+          /root/.xbmc/S96xbmc-post
+          echo "S96xbmc-post: done"
+      fi
 }
 
 run_xbmc() {
