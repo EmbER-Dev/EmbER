@@ -167,7 +167,7 @@ def main():
   parser.add_option("-r", "--recovery", dest="recovery", action="store_true",
                       help=" install recovery.img file on recovery partition")
   parser.add_option("-m", "--memory", dest="memory",
-                      help=" memory type, EMMC or MTD")
+                      help=" memory type, EMMC or MTD or UBI")
   parser.add_option("-s", "--system-partition", dest="system_partition",
                       help=" system partition location")
   parser.add_option("-d", "--data-partition", dest="data_partition",

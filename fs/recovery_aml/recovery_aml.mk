@@ -87,15 +87,19 @@ endif
 # Memory type
 ifeq ($(BR2_TARGET_ROOTFS_RECOVERY_AML_ADV_EMMC),y)
 RECOVERY_AML_ARGS += -m EMMC
-else
+else ifeq ($(BR2_TARGET_ROOTFS_RECOVERY_AML_ADV_MTD),y)
 RECOVERY_AML_ARGS += -m MTD
+else
+RECOVERY_AML_ARGS += -m UBI
 endif
 
 # File system for system and data partitions
 ifeq ($(BR2_TARGET_ROOTFS_RECOVERY_AML_ADV_FS_EXT4),y)
 RECOVERY_AML_ARGS += -f ext4
-else
+else ifeq ($(BR2_TARGET_ROOTFS_RECOVERY_AML_ADV_FS_YAFFS2),y)
 RECOVERY_AML_ARGS += -f yaffs2
+else
+RECOVERY_AML_ARGS += -f ubifs
 endif
 
 # Path to system partition in recovery

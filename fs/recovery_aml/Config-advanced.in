@@ -13,6 +13,9 @@ config BR2_TARGET_ROOTFS_RECOVERY_AML_ADV_EMMC
 config BR2_TARGET_ROOTFS_RECOVERY_AML_ADV_MTD
       bool "MTD"
 
+config BR2_TARGET_ROOTFS_RECOVERY_AML_ADV_UBI
+      bool "UBI"
+
 endchoice
 
 choice
@@ -25,6 +28,9 @@ config BR2_TARGET_ROOTFS_RECOVERY_AML_ADV_FS_EXT4
 
 config BR2_TARGET_ROOTFS_RECOVERY_AML_ADV_FS_YAFFS2
      bool "yaffs2"
+
+config BR2_TARGET_ROOTFS_RECOVERY_AML_ADV_FS_UBIFS
+     bool "ubifs"
 
 endchoice
 
