@@ -3,7 +3,7 @@ menu "Boot logo options"
 
 config BR2_TARGET_ROOTFS_RECOVERY_AML_LOGO
        string "Bootloader logo (Windows bitmap, up to 1280x720px)"
-       depends on BR2_TARGET_ROOTFS_RECOVERY_AML
+       depends on BR2_TARGET_ROOTFS_RECOVERY_AML && !BR2_TARGET_ROOTFS_RECOVERY_AML_IMGPACK
        default ""
        help
 	  Replaces default black logo which is shown on boot.
