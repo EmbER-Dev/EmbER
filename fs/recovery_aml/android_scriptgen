@@ -258,7 +258,7 @@ def main():
         f.write('ui_print("Copying Files");\n')
         f.write('package_extract_dir("system", "/system");\n')
         f.write("\n".join(script.script) + "\n")
-        if options.logo_partition:
+        if options.logo_partition or options.boardnames == "stvmx":
           f.write('assert(package_extract_file("logo.img", "/tmp/logo.img"),\n')
           f.write('       write_raw_image("/tmp/logo.img", "logo"),\n')
           f.write('       delete("/tmp/logo.img"));\n')

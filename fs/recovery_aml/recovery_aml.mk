@@ -143,8 +143,13 @@ ROOTFS_RECOVERY_AML_CMD += \
     cp -f fs/recovery_aml/update-binary $(BINARIES_DIR)/aml_recovery/META-INF/com/google/android/ &&
 
 ifneq ($(BR2_TARGET_ROOTFS_RECOVERY_AML_IMGPACK),y)
+ifeq ($(strip $(BR2_TARGET_ROOTFS_RECOVERY_AML_BOARDNAME)),"stvmx")
+ROOTFS_RECOVERY_AML_CMD += \
+    cp -f $(AML_LOGO) $(BINARIES_DIR)/aml_recovery/logo.img &&
+else
 ROOTFS_RECOVERY_AML_CMD += \
     cp -f $(AML_LOGO) $(BINARIES_DIR)/aml_recovery/aml_logo.img &&
+endif
 endif
 
 ROOTFS_RECOVERY_AML_CMD += \
