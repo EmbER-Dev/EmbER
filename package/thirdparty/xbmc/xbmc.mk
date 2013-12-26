@@ -26,19 +26,7 @@ XBMC_DEPENDENCIES += libogg flac libmad libmpeg2 libogg \
   libmicrohttpd libssh2 boost fribidi ncurses pcre libnfs afpfs-ng \
   libplist libshairport libbluray libcec \
   readline expat libxml2 yajl samba libass opengl libusb-compat \
-  avahi udev tinyxml taglib18 libssh
-
-ifeq ($(BR2_PACKAGE_LIBAMPLAYERM1),y)
-XBMC_DEPENDENCIES += libamplayerm1
-endif
-
-ifeq ($(BR2_PACKAGE_LIBAMPLAYERM3),y)
-XBMC_DEPENDENCIES += libamplayerm3
-endif
-
-ifeq ($(BR2_PACKAGE_LIBAMPLAYERM6),y)
-XBMC_DEPENDENCIES += libamplayerm6
-endif
+  avahi udev tinyxml taglib18 libssh libamplayer
 
 ifneq ($(BR2_XBMC_REMOTE_CONF),)
 XBMC_REMOTE_CONF = $(BR2_XBMC_REMOTE_CONF)
