@@ -19,6 +19,9 @@ config BR2_TARGET_ROOTFS_RECOVERY_AML_UPDATE_ZIP_PREFIX
         Prefix to use for building update zip file name
         Default is to use BR2_TARGET_ROOTFS_RECOVERY_AML_BOARDNAME
 
+config BR2_TARGET_ROOTFS_RECOVERY_AML_UPDATE_IMG
+	bool "Create update.img instead of update.zip"
+
 choice
 	prompt "Update package file name"
 	default BR2_TARGET_ROOTFS_RECOVERY_AML_UPDATE_ZIP_NAME_FULL_DATETIME
@@ -27,24 +30,24 @@ choice
 	  Choose how update package will be named
 
 config BR2_TARGET_ROOTFS_RECOVERY_AML_UPDATE_ZIP_NAME_FULL_DATETIME
-	bool "Boardname-DDMMMYYYY-hhmmss-update.zip"
+	bool "Boardname-DDMMMYYYY-hhmmss-update.img/zip"
 
 config BR2_TARGET_ROOTFS_RECOVERY_AML_UPDATE_ZIP_NAME_SHORT_DATE
-	bool "Boardname-YYMMDD-update.zip"
+	bool "Boardname-YYMMDD-update.img/zip"
 
 config BR2_TARGET_ROOTFS_RECOVERY_AML_UPDATE_ZIP_NAME_BOARDNAME_UPDATE_ZIP
-	bool "Boardname-update.zip"
+	bool "Boardname-update.img/zip"
 
 config BR2_TARGET_ROOTFS_RECOVERY_AML_UPDATE_ZIP_NAME_UPDATE_ZIP
-	bool "update.zip"
+	bool "update.img/zip"
 
 config BR2_TARGET_ROOTFS_RECOVERY_AML_UPDATE_ZIP_NAME_CUSTOM
-	bool "custom-update.zip"
+	bool "custom-update.img/zip"
 
 endchoice
 
 config BR2_TARGET_ROOTFS_RECOVERY_AML_UPDATE_ZIP_NAME_CUSTOM_STRING
-	string "custom-update.zip"
+	string "custom-update.img/zip"
 	depends on BR2_TARGET_ROOTFS_RECOVERY_AML_UPDATE_ZIP_NAME_CUSTOM
 
 choice
