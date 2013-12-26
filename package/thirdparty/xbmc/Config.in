@@ -93,3 +93,31 @@ config BR2_XBMC_REMOTE_CONF
 	help
 	  File to copy to remote.conf in /etc/xbmc directory.
 
+menu "XBMC Power Options"
+	depends on BR2_PACKAGE_XBMC
+
+config BR2_XBMC_POWERDOWN
+	bool "Powerdown"
+	default y
+	help
+	  Enable Powerdown option.
+
+config BR2_XBMC_SUSPEND
+	bool "Suspend"
+	default n
+	help
+	  Enable Suspend option.
+
+config BR2_XBMC_HIBERNATE
+	bool "Hibernate"
+	default n
+	help
+	  Enable Hibernate option.
+
+config BR2_XBMC_REBOOT
+	bool "Reboot"
+	default y
+	help
+	  Enable Reboot option.
+
+endmenu
