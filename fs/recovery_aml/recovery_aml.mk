@@ -71,6 +71,17 @@ ifeq ($(BR2_TARGET_ROOTFS_RECOVERY_AML_UPDATE_ZIP_NAME_CUSTOM),y)
   UPDATE_ZIP = $(BR2_TARGET_ROOTFS_RECOVERY_AML_UPDATE_ZIP_NAME_CUSTOM_STRING)-update.$(UPDATE_FORMAT)
 endif
 
+# If we use imgpack, append ROOTFS_RECOVERY_AML_CMD with aditional commands
+ifeq ($(BR2_TARGET_ROOTFS_RECOVERY_AML_IMGPACK),y)
+
+ROOTFS_RECOVERY_AML_CMD += \
+    echo "Creating logo.img..." && \
+    fs/recovery_aml/imgpack -r $(RES_PACK) $(BINARIES_DIR)/aml_recovery/logo.img && 
+
+ADDITIONAL_FILES += " logo.img"
+
+else
+
 ifneq ($(strip $(BR2_TARGET_ROOTFS_RECOVERY_AML_LOGO)),"")
 AML_LOGO = $(BR2_TARGET_ROOTFS_RECOVERY_AML_LOGO)
 else
@@ -81,19 +92,14 @@ endif
 $(if $(wildcard $(AML_LOGO)),,$(fatal AML_LOGO=$(AML_LOGO), file does not exist.))
 
 # Aditional files to be included in package, by default only aml_logo.img
+ifeq ($(BR2_TARGET_ROOTFS_RECOVERY_AML_BOARDNAME),"stvmx")
+ADDITIONAL_FILES = logo.img
+else
 ADDITIONAL_FILES = aml_logo.img
+endif
 
 ROOTFS_RECOVERY_AML_CMD = \
     mkdir -p $(BINARIES_DIR)/aml_recovery/system &&
-
-# If we use imgpack, append ROOTFS_RECOVERY_AML_CMD with aditional commands
-ifeq ($(BR2_TARGET_ROOTFS_RECOVERY_AML_IMGPACK),y)
-
-ROOTFS_RECOVERY_AML_CMD += \
-    echo "Creating logo.img..." && \
-    fs/recovery_aml/imgpack -r $(RES_PACK) $(BINARIES_DIR)/aml_recovery/logo.img && 
-
-ADDITIONAL_FILES += " logo.img"
 endif
 
 ###### Advanced options ######
@@ -149,7 +155,7 @@ ROOTFS_RECOVERY_AML_CMD += \
     cp -f fs/recovery_aml/update-binary $(BINARIES_DIR)/aml_recovery/META-INF/com/google/android/ &&
 
 ifneq ($(BR2_TARGET_ROOTFS_RECOVERY_AML_IMGPACK),y)
-ifeq ($(strip $(BR2_TARGET_ROOTFS_RECOVERY_AML_BOARDNAME)),"stvmx")
+ifeq ($(BR2_TARGET_ROOTFS_RECOVERY_AML_BOARDNAME),"stvmx")
 ROOTFS_RECOVERY_AML_CMD += \
     cp -f $(AML_LOGO) $(BINARIES_DIR)/aml_recovery/logo.img &&
 else
