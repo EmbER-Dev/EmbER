@@ -11,13 +11,15 @@ List of actively maintained devices:
 
 G18REF/MX2REF (mx_linux_g18-mx2_defconfig)
 
-ATV106 (mx_linux_atv106_defconfig)
+G18REF/MX2REF --NewMTD-- (mx_linux_g18-mx2_newmtd_defconfig)
 
-ATV1200 (mx_linux_atv1200_defconfig) {WIP}
+GO2REFDONGLE (mx_linux_g02refDongle_defconfig) {WIP - No ETA}
 
-C150 (mx_linux_c150_defconfig) {WIP}
+STVMX (mx_linux_stvmx_defconfig) {WIP - ETA 2014}
 
-G02REF + More (TODO)
+ATV106 (mx_linux_atv106_defconfig) {WIP - No ETA}
+
+G02REF + C150 + Meson 3 + More (TODO)
 
 ===================================
-This readme was updated: 2013-09-21
+This readme was updated: 2013-12-25
