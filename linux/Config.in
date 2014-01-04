@@ -6,7 +6,9 @@ config BR2_LINUX_KERNEL
 	  Enable this option if you want to build a Linux kernel for
 	  your embedded device
 
-if BR2_LINUX_KERNEL
+source "linux/Config.pre.in"
+
+if BR2_LINUX_KERNEL && !BR2_PREBUILT_LINUX
 
 #
 # Version selection. We provide the choice between:
@@ -118,6 +120,9 @@ choice
 config BR2_LINUX_KERNEL_USE_DEFCONFIG
 	bool "Using a defconfig"
 
+config BR2_LINUX_KERNEL_USE_DEFCONFIG_NEW_SRC_STRUCT
+	bool "Using a defconfig (new source structure)"
+
 config BR2_LINUX_KERNEL_USE_CUSTOM_CONFIG
 	bool "Using a custom config file"
 
@@ -125,11 +130,11 @@ endchoice
 
 config BR2_LINUX_KERNEL_DEFCONFIG
 	string "Defconfig name"
-	depends on BR2_LINUX_KERNEL_USE_DEFCONFIG
+	depends on BR2_LINUX_KERNEL_USE_DEFCONFIG || BR2_LINUX_KERNEL_USE_DEFCONFIG_NEW_SRC_STRUCT
 	help
 	  Name of the kernel defconfig file to use, without the
-	  trailing _defconfig.  The defconfig is located in
-	  arch/<arch>/configs in the kernel tree.
+	  trailing _defconfig. The defconfig is located in the
+	  kernel tree.
 
 config BR2_LINUX_KERNEL_CUSTOM_CONFIG_FILE
 	string "Configuration file path"

@@ -1,0 +1,18 @@
+config BR2_ARM_AMLOGIC
+	bool "Support for Amlogic"
+	default n
+
+choice
+	prompt "Amlogic SoC Type"
+	depends on BR2_ARM_AMLOGIC
+
+config BR2_BOARD_TYPE_AMLOGIC_M1
+	bool "M1"
+
+config BR2_BOARD_TYPE_AMLOGIC_M3
+	bool "M3"
+
+config BR2_BOARD_TYPE_AMLOGIC_M6
+	bool "M6/MX"
+
+endchoice

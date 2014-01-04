@@ -291,6 +291,7 @@ endif
 
 if BR2_arm || BR2_armeb
 source "arch/Config.in.arm"
+source "arch/Config.in.aml"
 endif
 
 if BR2_aarch64

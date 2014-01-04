@@ -4,6 +4,10 @@
 #
 ################################################################################
 
+ifeq ($(BR2_PREBUILT_LINUX),y)
+include linux/linux.pre.mk
+else
+
 LINUX_VERSION = $(call qstrip,$(BR2_LINUX_KERNEL_VERSION))
 LINUX_LICENSE = GPLv2
 LINUX_LICENSE_FILES = COPYING
@@ -156,9 +160,12 @@ endef
 
 LINUX_POST_PATCH_HOOKS += LINUX_APPLY_PATCHES
 
-
 ifeq ($(BR2_LINUX_KERNEL_USE_DEFCONFIG),y)
 KERNEL_SOURCE_CONFIG = $(KERNEL_ARCH_PATH)/configs/$(call qstrip,$(BR2_LINUX_KERNEL_DEFCONFIG))_defconfig
+$(if $(wildcard $(KERNEL_SOURCE_CONFIG)),,$(fatal Kernel defconfig does not exist! Check your confguration!))
+else ifeq ($(BR2_LINUX_KERNEL_USE_DEFCONFIG_NEW_SRC_STRUCT),y)
+KERNEL_SOURCE_CONFIG = $(LINUX_DIR)/customer/configs/$(call qstrip,$(BR2_LINUX_KERNEL_DEFCONFIG))_defconfig
+$(if $(wildcard $(KERNEL_SOURCE_CONFIG)),,$(fatal Kernel defconfig does not exist! Check your confguration!))
 else ifeq ($(BR2_LINUX_KERNEL_USE_CUSTOM_CONFIG),y)
 KERNEL_SOURCE_CONFIG = $(BR2_LINUX_KERNEL_CUSTOM_CONFIG_FILE)
 endif
@@ -340,4 +347,5 @@ $(error No kernel configuration file specified, check your BR2_LINUX_KERNEL_CUST
 endif
 endif
 
+endif
 endif

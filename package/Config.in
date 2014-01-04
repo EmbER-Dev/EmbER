@@ -28,6 +28,12 @@ source "package/wavpack/Config.in"
 source "package/yavta/Config.in"
 endmenu
 
+# Thirdparty
+source "package/thirdparty/Config.in"
+
+# AMLogic libs and programs
+source "package/amlogic/Config.in"
+
 menu "Compressors and decompressors"
 source "package/bzip2/Config.in"
 if BR2_PACKAGE_BUSYBOX_SHOW_OTHERS

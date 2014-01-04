@@ -1,0 +1,19 @@
+#!/bin/sh
+
+if [ "X$1" = "Xstart" ]; then
+  # Init framebuffers
+  echo 1 > /sys/class/graphics/fb0/blank
+  echo 1 > /sys/class/graphics/fb1/blank
+  # Clear framebuffers
+  dd if=/dev/zero of=/dev/fb0 bs=1280 count=2880
+  dd if=/dev/zero of=/dev/fb1 bs=1280 count=2880
+  # Bugfix for M3/M6 kernel, init fb0 to 24 bpp first
+  # or the init to 32 bpp will not work
+  fbset -fb /dev/fb0 -g 1280 720 1280 1440 24
+  # Setup the default fb sizes, bbp and buffering
+  fbset -fb /dev/fb0 -g 1280 720 1280 1440 32
+  fbset -fb /dev/fb1 -g 1280 720 1280 1440 32
+  # Display splash image
+  lzopcat /usr/share/splash/starting.fb.lzo > /dev/fb0
+  echo 0 > /sys/class/graphics/fb0/blank
+fi

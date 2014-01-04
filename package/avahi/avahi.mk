@@ -80,8 +80,8 @@ AVAHI_CONF_OPT = --localstatedir=/var \
 		--with-distro=none \
 		$(if $(BR2_HAVE_DOCUMENTATION),--enable,--disable)-manpages \
 		$(if $(BR2_PACKAGE_AVAHI_AUTOIPD),--enable,--disable)-autoipd \
-		--with-avahi-user=default \
-		--with-avahi-group=default \
+		--with-avahi-user=root \
+		--with-avahi-group=root \
 		--with-autoipd-user=default \
 		--with-autoipd-group=default
 

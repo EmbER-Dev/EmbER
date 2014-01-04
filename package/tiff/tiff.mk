@@ -14,6 +14,7 @@ TIFF_CONF_OPT = \
 	--without-x \
 
 TIFF_DEPENDENCIES = host-pkgconf
+HOST_TIFF_DEPENDENCIES = host-zlib host-libjpeg
 
 TIFF_TOOLS_LIST =
 ifeq ($(BR2_PACKAGE_TIFF_TIFF2PDF),y)
@@ -84,3 +85,4 @@ define TIFF_INSTALL_TARGET_CMDS
 endef
 
 $(eval $(autotools-package))
+$(eval $(host-autotools-package))

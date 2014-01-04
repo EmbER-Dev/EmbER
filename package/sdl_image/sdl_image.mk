@@ -11,6 +11,8 @@ SDL_IMAGE_INSTALL_STAGING = YES
 SDL_IMAGE_LICENSE = zlib
 SDL_IMAGE_LICENSE_FILES = COPYING
 
+HOST_SDL_IMAGE_DEPENDENCIES=host-libpng host-sdl host-libjpeg host-tiff
+
 SDL_IMAGE_CONF_OPT = --with-sdl-prefix=$(STAGING_DIR)/usr \
 		--with-sdl-exec-prefix=$(STAGING_DIR)/usr \
 		--disable-sdltest \
@@ -32,6 +34,14 @@ SDL_IMAGE_CONF_OPT = --with-sdl-prefix=$(STAGING_DIR)/usr \
 		--enable-xpm=$(if $(BR2_PACKAGE_SDL_IMAGE_XPM),yes,no) \
 		--enable-xv=$(if $(BR2_PACKAGE_SDL_IMAGE_XV),yes,no) \
 
+HOST_SDL_IMAGE_CONF_OPT:=--with-sdl-prefix=$(HOST_DIR)/usr \
+                --with-sdl-exec-prefix=$(HOST_DIR)/usr \
+                --disable-sdltest \
+                --disable-static \
+                --disable-jpg-shared \
+                --disable-png-shared \
+                --disable-tif-shared 
+
 SDL_IMAGE_DEPENDENCIES = sdl \
 	$(if $(BR2_PACKAGE_SDL_IMAGE_JPEG),jpeg) \
 	$(if $(BR2_PACKAGE_SDL_IMAGE_PNG),libpng) \
@@ -39,3 +49,5 @@ SDL_IMAGE_DEPENDENCIES = sdl \
 	$(if $(BR2_PACKAGE_SDL_IMAGE_WEBP),webp)
 
 $(eval $(autotools-package))
+$(eval $(host-autotools-package))
+

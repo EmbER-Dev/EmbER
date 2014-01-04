@@ -1,0 +1,2 @@
+LIRCD_OPTS="-d /dev/lirc0 -o /dev/lircd /etc/lirc/lircd.conf"
+

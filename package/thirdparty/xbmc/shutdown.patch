@@ -1,0 +1,13 @@
+diff --git a/addons/skin.confluence/720p/Home.xml b/addons/skin.confluence/720p/Home.xml
+index 1eb6bd6..0b69bea 100644
+--- a/addons/skin.confluence/720p/Home.xml
++++ b/addons/skin.confluence/720p/Home.xml
+@@ -1064,7 +1064,7 @@
+ 				<label>31003</label>
+ 				<font>-</font>
+ 				<aligny>-</aligny>
+-				<onclick>ActivateWindow(ShutdownMenu)</onclick>
++				<onclick>XBMC.Shutdown()</onclick>
+ 				<texturefocus border="5">floor_buttonFO.png</texturefocus>
+ 				<texturenofocus border="5">floor_button.png</texturenofocus>
+ 				<onleft>21</onleft>

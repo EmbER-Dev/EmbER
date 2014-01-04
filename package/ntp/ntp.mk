@@ -16,6 +16,7 @@ endif
 
 NTP_CONF_OPT = --with-shared \
 		--program-transform-name=s,,, \
+		--enable-clockctl \
 		--disable-tickadj
 
 ifeq ($(BR2_PACKAGE_OPENSSL),y)

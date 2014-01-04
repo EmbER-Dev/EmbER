@@ -3,7 +3,7 @@ NTPSERVERS="pool.ntp.org"
 
 # Get initial time via ntpdate?
 NTPDATE=no
-NTPDATE_OPTS="-t 5"
+NTPDATE_OPTS="-t 2 -p 1"
 
 # Start the ntp daemon?
 NTPD=yes

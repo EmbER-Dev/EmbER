@@ -1,0 +1,17 @@
+<keymap>
+  <global>
+    <keyboard>
+      <n>XBMC.ActivateWindow(MyMusic)</n>
+      <a>XBMC.ActivateWindow(Settings)</a>
+      <y>XBMC.RunScript(script.globalsearch)</y>
+      <f1>XBMC.ActivateWindow(MyPictures)</f1>
+      <f9>XBMC.ActivateWindow(SystemSettings)</f9>
+      <f10>XBMC.ActivateWindow(MyFiles)</f10>
+    </keyboard>
+  </global>
+  <FullscreenVideo>
+    <keyboard>
+      <g>AudioNextLanguage</g>
+    </keyboard>
+  </FullscreenVideo>
+</keymap>

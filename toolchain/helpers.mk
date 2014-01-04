@@ -83,6 +83,20 @@ copy_toolchain_lib_root = \
  \
 	echo -n
 
+# Function for Linaro toolchains that copies gconv libs to target
+# Expects 2 params:
+# $1: toolchain root
+# $2: Linaro toolchain prefix, based on that we can locate gconv folder if it exists
+copy_toolchain_gconv = \
+	BASE_DIR="$(strip $1)"; \
+	LINARO_PREFIX="$(strip $2)"; \
+	if [ -d $${BASE_DIR}usr/lib/$${LINARO_PREFIX}/gconv ] ; then \
+	    mkdir -p $(TARGET_DIR)/usr/lib/gconv ; \
+	    cp -r $${BASE_DIR}usr/lib/$${LINARO_PREFIX}/gconv/* $(TARGET_DIR)/usr/lib/gconv ; \
+	fi; \
+ \
+	echo -n
+
 #
 # Copy the full external toolchain sysroot directory to the staging
 # dir. The operation of this function is rendered a little bit
