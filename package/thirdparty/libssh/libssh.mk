@@ -4,8 +4,8 @@
 #
 #################################################################################
 
-LIBSSH_VERSION = 0.5.2
-LIBSSH_SITE = http://www.libssh.org/files/0.5
+LIBSSH_VERSION = 0.5.5
+LIBSSH_SITE = http://git.libssh.org/projects/libssh.git/snapshot
 LIBSSH_INSTALL_STAGING = YES
 LIBSSH_TEMP_BUILDDIR=output/build/libssh-build
 LIBSSH_CONF_OPT += -DWITH_SERVER=OFF
