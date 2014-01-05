@@ -4,7 +4,7 @@
 #
 #################################################################################
 
-BOBLIGHT_VERSION = r458
+BOBLIGHT_VERSION = r478
 BOBLIGHT_SITE_METHOD = svn
 BOBLIGHT_SITE = http://boblight.googlecode.com/svn/trunk/
 BOBLIGHT_INSTALL_STAGING = YES
