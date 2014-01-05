@@ -12,28 +12,35 @@ XBMC_INSTALL_TARGET = YES
 
 XBMC_DEPENDENCIES = host-lzo host-sdl_image
 
-XBMC_CONF_OPT+= --enable-neon --enable-gles --disable-sdl --disable-x11 --disable-xrandr \
-  --disable-projectm --enable-debug --disable-joystick --with-cpu=cortex-a9 --enable-m6 \
-  --enable-codec=amcodec
+XBMC_CONF_OPT += --enable-neon --enable-gles --disable-sdl --disable-x11 --disable-xrandr \
+  --disable-projectm --enable-debug --disable-joystick --with-cpu=cortex-a9
+
+ifeq ($(BR2_ARM_AMLOGIC),y)
+XBMC_CONF_OPT += --enable-codec=amcodec
+endif
+
+ifeq ($(BR2_BOARD_TYPE_AMLOGIC_M6),y)
+XBMC_CONF_OPT += --enable-m6
+endif
 
 ifeq ($(BR2_XBMC_POWERDOWN),y)
-XBMC_CONF_OPT+= --enable-powerdown
+XBMC_CONF_OPT += --enable-powerdown
 endif
 
 ifeq ($(BR2_XBMC_SUSPEND),y)
-XBMC_CONF_OPT+= --enable-suspend
+XBMC_CONF_OPT += --enable-suspend
 endif
 
 ifeq ($(BR2_XBMC_HIBERNATE),y)
-XBMC_CONF_OPT+= --enable-hibernate
+XBMC_CONF_OPT += --enable-hibernate
 endif
 
 ifeq ($(BR2_XBMC_REBOOT),y)
-XBMC_CONF_OPT+= --enable-reboot
+XBMC_CONF_OPT += --enable-reboot
 endif
 
 ifneq ($(BR2_CCACHE),y)
-XBMC_CONF_OPT+= --disable-ccache
+XBMC_CONF_OPT += --disable-ccache
 endif
 
 XBMC_DEPENDENCIES += flac libmad libmpeg2 libogg \
@@ -43,7 +50,11 @@ XBMC_DEPENDENCIES += flac libmad libmpeg2 libogg \
   libmicrohttpd libssh2 boost fribidi ncurses pcre libnfs afpfs-ng \
   libplist libshairport libbluray libcec \
   readline expat libxml2 yajl samba libass opengl libusb-compat \
-  avahi udev tinyxml taglib18 libssh libamplayer
+  avahi udev tinyxml taglib18 libssh
+
+ifeq ($(BR2_ARM_AMLOGIC),y)
+XBMC_DEPENDENCIES += libamplayer
+endif
 
 ifneq ($(BR2_XBMC_REMOTE_CONF),)
 XBMC_REMOTE_CONF = $(BR2_XBMC_REMOTE_CONF)
