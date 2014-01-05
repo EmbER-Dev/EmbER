@@ -3,7 +3,7 @@
 # libplist
 #
 #############################################################
-LIBPLIST_VERSION = 1.6
+LIBPLIST_VERSION = 1.10
 LIBPLIST_SITE = http://cgit.sukimashita.com/libplist.git/snapshot
 LIBPLIST_SOURCE = libplist-$(LIBPLIST_VERSION).tar.gz
 LIBPLIST_DEPENDENCIES=libxml2
