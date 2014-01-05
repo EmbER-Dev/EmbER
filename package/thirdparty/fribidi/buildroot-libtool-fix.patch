@@ -1,0 +1,22 @@
+diff --git a/ltmain.sh b/ltmain.sh
+index a50a21a..689f1cd 100644
+--- a/ltmain.sh
++++ b/ltmain.sh
+@@ -2584,7 +2584,7 @@ func_infer_tag ()
+ 	# line option must be used.
+ 	if test -z "$tagname"; then
+ 	  func_echo "unable to infer tagged configuration"
+-	  func_fatal_error "specify a tag with '--tag'"
++	  func_fatal_error "specify a tag with \`--tag'"
+ #	else
+ #	  func_verbose "using $tagname tagged configuration"
+ 	fi
+@@ -4173,7 +4173,7 @@ func_mode_install ()
+ 	  # are installed into $libdir/../bin (currently, that works fine)
+ 	  # but it's something to keep an eye on.
+ 	  test "$inst_prefix_dir" = "$destdir" && \
+-	    func_fatal_error "error: cannot install '$file' to a directory not ending in $libdir"
++	    func_fatal_error "error: cannot install \`$file' to a directory not ending in $libdir"
+ 
+ 	  if test -n "$inst_prefix_dir"; then
+ 	    # Stick the inst_prefix_dir data into the link command.
