@@ -56,10 +56,22 @@ ifeq ($(BR2_ARM_AMLOGIC),y)
 XBMC_DEPENDENCIES += libamplayer
 endif
 
-ifneq ($(BR2_XBMC_REMOTE_CONF),)
-XBMC_REMOTE_CONF = $(BR2_XBMC_REMOTE_CONF)
+ifneq ($(BR2_XBMC_REMOTE_CONF),"")
+XBMC_REMOTE_CONF = $(call qstrip,$(BR2_XBMC_REMOTE_CONF)).conf
 else
 XBMC_REMOTE_CONF = remote.conf
+endif
+
+ifneq ($(BR2_XBMC_DEFAULT_SKIN),"")
+XBMC_DEFAULT_SKIN = skin.$(call qstrip,$(BR2_XBMC_DEFAULT_SKIN))
+else
+XBMC_DEFAULT_SKIN = skin.confluence
+endif
+
+ifneq ($(BR2_XBMC_SPLASH),"")
+XBMC_SPLASH_FILE = $(call qstrip,$(BR2_XBMC_SPLASH)).png
+else
+XBMC_SPLASH_FILE = package/thirdparty/xbmc/splash.png
 endif
 
 XBMC_CONF_ENV += PYTHON_VERSION="$(PYTHON_VERSION_MAJOR)"
@@ -84,14 +96,16 @@ define XBMC_INSTALL_ETC
   cp -f package/thirdparty/xbmc/variant.gbox.keyboard.xml $(TARGET_DIR)/usr/share/xbmc/system/keymaps/
 endef
 
-ifneq ($(XBMC_REMOTE_CONF),"")
 define XBMC_INSTALL_REMOTE_CONF
   cp -f package/thirdparty/xbmc/etc/xbmc/$(XBMC_REMOTE_CONF) $(TARGET_DIR)/etc/xbmc/remote.conf
 endef
-endif
+
+define XBMC_SET_DEFAULT_SKIN
+  sed -i '/#define DEFAULT_SKIN/c\#define DEFAULT_SKIN "$(XBMC_DEFAULT_SKIN)"' $(XBMC_DIR)/xbmc/settings/Settings.h
+endef
 
 define XBMC_INSTALL_SPLASH
-  cp -f package/thirdparty/xbmc/splash.png $(TARGET_DIR)/usr/share/xbmc/media/Splash.png
+  cp -f $(XBMC_SPLASH_FILE) $(TARGET_DIR)/usr/share/xbmc/media/Splash.png
 endef
 
 define XBMC_CLEAN_UNUSED_ADDONS
@@ -106,19 +120,29 @@ define XBMC_CLEAN_CONFLUENCE_SKIN
   find $(TARGET_DIR)/usr/share/xbmc/addons/skin.confluence/media -name *.jpg -delete
 endef
 
+define XBMC_REMOVE_CONFLUENCE_SKIN
+  rm -rf $(TARGET_DIR)/usr/share/xbmc/addons/skin.confluence
+endef
+
 define XBMC_STRIP_BINARIES
   find $(TARGET_DIR)/usr/lib/xbmc/ -name "*.so" -exec $(STRIPCMD) $(STRIP_STRIP_UNNEEDED) {} \;
   $(STRIPCMD) $(STRIP_STRIP_UNNEEDED) $(TARGET_DIR)/usr/lib/xbmc/xbmc.bin
 endef
 
+XBMC_PRE_CONFIGURE_HOOKS += XBMC_SET_DEFAULT_SKIN
 XBMC_PRE_CONFIGURE_HOOKS += XBMC_BOOTSTRAP
 XBMC_POST_INSTALL_TARGET_HOOKS += XBMC_INSTALL_ETC
 XBMC_POST_INSTALL_TARGET_HOOKS += XBMC_INSTALL_SPLASH
 XBMC_POST_INSTALL_TARGET_HOOKS += XBMC_CLEAN_UNUSED_ADDONS
 XBMC_POST_INSTALL_TARGET_HOOKS += XBMC_CLEAN_CONFLUENCE_SKIN
 XBMC_POST_INSTALL_TARGET_HOOKS += XBMC_INSTALL_REMOTE_CONF
+
 ifneq ($(BR2_ENABLE_DEBUG),y)
 XBMC_POST_INSTALL_TARGET_HOOKS += XBMC_STRIP_BINARIES
+endif
+
+ifeq ($(BR2_XBMC_NO_CONFLUENCE),y)
+XBMC_POST_INSTALL_TARGET_HOOKS += XBMC_REMOVE_CONFLUENCE_SKIN
 endif
 
 $(eval $(call autotools-package))

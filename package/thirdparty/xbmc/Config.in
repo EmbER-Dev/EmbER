@@ -1,8 +1,6 @@
 config BR2_PACKAGE_XBMC
 	bool "xbmc"
 	depends on BR2_PACKAGE_UDEV
-	select BR2_PACKAGE_LIBAMPLAYER
-	select BR2_PACKAGE_AMREMOTE_CONFIG
 	select BR2_PACKAGE_ALSA_UTILS
 	select BR2_PACKAGE_ALSA_UTILS_ALSAMIXER
 	select BR2_PACKAGE_FLAC
@@ -79,22 +77,62 @@ config BR2_PACKAGE_XBMC
 	select BR2_PACKAGE_BOBLIGHT
 	select BR2_PACKAGE_XBMCPVR
 	select BR2_PACKAGE_LIBCEC
-	select BR2_PACKAGE_LIBAMPLAYERM3 if BR2_BOARD_TYPE_AMLOGIC_M3
-	select BR2_PACKAGE_LIBAMPLAYERM1 if BR2_BOARD_TYPE_AMLOGIC_M1
-	select BR2_PACKAGE_LIBAMPLAYERM6 if BR2_BOARD_TYPE_AMLOGIC_M6
+	select BR2_PACKAGE_LIBAMPLAYER if BR2_ARM_AMLOGIC
+	select BR2_PACKAGE_AMREMOTE_CONFIG if BR2_ARM_AMLOGIC
 	help
 	xbmc
 
 		http://xbmc.org
 
+menu "XBMC Options"
+	depends on BR2_PACKAGE_XBMC
+
+comment "XBMC Customization Options"
+
 config BR2_XBMC_REMOTE_CONF
-	string "XBMC Remote Configuration File"
+	string "Remote Configuration"
 	default ""
 	help
-	  File to copy to remote.conf in /etc/xbmc directory.
+	  This option will set the IR remote configuration.
 
-menu "XBMC Power Options"
-	depends on BR2_PACKAGE_XBMC
+	  NOTES:
+		- If this option is not set XBMC will use it's default remote configuration
+		- Selected configuration will be installed to /etc/xbmc/remote.conf
+		- Compiler will append ".conf" to end of file name
+
+config BR2_XBMC_SPLASH
+	string "Splash Screen"
+	default ""
+	help
+	  This option changes the boot splash.
+
+	  NOTES: 
+		- If this option is not set XBMC will use it's default splash
+		- Selected image should be 1280x720 and .PNG format
+		- Compiler will append ".png" to end of file name
+
+config BR2_XBMC_DEFAULT_SKIN
+	string "Default Skin"
+	default ""
+	help
+	  This option will set the default skin.
+
+	  Current choices:
+	  	- none
+
+	  NOTES: 
+		- If this option is not set XBMC will use confluence
+		- The set skin must exist in the source tree
+		- Compiler will append "skin." to begining of skin name
+
+config BR2_XBMC_NO_CONFLUENCE
+	bool "Don't install confluence skin"
+	depends on !BR2_XBMC_DEFAULT_SKIN=""
+	default n
+	help
+	  This option will remove confluence skin from XBMC.
+
+comment "XBMC Power Options"
 
 config BR2_XBMC_POWERDOWN
 	bool "Powerdown"
