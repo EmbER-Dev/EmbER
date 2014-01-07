@@ -116,10 +116,13 @@ endif
 # File system for system and data partitions
 ifeq ($(BR2_TARGET_ROOTFS_RECOVERY_AML_ADV_FS_EXT4),y)
 RECOVERY_AML_ARGS += -f ext4
+PARTITION_TYPE = ext4
 else ifeq ($(BR2_TARGET_ROOTFS_RECOVERY_AML_ADV_FS_YAFFS2),y)
 RECOVERY_AML_ARGS += -f yaffs2
+PARTITION_TYPE = yaffs2
 else
 RECOVERY_AML_ARGS += -f ubifs
+PARTITION_TYPE = ubifs
 endif
 
 # Path to system partition in recovery
@@ -149,6 +152,7 @@ endif
 
 ROOTFS_RECOVERY_AML_CMD += \
     tar -C $(BINARIES_DIR)/aml_recovery/system -xf $(BINARIES_DIR)/rootfs.tar && \
+    sed -i -f fs/recovery_aml/$(PARTITION_TYPE).sed $(BINARIES_DIR)/aml_recovery/system/etc/init.d/S10setup && \
     mkdir -p $(BINARIES_DIR)/aml_recovery/META-INF/com/google/android/ && \
     PYTHONDONTWRITEBYTECODE=1 $(HOST_DIR)/usr/bin/python fs/recovery_aml/android_scriptgen $(RECOVERY_AML_ARGS) -i -p $(BINARIES_DIR)/aml_recovery/system -o \
      $(BINARIES_DIR)/aml_recovery/META-INF/com/google/android/updater-script && \
