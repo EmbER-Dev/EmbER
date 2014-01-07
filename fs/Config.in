@@ -11,7 +11,9 @@ source "fs/romfs/Config.in"
 source "fs/squashfs/Config.in"
 source "fs/tar/Config.in"
 source "fs/ubifs/Config.in"
+if BR2_ARM_AMLOGIC
 source "fs/tar_aml/Config.in"
 source "fs/recovery_aml/Config.in"
+endif
 
 endmenu

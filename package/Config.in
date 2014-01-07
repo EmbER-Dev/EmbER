@@ -32,7 +32,9 @@ endmenu
 source "package/thirdparty/Config.in"
 
 # AMLogic libs and programs
+if BR2_ARM_AMLOGIC
 source "package/amlogic/Config.in"
+endif
 
 menu "Compressors and decompressors"
 source "package/bzip2/Config.in"
