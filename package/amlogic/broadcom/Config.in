@@ -1,0 +1,8 @@
+config BR2_PACKAGE_BROADCOM
+	bool "broadcom wifi"
+	default n
+	help
+	  This option will install FW and NVRAM files to support various
+	  broadcom wifi chips on Amlogic platforms.
+
+	  NOTE: The kernel side driver is required

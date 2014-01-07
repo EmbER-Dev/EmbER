@@ -5,4 +5,5 @@ source "package/amlogic/ubootaml/Config.in"
 source "package/amlogic/ubootf16ref/Config.in"
 source "package/amlogic/libamplayer/Config.in"
 source "package/amlogic/amremote_config/Config.in"
+source "package/amlogic/broadcom/Config.in"
 endmenu
