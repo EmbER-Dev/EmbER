@@ -20,13 +20,13 @@ define BROADCOM_INSTALL_TARGET_CMDS
  mkdir $(TARGET_DIR)/etc/wifi/ap6210
  mkdir $(TARGET_DIR)/etc/wifi/ap6330
  install -m 755 $(@D)/S60wifi $(TARGET_DIR)/etc/init.d
- install -m 644 $(@D)/firmware/4330/*.bin $(TARGET_DIR)/etc/wifi/4330
- install -m 644 $(@D)/firmware/40181/*.bin $(TARGET_DIR)/etc/wifi/40181
- install -m 644 $(@D)/firmware/40183/*.bin $(TARGET_DIR)/etc/wifi/40183
- install -m 644 $(@D)/firmware/ap62x2/*.bin $(TARGET_DIR)/etc/wifi/ap62x2
- install -m 644 $(@D)/firmware/ap6181/*.bin $(TARGET_DIR)/etc/wifi/ap6181
- install -m 644 $(@D)/firmware/ap6210/*.bin $(TARGET_DIR)/etc/wifi/ap6210
- install -m 644 $(@D)/firmware/ap6330/*.bin $(TARGET_DIR)/etc/wifi/ap6330
+ install -m 644 $(@D)/firmware/4330/* $(TARGET_DIR)/etc/wifi/4330
+ install -m 644 $(@D)/firmware/40181/* $(TARGET_DIR)/etc/wifi/40181
+ install -m 644 $(@D)/firmware/40183/* $(TARGET_DIR)/etc/wifi/40183
+ install -m 644 $(@D)/firmware/ap62x2/* $(TARGET_DIR)/etc/wifi/ap62x2
+ install -m 644 $(@D)/firmware/ap6181/* $(TARGET_DIR)/etc/wifi/ap6181
+ install -m 644 $(@D)/firmware/ap6210/* $(TARGET_DIR)/etc/wifi/ap6210
+ install -m 644 $(@D)/firmware/ap6330/* $(TARGET_DIR)/etc/wifi/ap6330
 endef
 
 $(eval $(call generic-package))
