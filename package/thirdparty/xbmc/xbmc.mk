@@ -71,7 +71,7 @@ endif
 ifneq ($(BR2_XBMC_SPLASH),"")
 XBMC_SPLASH_FILE = $(call qstrip,$(BR2_XBMC_SPLASH)).png
 else
-XBMC_SPLASH_FILE = package/thirdparty/xbmc/splash.png
+XBMC_SPLASH_FILE = package/thirdparty/xbmc/logos/splash.png
 endif
 
 XBMC_CONF_ENV += PYTHON_VERSION="$(PYTHON_VERSION_MAJOR)"

@@ -26,12 +26,11 @@ endif
 # Introduce imgpack
 ifeq ($(BR2_TARGET_ROOTFS_RECOVERY_AML_IMGPACK), y)
 
-# We set default folder for res_pack resources
-RES_PACK = fs/recovery_aml/res_pack
-
-# Change it if custom folder is specified
+# We set folder for res_pack resources
 ifneq ($(strip $(BR2_TARGET_ROOTFS_RECOVERY_AML_IMGPACK_CUSTOM)),"")
 RES_PACK = $(BR2_TARGET_ROOTFS_RECOVERY_AML_IMGPACK_CUSTOM)
+else
+RES_PACK = fs/recovery_aml/logos/mx_res_pack
 endif
 
 # Check if AML_IMGPACK folder exists
@@ -85,7 +84,7 @@ else
 ifneq ($(strip $(BR2_TARGET_ROOTFS_RECOVERY_AML_LOGO)),"")
 AML_LOGO = $(BR2_TARGET_ROOTFS_RECOVERY_AML_LOGO)
 else
-AML_LOGO = fs/recovery_aml/aml_logo.img
+AML_LOGO = fs/recovery_aml/logos/mx_logo.img
 endif
 
 # Check if AML_LOGO exists
