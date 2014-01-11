@@ -57,9 +57,27 @@ XBMC_DEPENDENCIES += libamplayer
 endif
 
 ifneq ($(BR2_XBMC_REMOTE_CONF),"")
-XBMC_REMOTE_CONF = $(call qstrip,$(BR2_XBMC_REMOTE_CONF)).conf
+XBMC_REMOTE_CONF = package/thirdparty/xbmc/remotes/$(call qstrip,$(BR2_XBMC_REMOTE_CONF)).conf
 else
-XBMC_REMOTE_CONF = remote.conf
+XBMC_REMOTE_CONF = package/thirdparty/xbmc/remotes/remote.conf
+endif
+
+ifneq ($(BR2_XBMC_KEYMAP),"")
+XBMC_KEYMAP = package/thirdparty/xbmc/keymaps/$(call qstrip,$(BR2_XBMC_KEYMAP)).xml
+else
+XBMC_KEYMAP = package/thirdparty/xbmc/keymaps/keyboard.xml
+endif
+
+ifneq ($(BR2_XBMC_ADV_SETTINGS),"")
+XBMC_ADV_SETTINGS = package/thirdparty/xbmc/settings/$(call qstrip,$(BR2_XBMC_ADV_SETTINGS)).xml
+else
+XBMC_ADV_SETTINGS = package/thirdparty/xbmc/settings/advancedsettings.xml
+endif
+
+ifneq ($(BR2_XBMC_GUI_SETTINGS),"")
+XBMC_GUI_SETTINGS = package/thirdparty/xbmc/settings/$(call qstrip,$(BR2_XBMC_GUI_SETTINGS)).xml
+else
+XBMC_GUI_SETTINGS = package/thirdparty/xbmc/settings/guisettings.xml
 endif
 
 ifneq ($(BR2_XBMC_DEFAULT_SKIN),"")
@@ -69,7 +87,7 @@ XBMC_DEFAULT_SKIN = skin.confluence
 endif
 
 ifneq ($(BR2_XBMC_SPLASH),"")
-XBMC_SPLASH_FILE = $(call qstrip,$(BR2_XBMC_SPLASH)).png
+XBMC_SPLASH_FILE = package/thirdparty/xbmc/logos/$(call qstrip,$(BR2_XBMC_SPLASH)).png
 else
 XBMC_SPLASH_FILE = package/thirdparty/xbmc/logos/splash.png
 endif
@@ -90,14 +108,20 @@ endef
 
 define XBMC_INSTALL_ETC
   cp -rf package/thirdparty/xbmc/etc $(TARGET_DIR)
-  cp -f package/thirdparty/xbmc/guisettings.xml $(TARGET_DIR)/usr/share/xbmc/system/
-  cp -f package/thirdparty/xbmc/advancedsettings.xml $(TARGET_DIR)/usr/share/xbmc/system/
-  cp -f package/thirdparty/xbmc/nobs.xml $(TARGET_DIR)/usr/share/xbmc/system/keymaps/
-  cp -f package/thirdparty/xbmc/variant.gbox.keyboard.xml $(TARGET_DIR)/usr/share/xbmc/system/keymaps/
+endef
+
+define XBMC_INSTALL_SETTINGS
+  cp -f $(XBMC_ADV_SETTINGS) $(TARGET_DIR)/usr/share/xbmc/system/advancedsettings.xml
+  cp -f $(XBMC_GUI_SETTINGS) $(TARGET_DIR)/usr/share/xbmc/system/guisettings.xml
+endef
+
+define XBMC_INSTALL_KEYMAP
+  cp -f $(KEYMAP) $(TARGET_DIR)/usr/share/xbmc/system/keymaps/
+  cp -f package/thirdparty/xbmc/keymaps/nobs.xml $(TARGET_DIR)/usr/share/xbmc/system/keymaps/
 endef
 
 define XBMC_INSTALL_REMOTE_CONF
-  cp -f package/thirdparty/xbmc/etc/xbmc/$(XBMC_REMOTE_CONF) $(TARGET_DIR)/etc/xbmc/remote.conf
+  cp -f $(XBMC_REMOTE_CONF) $(TARGET_DIR)/etc/xbmc/remote.conf
 endef
 
 define XBMC_SET_DEFAULT_SKIN
@@ -132,6 +156,8 @@ endef
 XBMC_PRE_CONFIGURE_HOOKS += XBMC_SET_DEFAULT_SKIN
 XBMC_PRE_CONFIGURE_HOOKS += XBMC_BOOTSTRAP
 XBMC_POST_INSTALL_TARGET_HOOKS += XBMC_INSTALL_ETC
+XBMC_POST_INSTALL_TARGET_HOOKS += XBMC_INSTALL_SETTINGS
+XBMC_POST_INSTALL_TARGET_HOOKS += XBMC_INSTALL_KEYMAP
 XBMC_POST_INSTALL_TARGET_HOOKS += XBMC_INSTALL_SPLASH
 XBMC_POST_INSTALL_TARGET_HOOKS += XBMC_CLEAN_UNUSED_ADDONS
 XBMC_POST_INSTALL_TARGET_HOOKS += XBMC_CLEAN_CONFLUENCE_SKIN

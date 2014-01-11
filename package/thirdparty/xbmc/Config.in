@@ -97,8 +97,45 @@ config BR2_XBMC_REMOTE_CONF
 
 	  NOTES:
 		- If this option is not set XBMC will use it's default remote configuration
-		- Selected configuration will be installed to /etc/xbmc/remote.conf
+		- Selected configuration will be installed to "/etc/xbmc/remote.conf"
+		- Remote configuration should be located in "package/thirdparty/xbmc/remotes"
 		- Compiler will append ".conf" to end of file name
+
+config BR2_XBMC_KEYMAP
+	string "Keymap"
+	default ""
+	help
+	  This option will set the keymap to be used.
+
+	  NOTES:
+		- If this option is not set XBMC will use it's default keymap
+		- Selected keymap will be installed to "/usr/share/xbmc/system/keymaps"
+		- Keymap should be located in "package/thirdparty/xbmc/keymaps"
+		- Compiler will append ".xml" to end of file name
+
+config BR2_XBMC_ADV_SETTINGS
+	string "Advanced settings"
+	default ""
+	help
+	  This option will set the advanced settings to be used.
+
+	  NOTES:
+		- If this option is not set XBMC will use it's default advanced settings
+		- Selected configuration will be installed to "/usr/share/xbmc/system/advancedsettings.xml"
+		- Remote configuration should be located in "package/thirdparty/xbmc/settings"
+		- Compiler will append ".xml" to end of file name
+
+config BR2_XBMC_GUI_SETTINGS
+	string "GUI settings"
+	default ""
+	help
+	  This option will set the GUI settings to be used.
+
+	  NOTES:
+		- If this option is not set XBMC will use it's default GUI settings
+		- Selected keymap will be installed to "/usr/share/xbmc/system/guisettings.xml"
+		- Keymap should be located in "package/thirdparty/xbmc/settings"
+		- Compiler will append ".xml" to end of file name
 
 config BR2_XBMC_SPLASH
 	string "Splash Screen"
@@ -109,6 +146,7 @@ config BR2_XBMC_SPLASH
 	  NOTES: 
 		- If this option is not set XBMC will use it's default splash
 		- Selected image should be 1280x720 and .PNG format
+		- Splash should be located in "package/thirdparty/xbmc/logos"
 		- Compiler will append ".png" to end of file name
 
 config BR2_XBMC_DEFAULT_SKIN
