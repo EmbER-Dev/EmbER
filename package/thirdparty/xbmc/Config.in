@@ -196,4 +196,32 @@ config BR2_XBMC_REBOOT
 	help
 	  Enable Reboot option.
 
+choice
+	prompt "Confluence GUI power button function"
+	default BR2_XBMC_SET_CONFLUENCE_POWER_BUTTON_MENU
+	depends on !BR2_XBMC_NO_CONFLUENCE
+	help
+	  This will set the function of the GUI power button
+
+config BR2_XBMC_SET_CONFLUENCE_POWER_BUTTON_MENU
+	bool "Power menu"
+
+config BR2_XBMC_SET_CONFLUENCE_POWER_BUTTON_POWERDOWN
+	bool "Powerdown"
+	depends on BR2_XBMC_POWERDOWN
+
+config BR2_XBMC_SET_CONFLUENCE_POWER_BUTTON_SUSPEND
+	bool "Suspend"
+	depends on BR2_XBMC_SUSPEND
+
+config BR2_XBMC_SET_CONFLUENCE_POWER_BUTTON_HIBERNATE
+	bool "Hibernate"
+	depends on BR2_XBMC_HIBERNATE
+
+config BR2_XBMC_SET_CONFLUENCE_POWER_BUTTON_REBOOT
+	bool "Reboot"
+	depends on BR2_XBMC_REBOOT
+
+endchoice
+
 endmenu

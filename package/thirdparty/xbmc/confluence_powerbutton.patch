@@ -7,7 +7,7 @@ index 1eb6bd6..0b69bea 100644
  				<font>-</font>
  				<aligny>-</aligny>
 -				<onclick>ActivateWindow(ShutdownMenu)</onclick>
-+				<onclick>XBMC.Shutdown()</onclick>
++				####Compiler will set function####
  				<texturefocus border="5">floor_buttonFO.png</texturefocus>
  				<texturenofocus border="5">floor_button.png</texturenofocus>
  				<onleft>21</onleft>

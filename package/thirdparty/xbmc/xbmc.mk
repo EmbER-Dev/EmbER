@@ -92,6 +92,18 @@ else
 XBMC_SPLASH_FILE = package/thirdparty/xbmc/logos/splash.png
 endif
 
+ifeq ($(BR2_XBMC_SET_CONFLUENCE_POWER_BUTTON_POWERDOWN),y)
+CONFLUENCE_POWER_BUTTON_FUNCTION = XBMC.Powerdown()
+else ifeq ($(BR2_XBMC_SET_CONFLUENCE_POWER_BUTTON_SUSPEND),y)
+CONFLUENCE_POWER_BUTTON_FUNCTION = XBMC.Suspend()
+else ifeq ($(BR2_XBMC_SET_CONFLUENCE_POWER_BUTTON_HIBERNATE),y)
+CONFLUENCE_POWER_BUTTON_FUNCTION = XBMC.Hibernate()
+else ifeq ($(BR2_XBMC_SET_CONFLUENCE_POWER_BUTTON_REBOOT),y)
+CONFLUENCE_POWER_BUTTON_FUNCTION = XBMC.Reset()
+else
+CONFLUENCE_POWER_BUTTON_FUNCTION = ActivateWindow(ShutdownMenu)
+endif
+
 XBMC_CONF_ENV += PYTHON_VERSION="$(PYTHON_VERSION_MAJOR)"
 XBMC_CONF_ENV += PYTHON_LDFLAGS="-L$(STAGING_DIR)/usr/lib/ -lpython$(PYTHON_VERSION_MAJOR) -lpthread -ldl -lutil -lm"
 XBMC_CONF_ENV += PYTHON_CPPFLAGS="-I$(STAGING_DIR)/usr/include/python$(PYTHON_VERSION_MAJOR)"
@@ -141,6 +153,10 @@ define XBMC_CLEAN_UNUSED_ADDONS
   rm -rf $(TARGET_DIR)/usr/share/xbmc/addons/visualization.itunes
 endef
 
+define XBMC_SET_CONFLUENCE_POWER_BUTTON
+  sed -i '/				####Compiler will set function####/c\				<onclick>$(CONFLUENCE_POWER_BUTTON_FUNCTION)</onclick>' $(TARGET_DIR)/usr/share/xbmc/addons/skin.confluence/720p/Home.xml
+endef
+
 define XBMC_CLEAN_CONFLUENCE_SKIN
   find $(TARGET_DIR)/usr/share/xbmc/addons/skin.confluence/media -name *.png -delete
   find $(TARGET_DIR)/usr/share/xbmc/addons/skin.confluence/media -name *.jpg -delete
@@ -171,6 +187,8 @@ endif
 
 ifeq ($(BR2_XBMC_NO_CONFLUENCE),y)
 XBMC_POST_INSTALL_TARGET_HOOKS += XBMC_REMOVE_CONFLUENCE_SKIN
+else
+XBMC_POST_INSTALL_TARGET_HOOKS += XBMC_SET_CONFLUENCE_POWER_BUTTON
 endif
 
 $(eval $(call autotools-package))
