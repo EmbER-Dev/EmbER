@@ -133,7 +133,9 @@ define XBMC_INSTALL_SPLASH
 endef
 
 define XBMC_CLEAN_UNUSED_ADDONS
+  rm -rf $(TARGET_DIR)/usr/share/xbmc/addons/screensaver.rsxs.euphoria
   rm -rf $(TARGET_DIR)/usr/share/xbmc/addons/screensaver.rsxs.plasma
+  rm -rf $(TARGET_DIR)/usr/share/xbmc/addons/screensaver.rsxs.solarwinds
   rm -rf $(TARGET_DIR)/usr/share/xbmc/addons/visualization.milkdrop
   rm -rf $(TARGET_DIR)/usr/share/xbmc/addons/visualization.projectm
   rm -rf $(TARGET_DIR)/usr/share/xbmc/addons/visualization.itunes
