@@ -128,11 +128,12 @@ define XBMC_INSTALL_SETTINGS
 endef
 
 define XBMC_INSTALL_KEYMAP
-  cp -f $(KEYMAP) $(TARGET_DIR)/usr/share/xbmc/system/keymaps/
+  cp -f $(XBMC_KEYMAP) $(TARGET_DIR)/usr/share/xbmc/system/keymaps/
   cp -f package/thirdparty/xbmc/keymaps/nobs.xml $(TARGET_DIR)/usr/share/xbmc/system/keymaps/
 endef
 
 define XBMC_INSTALL_REMOTE_CONF
+  mkdir -p $(TARGET_DIR)/etc/xbmc
   cp -f $(XBMC_REMOTE_CONF) $(TARGET_DIR)/etc/xbmc/remote.conf
 endef
 
