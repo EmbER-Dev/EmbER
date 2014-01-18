@@ -4,3 +4,40 @@ config BR2_PACKAGE_LIBAMPLAYER
         help
           amlogic media player library for M1/M3/M6
 
+choice
+	prompt "build type"
+	depends on BR2_PACKAGE_LIBAMPLAYER
+	default BR2_PACKAGE_LIBAMPLAYER_PREBUILT
+
+config BR2_PACKAGE_LIBAMPLAYER_PREBUILT
+	bool "prebuilt"
+	help
+	  Use prebuilt libamplayer included in source tree.
+
+config BR2_PACKAGE_LIBAMPLAYER_SOURCE
+	bool "source"
+	help
+	  Use a git or mercurial repo to build libamplayer from source.
+
+endchoice
+
+choice
+	prompt "repo type"
+	depends on BR2_PACKAGE_LIBAMPLAYER_SOURCE
+	default BR2_PACKAGE_LIBAMPLAYER_SOURCE_GIT
+
+config BR2_PACKAGE_LIBAMPLAYER_SOURCE_GIT
+	bool "git"
+
+config BR2_PACKAGE_LIBAMPLAYER_SOURCE_HG
+	bool "mercurial"
+
+endchoice
+
+config BR2_PACKAGE_LIBAMPLAYER_SOURCE_URL
+	string "repo url"
+	depends on BR2_PACKAGE_LIBAMPLAYER_SOURCE_GIT || BR2_PACKAGE_LIBAMPLAYER_SOURCE_HG
+
+config BR2_PACKAGE_LIBAMPLAYER_SOURCE_VERSION
+	string "repo version"
+	depends on BR2_PACKAGE_LIBAMPLAYER_SOURCE_GIT || BR2_PACKAGE_LIBAMPLAYER_SOURCE_HG
