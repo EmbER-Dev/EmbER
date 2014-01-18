@@ -3,7 +3,13 @@
 # opengl
 #
 #############################################################
+
+ifneq ($(BR2_BOARD_TYPE_AMLOGIC_M6),y)
+OPENGL_VERSION=apiv14
+else
 OPENGL_VERSION=apiv17
+endif
+
 OPENGL_SOURCE=opengl-$(OPENGL_VERSION).tar
 OPENGL_SITE=$(TOPDIR)/package/amlogic/opengl/
 OPENGL_SITE_METHOD=file
