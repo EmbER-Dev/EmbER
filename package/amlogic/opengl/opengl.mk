@@ -4,10 +4,20 @@
 #
 #############################################################
 
-ifneq ($(BR2_BOARD_TYPE_AMLOGIC_M6),y)
-OPENGL_VERSION=apiv14
-else
+# Set initial value to "none", if it stays that way, report an error
+OPENGL_VERSION=none
+
+ifeq ($(BR2_PACKAGE_OPENGL_API17),y)
 OPENGL_VERSION=apiv17
+endif
+
+ifeq ($(BR2_PACKAGE_OPENGL_API14),y)
+OPENGL_VERSION=apiv14
+endif
+
+# If API version is not selected, report an error
+ifeq ($(OPENGL_VERSION),none)
+$(fatal Error: No OpenGL version selected.)
 endif
 
 OPENGL_SOURCE=opengl-$(OPENGL_VERSION).tar
