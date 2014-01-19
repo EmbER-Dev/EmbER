@@ -11,6 +11,12 @@ ifdef DEBUG
 AMFFMPEG_CONF_OPT+= --enable-debug --disable-stripping
 endif
 
+ifdef BR2_ARM_EABIHF
+FLOAT = hard
+else
+FLOAT = softfp
+endif
+
 define AMFFMPEG_CONFIGURE_CMDS
 	(cd $(AMFFMPEG_DIR) && rm -rf config.cache && \
 	$(TARGET_CONFIGURE_OPTS) \
@@ -23,7 +29,7 @@ define AMFFMPEG_CONFIGURE_CMDS
 		--host-cc="$(HOSTCC)" \
 		--arch=$(BR2_ARCH) \
 		--prefix=/usr \
-		--extra-cflags="-mfloat-abi=hard -mfpu=neon -march=armv7-a $(AMFFMPEG_EXTRA_INCLUDES)" \
+		--extra-cflags="-mfloat-abi=$(FLOAT) -mfpu=neon -march=armv7-a $(AMFFMPEG_EXTRA_INCLUDES)" \
 		$(AMFFMPEG_EXTRA_LDFLAGS) \
 		$(AMFFMPEG_CONF_OPT) \
   )
