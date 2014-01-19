@@ -364,3 +364,5 @@ include package/pkg-download.mk
 include package/pkg-autotools.mk
 include package/pkg-cmake.mk
 include package/pkg-generic.mk
+include package/pkg-xbmc-addon.mk
+include package/pkg-xbmc-skin.mk

@@ -1,8 +1,20 @@
 config BR2_PACKAGE_OPENGL
 	bool "opengl"
 	help
-	  amlogic mali400 opengl driver.
+	  OpenGL framebuffer userspace drivers for Amlogic platform
 
-	  http://openlinux.amlogic.com
+choice
+	prompt "OpenGL version"
+	depends on BR2_PACKAGE_OPENGL && (BR2_BOARD_TYPE_AMLOGIC_M1 || BR2_BOARD_TYPE_AMLOGIC_M3 || BR2_BOARD_TYPE_AMLOGIC_M6)
+	default BR2_PACKAGE_OPENGL_API17 if BR2_BOARD_TYPE_AMLOGIC_M6
+	default BR2_PACKAGE_OPENGL_API14 if (BR2_BOARD_TYPE_AMLOGIC_M1 || BR2_BOARD_TYPE_AMLOGIC_M3)
 
+config BR2_PACKAGE_OPENGL_API14
+    bool "Mali 400 OpenGL API 14"
+    depends on !BR2_ARM_EABIHF
 
+config BR2_PACKAGE_OPENGL_API17
+    bool "Mali 400 OpenGL API 17"
+    depends on BR2_ARM_EABIHF
+
+endchoice
