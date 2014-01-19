@@ -1,0 +1,4 @@
+menu "XBMC skins"
+    depends on BR2_PACKAGE_XBMC
+
+endmenu

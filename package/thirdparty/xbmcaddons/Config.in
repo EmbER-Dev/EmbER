@@ -1,0 +1,9 @@
+menu "XBMC addons"
+    depends on BR2_PACKAGE_XBMC
+
+comment "XBMC services"
+
+comment "XBMC scripts"
+
+
+endmenu
