@@ -92,6 +92,24 @@ else
 XBMC_SPLASH_FILE = package/thirdparty/xbmc/logos/splash.png
 endif
 
+ifneq ($(BR2_XBMC_STARTING_FB),"")
+XBMC_STARTING_FB = package/thirdparty/xbmc/fb_splashs/$(call qstrip,$(BR2_XBMC_STARING_FB)).fb.lzo
+else
+XBMC_STARTING_FB = package/thirdparty/xbmc/fb_splashs/starting.fb.lzo
+endif
+
+ifneq ($(BR2_XBMC_STOPPING_FB),"")
+XBMC_STOPPING_FB = package/thirdparty/xbmc/fb_splashs/$(call qstrip,$(BR2_XBMC_STOPPING_FB)).fb.lzo
+else
+XBMC_STOPPING_FB = package/thirdparty/xbmc/fb_splashs/stopping.fb.lzo
+endif
+
+ifneq ($(BR2_XBMC_COMPLETE_FB),"")
+XBMC_COMPLETE_FB = package/thirdparty/xbmc/fb_splashs/$(call qstrip,$(BR2_XBMC_COMPLETE_FB)).fb.lzo
+else
+XBMC_COMPLETE_FB = package/thirdparty/xbmc/fb_splashs/complete.fb.lzo
+endif
+
 ifeq ($(BR2_XBMC_SET_CONFLUENCE_POWER_BUTTON_POWERDOWN),y)
 CONFLUENCE_POWER_BUTTON_FUNCTION = XBMC.Powerdown()
 else ifeq ($(BR2_XBMC_SET_CONFLUENCE_POWER_BUTTON_SUSPEND),y)
@@ -141,7 +159,11 @@ define XBMC_SET_DEFAULT_SKIN
   sed -i '/#define DEFAULT_SKIN/c\#define DEFAULT_SKIN "$(XBMC_DEFAULT_SKIN)"' $(XBMC_DIR)/xbmc/settings/Settings.h
 endef
 
-define XBMC_INSTALL_SPLASH
+define XBMC_INSTALL_SPLASHS
+  mkdir -p $(TARGET_DIR)/usr/share/splash
+  cp -f $(XBMC_STARTING_FB) $(TARGET_DIR)/usr/share/splash/starting.fb.lzo
+  cp -f $(XBMC_STOPPING_FB) $(TARGET_DIR)/usr/share/splash/stopping.fb.lzo
+  cp -f $(XBMC_COMPLETE_FB) $(TARGET_DIR)/usr/share/splash/complete.fb.lzo
   cp -f $(XBMC_SPLASH_FILE) $(TARGET_DIR)/usr/share/xbmc/media/Splash.png
 endef
 
@@ -177,7 +199,7 @@ XBMC_PRE_CONFIGURE_HOOKS += XBMC_BOOTSTRAP
 XBMC_POST_INSTALL_TARGET_HOOKS += XBMC_INSTALL_ETC
 XBMC_POST_INSTALL_TARGET_HOOKS += XBMC_INSTALL_SETTINGS
 XBMC_POST_INSTALL_TARGET_HOOKS += XBMC_INSTALL_KEYMAP
-XBMC_POST_INSTALL_TARGET_HOOKS += XBMC_INSTALL_SPLASH
+XBMC_POST_INSTALL_TARGET_HOOKS += XBMC_INSTALL_SPLASHS
 XBMC_POST_INSTALL_TARGET_HOOKS += XBMC_CLEAN_UNUSED_ADDONS
 XBMC_POST_INSTALL_TARGET_HOOKS += XBMC_CLEAN_CONFLUENCE_SKIN
 XBMC_POST_INSTALL_TARGET_HOOKS += XBMC_INSTALL_REMOTE_CONF

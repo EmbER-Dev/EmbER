@@ -149,6 +149,39 @@ config BR2_XBMC_SPLASH
 		- Splash should be located in "package/thirdparty/xbmc/logos"
 		- Compiler will append ".png" to end of file name
 
+config BR2_XBMC_STARTING_FB
+	string "Starting FB splash"
+	default ""
+	help
+	  This option changes the starting fb splash.
+
+	  NOTES: 
+		- If this option is not set XBMC will use it's default starting fb splash
+		- Splash should be located in "package/thirdparty/xbmc/fb_splashs"
+		- Compiler will append ".fb.lzo" to end of file name
+
+config BR2_XBMC_STOPPING_FB
+	string "Stopping FB splash"
+	default ""
+	help
+	  This option changes the stopping fb splash.
+
+	  NOTES: 
+		- If this option is not set XBMC will use it's default stopping fb splash
+		- Splash should be located in "package/thirdparty/xbmc/fb_splashs"
+		- Compiler will append ".fb.lzo" to end of file name
+
+config BR2_XBMC_COMPLETE_FB
+	string "Complete FB splash"
+	default ""
+	help
+	  This option changes the complete fb splash.
+
+	  NOTES: 
+		- If this option is not set XBMC will use it's default complete fb splash
+		- Splash should be located in "package/thirdparty/xbmc/fb_splashs"
+		- Compiler will append ".fb.lzo" to end of file name
+
 config BR2_XBMC_DEFAULT_SKIN
 	string "Default Skin"
 	default ""
