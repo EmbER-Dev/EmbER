@@ -73,9 +73,15 @@ endif
 # If we use imgpack, append ROOTFS_RECOVERY_AML_CMD with aditional commands
 ifeq ($(BR2_TARGET_ROOTFS_RECOVERY_AML_IMGPACK),y)
 
+ifeq ($(BR2_TARGET_ROOTFS_RECOVERY_AML_IMGPACK_1225),y)
+IMGPACK = imgpack-1225
+else
+IMGPACK = imgpack
+endif
+
 ROOTFS_RECOVERY_AML_CMD += \
     echo "Creating logo.img..." && \
-    fs/recovery_aml/imgpack -r $(RES_PACK) $(BINARIES_DIR)/aml_recovery/logo.img && 
+    fs/recovery_aml/$(IMGPACK) -r $(RES_PACK) $(BINARIES_DIR)/aml_recovery/logo.img && 
 
 ADDITIONAL_FILES += " logo.img"
 

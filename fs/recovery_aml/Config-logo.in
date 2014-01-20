@@ -15,6 +15,12 @@ config BR2_TARGET_ROOTFS_RECOVERY_AML_IMGPACK
 	Logo partition is newly introduced partition used on MX U-Boot. It stores
 	packed bitmap images
 
+config BR2_TARGET_ROOTFS_RECOVERY_AML_IMGPACK_1225
+      bool "Use 20131225 imgpack binary"
+      depends on BR2_TARGET_ROOTFS_RECOVERY_AML_IMGPACK
+      help
+	This option will make compiler use the 20131225 imgpack binary needed for new uboot's.
+
 config BR2_TARGET_ROOTFS_RECOVERY_AML_IMGPACK_CUSTOM
       string "Specify path to custom img_pack folder"
       depends on BR2_TARGET_ROOTFS_RECOVERY_AML_IMGPACK
