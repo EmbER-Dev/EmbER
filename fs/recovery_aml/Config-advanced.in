@@ -2,6 +2,18 @@
 menu "Advanced options"
       depends on BR2_TARGET_ROOTFS_RECOVERY_AML
 
+config BR2_TARGET_ROOTFS_RECOVERY_AML_APPEND_INITRD
+       string "Append init ramfs to kernel"
+       depends on BR2_BOARD_TYPE_AMLOGIC_M6
+       default ""
+       help
+         If path provided, initrd will be added to kernel.
+         
+         Note:
+         
+         If this option is used, you shall disable kernel command lines
+         and let kernel use uboot environment variables.
+
 choice
       prompt "Memory type"
       default BR2_TARGET_ROOTFS_RECOVERY_AML_ADV_EMMC if BR2_BOARD_TYPE_AMLOGIC_M6
