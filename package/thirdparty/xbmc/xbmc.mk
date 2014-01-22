@@ -93,7 +93,7 @@ XBMC_SPLASH_FILE = package/thirdparty/xbmc/logos/splash.png
 endif
 
 ifneq ($(BR2_XBMC_STARTING_FB),"")
-XBMC_STARTING_FB = package/thirdparty/xbmc/fb_splashs/$(call qstrip,$(BR2_XBMC_STARING_FB)).fb.lzo
+XBMC_STARTING_FB = package/thirdparty/xbmc/fb_splashs/$(call qstrip,$(BR2_XBMC_STARTING_FB)).fb.lzo
 else
 XBMC_STARTING_FB = package/thirdparty/xbmc/fb_splashs/starting.fb.lzo
 endif

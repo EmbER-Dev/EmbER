@@ -5,6 +5,7 @@
   <hidecpurev>1</hidecpurev>
   <hidecpuserial>1</hidecpuserial>
   <hidecputemp>1</hidecputemp>
+  <hidetotaluptime>1</hidetotaluptime>
   <showexitbutton>false</showexitbutton>
   <loglevel hide="false">2</loglevel>
 
