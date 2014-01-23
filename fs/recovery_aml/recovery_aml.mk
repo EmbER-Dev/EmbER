@@ -70,6 +70,9 @@ ifeq ($(BR2_TARGET_ROOTFS_RECOVERY_AML_UPDATE_ZIP_NAME_CUSTOM),y)
   UPDATE_ZIP = $(BR2_TARGET_ROOTFS_RECOVERY_AML_UPDATE_ZIP_NAME_CUSTOM_STRING)-update.$(UPDATE_FORMAT)
 endif
 
+ROOTFS_RECOVERY_AML_CMD = \
+    mkdir -p $(BINARIES_DIR)/aml_recovery/system &&
+
 # If we use imgpack, append ROOTFS_RECOVERY_AML_CMD with aditional commands
 ifeq ($(BR2_TARGET_ROOTFS_RECOVERY_AML_IMGPACK),y)
 
@@ -102,9 +105,6 @@ ADDITIONAL_FILES = logo.img
 else
 ADDITIONAL_FILES = aml_logo.img
 endif
-
-ROOTFS_RECOVERY_AML_CMD = \
-    mkdir -p $(BINARIES_DIR)/aml_recovery/system &&
 endif
 
 ###### Advanced options ######
