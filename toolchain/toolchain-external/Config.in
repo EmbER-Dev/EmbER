@@ -231,6 +231,21 @@ config BR2_TOOLCHAIN_EXTERNAL_CODESOURCERY_ARM201109
 	      Select BR2_SOFT_FLOAT
 	      Set BR2_TARGET_OPTIMIZATION to -mthumb
 
+config BR2_TOOLCHAIN_EXTERNAL_CODESOURCERY_ARM2010Q1
+        bool "CodeSourcery ARM 2010q1"
+        depends on BR2_arm
+        select BR2_TOOLCHAIN_EXTERNAL_GLIBC
+        select BR2_TOOLCHAIN_HAS_NATIVE_RPC
+	select BR2_INSTALL_LIBSTDCPP
+        help
+          Toolchain for the ARM architecture, from CodeSourcery. It
+          uses gcc 4.4.1, binutils 2.19, glibc 2.11, gdb 7.0.50 and
+          kernel headers 2.6.32. It has support for the following
+          variants:
+             - ARMv5T, little endian, soft-float, glibc
+             - ARMv4T, little endian, soft-float, glibc
+             - ARMv7-A, Thumb 2, little endian, soft-float, glibc
+
 comment "Sourcery CodeBench toolchains available for the EABI ABI"
 	depends on BR2_arm
 	depends on !BR2_ARM_EABI
@@ -919,6 +934,7 @@ config BR2_TOOLCHAIN_EXTERNAL_PREFIX
 	default "arm-linux-gnueabihf"    if BR2_TOOLCHAIN_EXTERNAL_LINARO_2013_05
 	default "arm-linux-gnueabihf"    if BR2_TOOLCHAIN_EXTERNAL_LINARO_2013_04
 	default "arm-linux-gnueabi"      if BR2_TOOLCHAIN_EXTERNAL_LINARO_2012_03
+	default "arm-none-linux-gnueabi" if BR2_TOOLCHAIN_EXTERNAL_CODESOURCERY_ARM2010Q1
 	default "arm-none-linux-gnueabi" if BR2_TOOLCHAIN_EXTERNAL_CODESOURCERY_ARM201109
 	default "arm-none-linux-gnueabi" if BR2_TOOLCHAIN_EXTERNAL_CODESOURCERY_ARM201203
 	default "arm-none-linux-gnueabi" if BR2_TOOLCHAIN_EXTERNAL_CODESOURCERY_ARM201305
