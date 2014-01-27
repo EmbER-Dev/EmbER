@@ -1,0 +1,13 @@
+--- a/src/udev-builtin-input_id.c   2011-10-09 17:10:32.000000000 -0600
++++ b/src/udev-builtin-input_id.c   2011-10-25 15:11:09.000000000 -0600
+@@ -30,6 +30,10 @@
+ #include "libudev.h"
+ #include "libudev-private.h"
+ 
++#ifndef BTN_TRIGGER_HAPPY
++#define BTN_TRIGGER_HAPPY 0x2c0
++#endif
++
+ /* we must use this kernel-compatible implementation */
+ #define BITS_PER_LONG (sizeof(unsigned long) * 8)
+ #define NBITS(x) ((((x)-1)/BITS_PER_LONG)+1)
