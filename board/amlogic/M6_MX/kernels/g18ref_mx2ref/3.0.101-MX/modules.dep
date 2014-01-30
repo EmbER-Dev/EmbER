@@ -6,7 +6,7 @@ kernel/drivers/media/common/tuners/tuner-xc2028.ko:
 kernel/drivers/media/common/tuners/tuner-simple.ko: kernel/drivers/media/common/tuners/tuner-types.ko
 kernel/drivers/media/common/tuners/tuner-types.ko:
 kernel/drivers/media/common/tuners/mt20xx.ko:
-kernel/drivers/media/common/tuners/tda8290.ko: kernel/drivers/media/common/tuners/tda18271.ko kernel/drivers/media/common/tuners/tda827x.ko
+kernel/drivers/media/common/tuners/tda8290.ko: kernel/drivers/media/common/tuners/tda827x.ko kernel/drivers/media/common/tuners/tda18271.ko
 kernel/drivers/media/common/tuners/tea5767.ko:
 kernel/drivers/media/common/tuners/tea5761.ko:
 kernel/drivers/media/common/tuners/tda9887.ko:
