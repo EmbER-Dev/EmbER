@@ -14,7 +14,7 @@ TIFF_CONF_OPT = \
 	--without-x \
 
 TIFF_DEPENDENCIES = host-pkgconf
-HOST_TIFF_DEPENDENCIES = host-zlib host-libjpeg
+HOST_TIFF_DEPENDENCIES = host-zlib host-jpeg-turbo
 
 TIFF_TOOLS_LIST =
 ifeq ($(BR2_PACKAGE_TIFF_TIFF2PDF),y)

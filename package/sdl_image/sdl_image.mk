@@ -11,7 +11,7 @@ SDL_IMAGE_INSTALL_STAGING = YES
 SDL_IMAGE_LICENSE = zlib
 SDL_IMAGE_LICENSE_FILES = COPYING
 
-HOST_SDL_IMAGE_DEPENDENCIES=host-libpng host-sdl host-libjpeg host-tiff
+HOST_SDL_IMAGE_DEPENDENCIES=host-libpng host-sdl host-jpeg-turbo host-tiff
 
 SDL_IMAGE_CONF_OPT = --with-sdl-prefix=$(STAGING_DIR)/usr \
 		--with-sdl-exec-prefix=$(STAGING_DIR)/usr \
