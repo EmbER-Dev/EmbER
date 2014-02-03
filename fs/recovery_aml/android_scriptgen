@@ -164,6 +164,8 @@ def main():
                       help=" check ro.product.board against boardname")
   parser.add_option("-l", "--logo_partition", dest="logo_partition", action="store_true",
                       help=" apply logo to logo partition")
+  parser.add_option("-u", "--bootloader", dest="bootloader", action="store_true",
+                      help=" install bootloader.img file on bootloader partition")
   parser.add_option("-r", "--recovery", dest="recovery", action="store_true",
                       help=" install recovery.img file on recovery partition")
   parser.add_option("-m", "--memory", dest="memory",
@@ -266,6 +268,10 @@ def main():
           f.write('assert(package_extract_file("aml_logo.img", "/tmp/aml_logo.img"),\n')
           f.write('       write_raw_image("/tmp/aml_logo.img", "aml_logo"),\n')
           f.write('       delete("/tmp/aml_logo.img"));\n')
+        if options.bootloader:
+          f.write('assert(package_extract_file("bootloader.img", "/tmp/bootloader.img"),\n')
+          f.write('       write_raw_image("/tmp/bootloader.img", "bootloader"),\n')
+          f.write('       delete("/tmp/bootloader.img"));\n')
         if options.recovery:
           f.write('assert(package_extract_file("recovery.img", "/tmp/recovery.img"),\n')
           f.write('       write_raw_image("/tmp/recovery.img", "recovery"),\n')

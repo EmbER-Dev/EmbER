@@ -14,6 +14,15 @@ ifeq ($(BR2_TARGET_ROOTFS_RECOVERY_AML_WIPE_USERDATA_CONDITIONAL),y)
   RECOVERY_AML_ARGS += -c
 endif
 
+ifneq ($(strip $(BR2_TARGET_ROOTFS_RECOVERY_BOOTLOADER_IMG)),"")
+
+# Check if bootloader.img exists
+  $(if $(wildcard $(BR2_TARGET_ROOTFS_RECOVERY_BOOTLOADER_IMG)),,$(fatal bootloader.img does not exist (Path: $(BR2_TARGET_ROOTFS_RECOVERY_BOOTLOADER_IMG)).))
+
+  
+  RECOVERY_AML_ARGS += -u
+endif
+
 ifneq ($(strip $(BR2_TARGET_ROOTFS_RECOVERY_RECOVERY_IMG)),"")
 
 # Check if recovery.img exists
@@ -144,6 +153,16 @@ RECOVERY_AML_ARGS += -n none
 endif
 
 ###### Advanced options ######
+
+# If we have provided bootloader.img, make sure it's included in update.zip
+ifneq ($(strip $(BR2_TARGET_ROOTFS_RECOVERY_BOOTLOADER_IMG)),"")
+
+ROOTFS_RECOVERY_AML_CMD += \
+    echo "Copy bootloader.img..." && \
+    cp -f $(BR2_TARGET_ROOTFS_RECOVERY_BOOTLOADER_IMG) $(BINARIES_DIR)/aml_recovery/bootloader.img && 
+
+ADDITIONAL_FILES += " bootloader.img"
+endif
 
 # If we have provided recovery.img, make sure it's included in update.zip
 ifneq ($(strip $(BR2_TARGET_ROOTFS_RECOVERY_RECOVERY_IMG)),"")

@@ -30,11 +30,4 @@ config BR2_TARGET_ROOTFS_RECOVERY_AML_IMGPACK_CUSTOM
 	We should only be interested in changing 'bootup' file, which is basically
 	Windows Bitmap file format with resolution 1280x720px or 1920x1080px
 
-config BR2_TARGET_ROOTFS_RECOVERY_RECOVERY_IMG
-       string "Flash recovery image using file specified"
-       depends on BR2_TARGET_ROOTFS_RECOVERY_AML
-       default ""
-       help
-	  Flash selected recovery image
-
 endmenu
