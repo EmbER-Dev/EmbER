@@ -132,12 +132,14 @@ define LIBAMPLAYER_INSTALL_PREBUILT_STAGING_CMDS
  mkdir -p $(STAGING_DIR)/usr/include/amlplayer/ppmgr
  install -m 644 $(@D)/usr/include/amlplayer/ppmgr/*.h $(STAGING_DIR)/usr/include/amlplayer/ppmgr
  cp -rf $(@D)/usr/include/amlplayer/* $(STAGING_DIR)/usr/include
+ cd $(STAGING_DIR)/usr/include; ln -sf amlplayer amcodec
 endef
 
 define LIBAMPLAYER_INSTALL_SOURCE_STAGING_CMDS
  $(MAKE) CC="$(TARGET_CC)" LD="$(TARGET_LD)" INSTALL_DIR="$(STAGING_DIR)/usr/lib" \
   STAGING="$(STAGING_DIR)/usr" PREFIX="$(STAGING_DIR)/usr" -C $(@D)/amplayer install
  cp -rf $(@D)/amcodec/include/* $(STAGING_DIR)/usr/include
+ cd $(STAGING_DIR)/usr/include; ln -sf amlplayer amcodec
 endef
 
 ifeq ($(BR2_PACKAGE_LIBAMPLAYER_PREBUILT),y)
@@ -162,8 +164,7 @@ define LIBAMPLAYER_INSTALL_PREBUILT_COMMON_CMDS
  install -m 644 $(@D)/lib/$(FIRMWARE)/*.bin $(TARGET_DIR)/lib/firmware
  mkdir -p $(TARGET_DIR)/usr/lib
  install -m 755 $(@D)/usr/lib/*.so* $(TARGET_DIR)/usr/lib
-if [ -e $(TARGET_DIR)/usr/lib/libamcodec.so ]; then rm $(TARGET_DIR)/usr/lib/libamcodec.so; fi;
- cd $(TARGET_DIR)/usr/lib/; ln -s libamcodec.so.0.0 libamcodec.so
+ cd $(TARGET_DIR)/usr/lib/; ln -sf libamcodec.so.0.0 libamcodec.so
  rm -rf $(TARGET_DIR)/usr/lib/libam*.so.prebuilt
 endef
 
@@ -173,8 +174,7 @@ define LIBAMPLAYER_INSTALL_SOURCE_COMMON_CMDS
  install -m 644 $(@D)/amadec/$(FIRMWARE)/*.bin $(TARGET_DIR)/lib/firmware
  mkdir -p $(TARGET_DIR)/usr/lib
  install -m 755 $(STAGING_DIR)/usr/lib/*.so* $(TARGET_DIR)/usr/lib
-if [ -e $(TARGET_DIR)/usr/lib/libamcodec.so ]; then rm $(TARGET_DIR)/usr/lib/libamcodec.so; fi;
- cd $(TARGET_DIR)/usr/lib/; ln -s libamcodec.so.0.0 libamcodec.so
+ cd $(TARGET_DIR)/usr/lib/; ln -sf libamcodec.so.0.0 libamcodec.so
  $(MAKE) CC="$(TARGET_CC)" LD="$(TARGET_LD)" INSTALL_DIR="$(TARGET_DIR)/usr/lib" \
   STAGING="$(TARGET_DIR)/usr" PREFIX="$(STAGING_DIR)/usr" -C $(@D)/amplayer install
 endef
