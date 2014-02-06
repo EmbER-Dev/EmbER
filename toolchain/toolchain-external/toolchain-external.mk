@@ -537,6 +537,11 @@ define TOOLCHAIN_EXTERNAL_INSTALL_CORE
 		$(call MESSAGE,"Copying external toolchain gconv to target...") ; \
 		$(call copy_toolchain_gconv,$${SYSROOT_DIR},$(BR2_TOOLCHAIN_EXTERNAL_PREFIX)) ; \
 	fi ; \
+	if test "$(BR2_TOOLCHAIN_EXTERNAL_CODESOURCERY_GCONV)" = "y" ; then \
+		$(call MESSAGE,"Copying external toolchain gconv to target...") ; \
+		mkdir -p ${TARGET_DIR}/usr/lib/gconv ; \
+		cp -r $${ARCH_SYSROOT_DIR}/usr/lib/gconv/* ${TARGET_DIR}/usr/lib/gconv ; \
+	fi ; \
 	$(call MESSAGE,"Copying external toolchain sysroot to staging...") ; \
 	$(call copy_toolchain_sysroot,$${SYSROOT_DIR},$${ARCH_SYSROOT_DIR},$${ARCH_SUBDIR},$${ARCH_LIB_DIR},$${SUPPORT_LIB_DIR}) ; \
 	if test "$(BR2_TOOLCHAIN_EXTERNAL_GDB_SERVER_COPY)" = "y"; then \

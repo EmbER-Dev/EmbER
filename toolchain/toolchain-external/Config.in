@@ -246,6 +246,10 @@ config BR2_TOOLCHAIN_EXTERNAL_CODESOURCERY_ARM2010Q1
              - ARMv4T, little endian, soft-float, glibc
              - ARMv7-A, Thumb 2, little endian, soft-float, glibc
 
+config BR2_TOOLCHAIN_EXTERNAL_CODESOURCERY_GCONV
+	bool "Copy GCONV libraries to target"
+	depends on BR2_TOOLCHAIN_EXTERNAL_CODESOURCERY_ARM2010Q1
+
 comment "Sourcery CodeBench toolchains available for the EABI ABI"
 	depends on BR2_arm
 	depends on !BR2_ARM_EABI
