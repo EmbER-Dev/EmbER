@@ -1,0 +1,12 @@
+#!/bin/sh
+LOGGER="/usr/bin/logger -s -p user.notice -t NetworkManagerDispatcher"
+
+if [ ! -x /etc/init.d/S49ntp ]; then
+  $LOGGER "init script /etc/init.d/S49ntp missing or not executible"
+  return
+fi
+
+if [ -n $1 ] && [ $2 == "up" ]; then
+    $LOGGER "NetworkManager brought an inteface up, restarting ntpd..."
+    /etc/init.d/S49ntp restart
+fi
