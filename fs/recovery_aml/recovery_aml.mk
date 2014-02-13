@@ -45,8 +45,6 @@ endif
 # Check if AML_IMGPACK folder exists
 $(if $(wildcard $(RES_PACK)),,$(fatal RES_PACK=$(RES_PACK), folder does not exist.))
 
-RECOVERY_AML_ARGS += -l
-
 endif
 
 # Check for UPDATE_ZIP_PREFIX to override file name
@@ -95,8 +93,6 @@ ROOTFS_RECOVERY_AML_CMD += \
     echo "Creating logo.img..." && \
     fs/recovery_aml/$(IMGPACK) -r $(RES_PACK) $(BINARIES_DIR)/aml_recovery/logo.img && 
 
-ADDITIONAL_FILES += " logo.img"
-
 else
 
 ifneq ($(strip $(BR2_TARGET_ROOTFS_RECOVERY_AML_LOGO)),"")
@@ -108,13 +104,10 @@ endif
 # Check if AML_LOGO exists
 $(if $(wildcard $(AML_LOGO)),,$(fatal AML_LOGO=$(AML_LOGO), file does not exist.))
 
-# Aditional files to be included in package, by default only aml_logo.img
-ifeq ($(BR2_TARGET_ROOTFS_RECOVERY_AML_BOARDNAME),"stvmx")
+endif
+
+# Aditional files to be included in package, by default only logo.img
 ADDITIONAL_FILES = logo.img
-else
-ADDITIONAL_FILES = aml_logo.img
-endif
-endif
 
 ###### Advanced options ######
 
@@ -138,6 +131,9 @@ else
 RECOVERY_AML_ARGS += -f ubifs
 PARTITION_TYPE = ubifs
 endif
+
+# Path to logo partition in recovery
+RECOVERY_AML_ARGS += -l $(BR2_TARGET_ROOTFS_RECOVERY_AML_ADV_PATH_LOGO)
 
 # Path to system partition in recovery
 RECOVERY_AML_ARGS += -s $(BR2_TARGET_ROOTFS_RECOVERY_AML_ADV_PATH_SYSTEM)
@@ -183,13 +179,8 @@ ROOTFS_RECOVERY_AML_CMD += \
     cp -f fs/recovery_aml/update-binary $(BINARIES_DIR)/aml_recovery/META-INF/com/google/android/ &&
 
 ifneq ($(BR2_TARGET_ROOTFS_RECOVERY_AML_IMGPACK),y)
-ifeq ($(BR2_TARGET_ROOTFS_RECOVERY_AML_BOARDNAME),"stvmx")
 ROOTFS_RECOVERY_AML_CMD += \
     cp -f $(AML_LOGO) $(BINARIES_DIR)/aml_recovery/logo.img &&
-else
-ROOTFS_RECOVERY_AML_CMD += \
-    cp -f $(AML_LOGO) $(BINARIES_DIR)/aml_recovery/aml_logo.img &&
-endif
 endif
 
 ifneq ($(strip $(BR2_TARGET_ROOTFS_RECOVERY_AML_APPEND_INITRD)),"")
