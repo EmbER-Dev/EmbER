@@ -13,17 +13,11 @@ case "$1" in
     sysctl -w net.ipv4.udp_mem='262144 327680 393216'
     sysctl -w net.ipv4.tcp_mem='262144 327680 393216'
 
-    # make sure eth0 and wlan0 interfaces are up
-    # xbmc will take care of actually configuring them
-    # do it this way to keep from triggering
-    # a lengthy dhcp probe at boot.
-    ifconfig eth0 up
-    ifconfig wlan0 up
+    ifup eth0
   ;;
   stop)
     echo -n "Stopping network..."
-    ifconfig eth0 down
-    ifconfig wlan0 down
+    ifdown eth0
 	;;
   restart|reload)
 	"$0" stop

@@ -1,6 +1,5 @@
 auto lo
 iface lo inet loopback
 #
-iface eth0 inet manual
-#
-iface wlan0 inet manual
+auto eth0
+iface eth0 inet dhcp
