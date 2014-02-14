@@ -30,6 +30,7 @@ NETWORK_MANAGER_CONF_OPT = \
 		--localstatedir=/var \
 		--with-crypto=gnutls \
 		--disable-ppp \
+		--with-wext=yes \
 		--with-iptables=/usr/sbin/iptables \
 		--disable-ifupdown \
 		--disable-ifnet
