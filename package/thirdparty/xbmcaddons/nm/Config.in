@@ -1,0 +1,5 @@
+config BR2_PACKAGE_XBMC_ADDON_NM
+    bool "nm"
+    help
+      Xbmc NetworkManager Addon
+
