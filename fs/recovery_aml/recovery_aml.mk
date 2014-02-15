@@ -183,7 +183,7 @@ ROOTFS_RECOVERY_AML_CMD += \
     cp -f $(AML_LOGO) $(BINARIES_DIR)/aml_recovery/logo.img &&
 endif
 
-ifneq ($(strip $(BR2_TARGET_ROOTFS_RECOVERY_AML_APPEND_INITRD)),)
+ifneq ($(qstrip $(BR2_TARGET_ROOTFS_RECOVERY_AML_APPEND_INITRD)),)
 
 ROOTFS_RECOVERY_AML_CMD += \
     echo "Appending initramfs to kernel..." && \
