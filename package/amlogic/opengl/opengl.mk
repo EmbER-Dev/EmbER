@@ -7,6 +7,10 @@
 # Set initial value to "none", if it stays that way, report an error
 OPENGL_VERSION=none
 
+ifeq ($(BR2_PACKAGE_OPENGL_API20),y)
+OPENGL_VERSION=apiv20
+endif
+
 ifeq ($(BR2_PACKAGE_OPENGL_API17),y)
 OPENGL_VERSION=apiv17
 endif
