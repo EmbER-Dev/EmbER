@@ -39,6 +39,10 @@ ifeq ($(BR2_XBMC_REBOOT),y)
 XBMC_CONF_OPT += --enable-reboot
 endif
 
+ifeq ($(BR2_PACKAGE_OPENGL_API20),y)
+XBMC_CONF_OPT += --enable-mali20
+endif
+
 ifneq ($(BR2_CCACHE),y)
 XBMC_CONF_OPT += --disable-ccache
 endif
