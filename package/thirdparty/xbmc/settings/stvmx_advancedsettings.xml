@@ -8,6 +8,7 @@
   <loglevel hide="false">2</loglevel>
 <!-- TODO: Implement CPU temp readings -->
   <!-- <cputempcommand>echo "$(cat /sys/class/saradc/temperature | awk '{print $2 }' |awk '{printf("%d\n",$1);}') C"</cputempcommand> -->
+  <hidecputemp>1</hidecputemp>
 
   <pvr>
     <minvideocachelevel>50</minvideocachelevel>
