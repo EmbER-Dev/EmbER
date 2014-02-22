@@ -1,5 +1,4 @@
 <advancedsettings>
-  <enablenetworkmanager>1</enablenetworkmanager>
   <hidebattery>1</hidebattery>
   <hidegputemp>1</hidegputemp>
   <hidecpurev>1</hidecpurev>
@@ -7,7 +6,8 @@
   <hidetotaluptime>1</hidetotaluptime>
   <showexitbutton>false</showexitbutton>
   <loglevel hide="false">2</loglevel>
-  <cputempcommand>echo "$(cat /sys/class/saradc/temperature | awk '{print $2 }' |awk '{printf("%d\n",$1);}') C"</cputempcommand>
+<!-- TODO: Implement CPU temp readings -->
+  <!-- <cputempcommand>echo "$(cat /sys/class/saradc/temperature | awk '{print $2 }' |awk '{printf("%d\n",$1);}') C"</cputempcommand> -->
 
   <pvr>
     <minvideocachelevel>50</minvideocachelevel>
