@@ -1,7 +1,12 @@
 #!/bin/sh
 LOGGER="/usr/bin/logger -s -p user.notice -t NetworkManagerDispatcher"
 
-if [ -n $1 ]; then
-    $LOGGER "NetworkManager brought an inteface up/down, restarting network..."
-    /etc/init.d/S40network restart
+if [ -n $1 ] && [ $2 == "up" ]; then
+    $LOGGER "NetworkManager brought a wifi inteface up, bringing eth0 down ..."
+    ifdown eth0
+fi
+
+if [ -n $1 ] && [ $2 == "down" ]; then
+    $LOGGER "NetworkManager pulled a wifi inteface down, bringing eth0 up ..."
+    ifup eth0
 fi
