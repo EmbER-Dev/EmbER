@@ -1,0 +1,7 @@
+#!/bin/sh
+LOGGER="/usr/bin/logger -s -p user.notice -t NetworkManagerDispatcher"
+
+if [ -n $1 ]; then
+    $LOGGER "NetworkManager brought an inteface up/down, restarting network..."
+    /etc/init.d/S40network restart
+fi
