@@ -36,6 +36,14 @@ if [ "X$1" = "Xstart" ]; then
     sync
   fi
 
+  # Check if NetworkManager system folder exists on userdata
+  if [ ! -d /root/.sysconfig/NetworkManager ] ; then
+    echo -n "Creating NetworkManager .sysconfig folder... "
+    mkdir -p /root/.sysconfig/NetworkManager
+    cp -a /etc/NetworkManager/* /root/.sysconfig/NetworkManager/
+    mount -o bind /root/.sysconfig/NetworkManager /etc/NetworkManager
+  fi
+
   # Boot with performance, then switch to ondemand (kernel bug)
   CPU=/sys/devices/system/cpu
   for i in $CPU/cpu0/cpufreq $CPU/cpu1/cpufreq; do
