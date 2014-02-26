@@ -1,0 +1,3 @@
+#!/bin/sh
+echo -e "--wipe_data\n--wipe_cache\n" > /recovery/recovery/command || exit 1
+reboot recovery
