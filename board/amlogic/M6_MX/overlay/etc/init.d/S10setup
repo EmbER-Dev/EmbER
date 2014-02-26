@@ -41,8 +41,8 @@ if [ "X$1" = "Xstart" ]; then
     echo -n "Creating NetworkManager .sysconfig folder... "
     mkdir -p /root/.sysconfig/NetworkManager
     cp -a /etc/NetworkManager/* /root/.sysconfig/NetworkManager/
-    mount -o bind /root/.sysconfig/NetworkManager /etc/NetworkManager
   fi
+  mount -o bind /root/.sysconfig/NetworkManager /etc/NetworkManager
 
   # Boot with performance, then switch to ondemand (kernel bug)
   CPU=/sys/devices/system/cpu
