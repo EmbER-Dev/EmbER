@@ -126,7 +126,11 @@ RECOVERY_AML_ARGS += -f ext4
 PARTITION_TYPE = ext4
 else ifeq ($(BR2_TARGET_ROOTFS_RECOVERY_AML_ADV_FS_YAFFS2),y)
 RECOVERY_AML_ARGS += -f yaffs2
+ifneq ($(BR2_BOARD_TYPE_AMLOGIC_M6),y)
+PARTITION_TYPE = legacy_yaffs2
+else
 PARTITION_TYPE = yaffs2
+endif
 else
 RECOVERY_AML_ARGS += -f ubifs
 PARTITION_TYPE = ubifs
