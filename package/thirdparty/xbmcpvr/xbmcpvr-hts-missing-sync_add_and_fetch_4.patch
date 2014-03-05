@@ -9,5 +9,5 @@ index 002dbcf..e2cb320 100644
 +libhts_la_LDFLAGS=-lgcc
  
  $(LIB): libhts.la
-        cp -f .libs/libhts.a .
+ 	cp -f .libs/libhts.a .
 
