@@ -41,8 +41,7 @@ run_xbmc() {
                 echo 0 > /sys/class/graphics/fb0/blank
                 sync
                 /etc/init.d/S21hwclock stop
-                mount -o remount,ro /tmp/userdata
-                mount -o remount,ro /tmp/userdata.internal 2>/dev/null
+                mount -o remount,ro /root
                 for dir in /media/*/; do
                     mount -o remount,ro ${dir%*/} 2>/dev/null
                 done
@@ -54,8 +53,7 @@ run_xbmc() {
                 echo 0 > /sys/class/graphics/fb0/blank
                 sync
                 /etc/init.d/S21hwclock stop
-                mount -o remount,ro /tmp/userdata
-                mount -o remount,ro /tmp/userdata.internal 2>/dev/null
+                mount -o remount,ro /root
                 for dir in /media/*/; do
                      mount -o remount,ro ${dir%*/} 2>/dev/null
                 done
