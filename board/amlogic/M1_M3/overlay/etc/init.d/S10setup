@@ -7,24 +7,6 @@ if [ "X$1" = "Xstart" ]; then
   echo "S10setup: remount / rw"
   mount -o remount,rw /
 
-  # Make sure dropbear directory exists
-  echo "S10setup: checking keys"
-  if [ ! -d /etc/dropbear ]; then
-    mkdir -p /etc/dropbear
-  fi
-
-  # Check for the Dropbear RSA key
-  if [ ! -f /etc/dropbear/dropbear_rsa_host_key ]; then
-    echo -n "generating rsa key... "
-    /usr/bin/dropbearkey -t rsa -f /etc/dropbear/dropbear_rsa_host_key > /dev/null 2>&1
-  fi
-
-  # Check for the Dropbear DSS key
-  if [ ! -f /etc/dropbear/dropbear_dss_host_key ]; then
-    echo -n "generating dss key... "
-    /usr/bin/dropbearkey -t dss -f /etc/dropbear/dropbear_dss_host_key > /dev/null 2>&1
-  fi
-
 ##Compiler will insert mount commands##
 
   # Move existing data to new location (Compatibility fix for coming from older builds)
@@ -38,7 +20,7 @@ if [ "X$1" = "Xstart" ]; then
 
   # Check if NetworkManager system folder exists on userdata
   if [ ! -d /root/.sysconfig/NetworkManager ] ; then
-    echo -n "Creating NetworkManager .sysconfig folder... "
+    echo "S10setup: Creating .sysconfig folder... "
     mkdir -p /root/.sysconfig/NetworkManager
     cp -a /etc/NetworkManager/* /root/.sysconfig/NetworkManager/
   fi
@@ -51,7 +33,7 @@ if [ "X$1" = "Xstart" ]; then
     # If M1 or M3, limit to 600Mhz to keep audio hw from stalling
     echo "S10setup: set cpu scaling min/max"
     echo "600000" > $CPU/scaling_min_freq
-    # M3 devices max out at 800Mhz
+    # M1/M3 devices max out at 800Mhz
     echo "800000" > $CPU/scaling_max_freq
 
   echo "S10setup: done"
