@@ -17,6 +17,10 @@ config BR2_PACKAGE_OPENGL_API17
     bool "Mali 400 OpenGL API 17"
     depends on BR2_ARM_EABIHF
 
+config BR2_PACKAGE_OPENGL_API19
+    bool "Mali 400 OpenGL API 19"
+    depends on BR2_BOARD_TYPE_AMLOGIC_M6
+
 config BR2_PACKAGE_OPENGL_API20
     bool "Mali 400 OpenGL API 20"
     depends on BR2_ARM_EABIHF
