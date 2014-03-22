@@ -1,7 +1,7 @@
 <keymap>
   <global>
     <keyboard>
-      <s>XBMC.Suspend()</s>
+      <s>XBMC.Powerdown()</s>
       <f4>XBMC.ActivateWindow(Settings)</f4>
       <f5>XBMC.RunScript(script.globalsearch)</f5>
       <f1>XBMC.ActivateWindow(MyPictures)</f1>
