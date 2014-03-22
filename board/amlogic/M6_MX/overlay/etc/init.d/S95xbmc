@@ -1,0 +1,98 @@
+#!/bin/sh
+#
+# Start XBMC....
+#
+
+xbmc_pre() {
+    if [ -f /root/.xbmc/S94xbmc-pre ]; then
+        echo "S94xbmc-pre:"
+        /root/.xbmc/S94xbmc-pre
+        echo "S94xbmc-pre: done"
+    fi
+}
+
+xbmc_post() {
+      if [ -f /root/.xbmc/S96xbmc-post ]; then
+          echo "S96xbmc-post:"
+          /root/.xbmc/S96xbmc-post
+          echo "S96xbmc-post: done"
+      fi
+}
+
+run_xbmc() {
+    export LD_LIBRARY_PATH=/usr/lib:/usr/lib/mysql:/lib
+    export XBMC_HOME=/usr/share/xbmc
+    export GCONV_PATH=/usr/lib/gconv
+    REMOTECONF=/etc/xbmc/remote.conf
+    if [ -f /root/.xbmc/remote.conf ]; then
+        REMOTECONF=/root/.xbmc/remote.conf
+    fi
+    /usr/bin/amremote_config $REMOTECONF
+    fbset -g 1280 720 1280 1440 32
+    xbmc_pre
+    while true; do
+        /usr/lib/xbmc/xbmc.bin --standalone;
+        exit_value=$?
+        case "$exit_value" in
+            0)  echo "XBMC exit" >&2
+                ;;
+            64) echo "XBMC exit with shutdown" >&2
+                lzopcat /usr/share/splash/stopping.fb.lzo > /dev/fb0
+                echo 0 > /sys/class/graphics/fb0/blank
+                sync
+                /etc/init.d/S21hwclock stop
+                mount -o remount,ro /root
+                for dir in /media/*/; do
+                    mount -o remount,ro ${dir%*/} 2>/dev/null
+                done
+                lzopcat /usr/share/splash/complete.fb.lzo > /dev/fb0
+                #poweroff (M6 use suspend)
+                echo 'mem' >/sys/power/state
+                ;;
+            66) echo "XBMC exit with reboot" >&2
+                lzopcat /usr/share/splash/stopping.fb.lzo > /dev/fb0
+                echo 0 > /sys/class/graphics/fb0/blank
+                sync
+                /etc/init.d/S21hwclock stop
+                mount -o remount,ro /root
+                for dir in /media/*/; do
+                     mount -o remount,ro ${dir%*/} 2>/dev/null
+                done
+                reboot
+                ;;
+            137) echo "XBMC was killed" >&2
+                dd if=/dev/zero of=/dev/fb0 bs=1280 count=2880 > /dev/null 2>&1
+                ;;
+            143) echo "XBMC was terminated" >&2
+                dd if=/dev/zero of=/dev/fb0 bs=1280 count=2880 > /dev/null 2>&1
+                ;;
+            *)  echo "XBMC crashed with exit code $exit_value.  Respawning.." >&2
+                sleep 1
+                continue
+                ;;
+        esac
+        xbmc_post
+        exit $exit_value
+    done
+}
+
+
+case "$1" in
+    start)
+        echo "Starting XBMC..."
+        run_xbmc 2>&1 | logger -t XBMC &
+        ;;
+    stop)
+        echo -n "Stopping XBMC..."
+        killall xbmc.bin
+        ;;
+    restart|reload)
+        "$0" stop
+        "$0" start
+        ;;
+    *)
+        echo $"Usage: $0 {start|stop|restart}"
+        exit 1
+esac
+
+exit $?
