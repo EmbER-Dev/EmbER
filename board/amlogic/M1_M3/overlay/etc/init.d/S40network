@@ -3,6 +3,15 @@
 # Start the network....
 #
 
+bring_up_iface()
+{
+  COUNT=0
+  while ! ifup $1 && test $((++COUNT)) -lt 3; do
+    echo waiting on $1
+    sleep 1
+  done
+}
+
 case "$1" in
   start)
     echo "Starting network..."
@@ -13,7 +22,7 @@ case "$1" in
     sysctl -w net.ipv4.udp_mem='262144 327680 393216'
     sysctl -w net.ipv4.tcp_mem='262144 327680 393216'
 
-    ifup eth0
+    bring_up_iface eth0
   ;;
   stop)
     echo -n "Stopping network..."
