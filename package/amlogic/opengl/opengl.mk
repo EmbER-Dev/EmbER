@@ -19,8 +19,8 @@ ifeq ($(BR2_PACKAGE_OPENGL_API17),y)
 OPENGL_VERSION=apiv17
 endif
 
-ifeq ($(BR2_PACKAGE_OPENGL_API14),y)
-OPENGL_VERSION=apiv14
+ifeq ($(BR2_PACKAGE_OPENGL_API9),y)
+OPENGL_VERSION=apiv9
 endif
 
 # If API version is not selected, report an error
