@@ -17,6 +17,8 @@
 # along with ifplugd; if not, write to the Free Software Foundation,
 # Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA.
 
+NTPD=/etc/init.d/S49ntp
+
 set -e
 
 if [ -z "$1" ] || [ -z "$2" ]; then
@@ -39,6 +41,7 @@ if [ "$2" = "up" ]; then
 	sysctl -w net.ipv4.udp_mem='262144 327680 393216'
 	sysctl -w net.ipv4.tcp_mem='262144 327680 393216'
 	bring_up_iface $1
+	$NTPD restart
 fi
 
 if [ "$2" = "down" ]; then
