@@ -1,12 +1,13 @@
 #!/bin/sh
 LOGGER="/usr/bin/logger -s -p user.notice -t NetworkManagerDispatcher"
+IFPLUGD=/etc/init.d/S45ifplugd
 
 if [ -n $1 ] && [ $2 == "up" ]; then
     $LOGGER "NetworkManager brought a wifi inteface up, bringing eth0 down ..."
-    ifdown eth0
+    $IFPLUGD stop
 fi
 
 if [ -n $1 ] && [ $2 == "down" ]; then
     $LOGGER "NetworkManager pulled a wifi inteface down, bringing eth0 up ..."
-    ifup eth0
+    $IFPLUGD start
 fi
