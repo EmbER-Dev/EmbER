@@ -4,7 +4,7 @@
 #
 #################################################################################
 
-XBMC_VERSION = dcaa33f394972a8e4763b34bd166cadec7825d5d
+XBMC_VERSION = f2642462c3db8edfb8fa628b83b2ee9a6fd547cf
 XBMC_SITE_METHOD = git
 XBMC_SITE = git://github.com/CoreTech-Development/xbmc.git
 XBMC_INSTALL_STAGING = YES
@@ -19,9 +19,10 @@ ifeq ($(BR2_ARM_AMLOGIC),y)
 XBMC_CONF_OPT += --enable-codec=amcodec
 endif
 
-ifeq ($(BR2_BOARD_TYPE_AMLOGIC_M6),y)
-XBMC_CONF_OPT += --enable-m6
-endif
+#TODO: Implement or Remove
+#ifeq ($(BR2_BOARD_TYPE_AMLOGIC_M6),y)
+#XBMC_CONF_OPT += --enable-m6
+#endif
 
 ifeq ($(BR2_XBMC_POWERDOWN),y)
 XBMC_CONF_OPT += --enable-powerdown
@@ -43,11 +44,6 @@ ifneq ($(BR2_CCACHE),y)
 XBMC_CONF_OPT += --disable-ccache
 endif
 
-ifeq ($(BR2_PACKAGE_OPENGL_API20),y)
-# Reference for apiv20... TODO:Test Compile
-# XBMC_EXTRA_LDFLAGS += --extra-ldflags="$LIBS -lUMP -lEGL -lGLESv2"
-endif
-
 XBMC_DEPENDENCIES += flac libmad libmpeg2 libogg \
   libsamplerate libtheora libvorbis wavpack bzip2 dbus libcdio \
   python lzo zlib libgcrypt openssl mysql_client sqlite fontconfig \
@@ -55,7 +51,7 @@ XBMC_DEPENDENCIES += flac libmad libmpeg2 libogg \
   libmicrohttpd libssh2 boost fribidi ncurses pcre libnfs afpfs-ng \
   libplist libshairport libbluray libcec \
   readline expat libxml2 yajl samba libass opengl libusb-compat \
-  avahi udev tinyxml taglib18 libssh
+  avahi udev tinyxml taglib18 libssh libxslt
 
 ifeq ($(BR2_ARM_AMLOGIC),y)
 XBMC_DEPENDENCIES += libamplayer
@@ -199,7 +195,8 @@ define XBMC_STRIP_BINARIES
   $(STRIPCMD) $(STRIP_STRIP_UNNEEDED) $(TARGET_DIR)/usr/lib/xbmc/xbmc.bin
 endef
 
-XBMC_PRE_CONFIGURE_HOOKS += XBMC_SET_DEFAULT_SKIN
+#TODO: Implement
+#XBMC_PRE_CONFIGURE_HOOKS += XBMC_SET_DEFAULT_SKIN
 XBMC_PRE_CONFIGURE_HOOKS += XBMC_BOOTSTRAP
 XBMC_POST_INSTALL_TARGET_HOOKS += XBMC_INSTALL_ETC
 XBMC_POST_INSTALL_TARGET_HOOKS += XBMC_INSTALL_SETTINGS
