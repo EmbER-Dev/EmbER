@@ -1,0 +1,25 @@
+From 06cb500538173fefbbd6b33c50a1edd05331badf Mon Sep 17 00:00:00 2001
+From: wjb <jaybob413@gmail.com>
+Date: Wed, 9 Apr 2014 11:40:35 -0400
+Subject: [PATCH] Reduce buffer size check 256 > 128
+
+---
+ xbmc/cores/AudioEngine/AESinkFactory.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/xbmc/cores/AudioEngine/AESinkFactory.cpp b/xbmc/cores/AudioEngine/AESinkFactory.cpp
+index e493123..43c7893 100644
+--- a/xbmc/cores/AudioEngine/AESinkFactory.cpp
++++ b/xbmc/cores/AudioEngine/AESinkFactory.cpp
+@@ -132,7 +132,7 @@ IAESink *CAESinkFactory::TrySink(std::string &driver, std::string &device, AEAud
+       CLog::Log(LOGERROR, "Sink %s:%s returned invalid sample rate", driver.c_str(), device.c_str());
+     else if (format.m_channelLayout.Count() == 0)
+       CLog::Log(LOGERROR, "Sink %s:%s returned invalid channel layout", driver.c_str(), device.c_str());
+-    else if (format.m_frames < 256)
++    else if (format.m_frames < 128)
+       CLog::Log(LOGERROR, "Sink %s:%s returned invalid buffer size: %d", driver.c_str(), device.c_str(), format.m_frames);
+     else
+       return sink;
+-- 
+1.7.9.5
+

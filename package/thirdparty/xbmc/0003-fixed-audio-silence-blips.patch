@@ -1,0 +1,58 @@
+From f2642462c3db8edfb8fa628b83b2ee9a6fd547cf Mon Sep 17 00:00:00 2001
+From: davilla <davilla@4pi.com>
+Date: Tue, 26 Feb 2013 17:26:18 -0500
+Subject: [PATCH] [aml] fixed, audio silence blips, make periodSize >= 1024 by
+ forcing ALSA_PERIODS = 8
+
+---
+ xbmc/cores/AudioEngine/Sinks/AESinkALSA.cpp | 19 ++++++++++++++++++-
+ 1 file changed, 18 insertions(+), 1 deletion(-)
+
+diff --git a/xbmc/cores/AudioEngine/Sinks/AESinkALSA.cpp b/xbmc/cores/AudioEngine/Sinks/AESinkALSA.cpp
+index b48a4fc..b7d8e7d 100644
+--- a/xbmc/cores/AudioEngine/Sinks/AESinkALSA.cpp
++++ b/xbmc/cores/AudioEngine/Sinks/AESinkALSA.cpp
+@@ -38,6 +38,7 @@
+ #endif
+ 
+ #define ALSA_OPTIONS (SND_PCM_NO_AUTO_FORMAT | SND_PCM_NO_AUTO_CHANNELS | SND_PCM_NO_AUTO_RESAMPLE)
++#define ALSA_PERIODS 8
+ 
+ #define ALSA_MAX_CHANNELS 16
+ static enum AEChannel ALSAChannelMap[ALSA_MAX_CHANNELS + 1] = {
+@@ -362,7 +363,19 @@ bool CAESinkALSA::InitializeHW(const ALSAConfig &inconfig, ALSAConfig &outconfig
+     }
+   }
+ 
++  unsigned int periods;
+   snd_pcm_uframes_t periodSize, bufferSize;
++
++  snd_pcm_hw_params_get_periods_min(hw_params, &periods, NULL);
++  snd_pcm_hw_params_get_period_size_min(hw_params, &periodSize, NULL);
++  snd_pcm_hw_params_get_buffer_size_min(hw_params, &bufferSize);
++  CLog::Log(LOGDEBUG, "CAESinkALSA::InitializeHW - Min: periodSize %lu, periods %u, bufferSize %lu", periodSize, periods, bufferSize);
++
++  snd_pcm_hw_params_get_periods_max(hw_params, &periods, NULL);
++  snd_pcm_hw_params_get_period_size_max(hw_params, &periodSize, NULL);
++  snd_pcm_hw_params_get_buffer_size_max(hw_params, &bufferSize);
++  CLog::Log(LOGDEBUG, "CAESinkALSA::InitializeHW - Max: periodSize %lu, periods %u, bufferSize %lu", periodSize, periods, bufferSize);
++
+   snd_pcm_hw_params_get_buffer_size_max(hw_params, &bufferSize);
+   snd_pcm_hw_params_get_period_size_max(hw_params, &periodSize, NULL);
+ 
+@@ -381,7 +394,11 @@ bool CAESinkALSA::InitializeHW(const ALSAConfig &inconfig, ALSAConfig &outconfig
+   */
+   periodSize = std::min(periodSize, bufferSize / 4);
+ 
+-  CLog::Log(LOGDEBUG, "CAESinkALSA::InitializeHW - Request: periodSize %lu, bufferSize %lu", periodSize, bufferSize);
++  bufferSize  = std::min(bufferSize, (snd_pcm_uframes_t)8192);
++  periodSize  = bufferSize / ALSA_PERIODS;
++  periods     = ALSA_PERIODS;
++
++  CLog::Log(LOGDEBUG, "CAESinkALSA::InitializeHW - Request: periodSize %lu, periods %u, bufferSize %lu", periodSize, periods, bufferSize);
+ 
+   snd_pcm_hw_params_t *hw_params_copy;
+   snd_pcm_hw_params_alloca(&hw_params_copy);
+-- 
+1.9.1
+

@@ -4,9 +4,9 @@
 #
 #################################################################################
 
-XBMC_VERSION = f2642462c3db8edfb8fa628b83b2ee9a6fd547cf
+XBMC_VERSION = 2372235d6c1871bc444375b0dd6b46e50ac882c3
 XBMC_SITE_METHOD = git
-XBMC_SITE = git://github.com/CoreTech-Development/xbmc.git
+XBMC_SITE = git://github.com/xbmc/xbmc.git
 XBMC_INSTALL_STAGING = YES
 XBMC_INSTALL_TARGET = YES
 
@@ -18,11 +18,6 @@ XBMC_CONF_OPT += --enable-neon --enable-gles --disable-sdl --disable-x11 --disab
 ifeq ($(BR2_ARM_AMLOGIC),y)
 XBMC_CONF_OPT += --enable-codec=amcodec
 endif
-
-#TODO: Implement or Remove
-#ifeq ($(BR2_BOARD_TYPE_AMLOGIC_M6),y)
-#XBMC_CONF_OPT += --enable-m6
-#endif
 
 ifeq ($(BR2_XBMC_POWERDOWN),y)
 XBMC_CONF_OPT += --enable-powerdown

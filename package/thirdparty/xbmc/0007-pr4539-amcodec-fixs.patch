@@ -1,0 +1,116 @@
+From c0a422767b55d658b0a088a3b0ceb90bfcec00ea Mon Sep 17 00:00:00 2001
+From: Brandon McAnsh <brandonm@matricom.net>
+Date: Mon, 17 Mar 2014 17:58:05 -0400
+Subject: [PATCH] DVDCodecs: Amlogic: Handle conditions in which amcodec should
+ be opened during Open()
+
+DVDCodecs: Amlogic: Use mpeg2 video codec for mpeg2's
+
+* AM Video Codec cannot properly handle the still-frames within DVDs
+
+Signed-off-by: Brandon McAnsh <brandonm@matricom.net>
+
+DVDFactoryCodec: Remove throttling of mpeg2 to libmpeg2 for amlogic
+
+* Thanks to @kszaq, am-mpeg2 can handle all mpeg2's however it can't handle the still frames (which is caught above it).
+* Testing .VOB isn't setting hint.stills to true so will need to address this in separate patch
+
+Signed-off-by: Brandon McAnsh <brandonm@matricom.net>
+
+DVDFactoryCodec: Further conditionalize HAS_LIBAMCODEC opening
+
+Signed-off-by: Brandon McAnsh <brandonm@matricom.net>
+
+DVDFactoryCodec: Amlogic: Force rmvb to ffmpeg
+
+Signed-off-by: Brandon McAnsh <brandonm@matricom.net>
+
+DVD: Amcodec: Handle conditions in which amcodec should be using during open
+
+* Instead of before
+
+Signed-off-by: Brandon McAnsh <brandonm@matricom.net>
+---
+ xbmc/cores/dvdplayer/DVDCodecs/DVDFactoryCodec.cpp | 25 +++++++++-------------
+ .../DVDCodecs/Video/DVDVideoCodecAmlogic.cpp       | 11 +++++++++-
+ 2 files changed, 20 insertions(+), 16 deletions(-)
+
+diff --git a/xbmc/cores/dvdplayer/DVDCodecs/DVDFactoryCodec.cpp b/xbmc/cores/dvdplayer/DVDCodecs/DVDFactoryCodec.cpp
+index a7445d3..14ad038 100644
+--- a/xbmc/cores/dvdplayer/DVDCodecs/DVDFactoryCodec.cpp
++++ b/xbmc/cores/dvdplayer/DVDCodecs/DVDFactoryCodec.cpp
+@@ -193,17 +193,20 @@ CDVDVideoCodec* CDVDFactoryCodec::CreateVideoCodec(CDVDStreamInfo &hint, unsigne
+ #endif
+ 
+   CLog::Log(LOGDEBUG, "CDVDFactoryCodec: compiled in hardware support: %s", hwSupport.c_str());
++
++  if (hint.stills && (hint.codec == AV_CODEC_ID_MPEG2VIDEO || hint.codec == AV_CODEC_ID_MPEG1VIDEO))
++  {
++     // If dvd is an mpeg2 and hint.stills
++     if ( (pCodec = OpenCodec(new CDVDVideoCodecLibMpeg2(), hint, options)) ) return pCodec;
++  }
++
+ #if defined(HAS_LIBAMCODEC)
+   // amcodec can handle dvd playback.
+-  if (!CSettings::Get().GetBool("videoplayer.useamcodec"))
+-#endif
++  if (!hint.software && CSettings::Get().GetBool("videoplayer.useamcodec"))
+   {
+-    // dvd's have weird still-frames in it, which is not fully supported in ffmpeg
+-    if(hint.stills && (hint.codec == AV_CODEC_ID_MPEG2VIDEO || hint.codec == AV_CODEC_ID_MPEG1VIDEO))
+-    {
+-      if( (pCodec = OpenCodec(new CDVDVideoCodecLibMpeg2(), hint, options)) ) return pCodec;
+-    }
++     if ( (pCodec = OpenCodec(new CDVDVideoCodecAmlogic(), hint, options)) ) return pCodec;
+   }
++#endif
+ 
+ #if defined(TARGET_DARWIN_OSX)
+   if (!hint.software && CSettings::Get().GetBool("videoplayer.usevda"))
+@@ -258,14 +261,6 @@ CDVDVideoCodec* CDVDFactoryCodec::CreateVideoCodec(CDVDStreamInfo &hint, unsigne
+   }
+ #endif
+ 
+-#if defined(HAS_LIBAMCODEC)
+-  if (!hint.software && CSettings::Get().GetBool("videoplayer.useamcodec"))
+-  {
+-    CLog::Log(LOGINFO, "Amlogic Video Decoder...");
+-    if ( (pCodec = OpenCodec(new CDVDVideoCodecAmlogic(), hint, options)) ) return pCodec;
+-  }
+-#endif
+-
+ #if defined(TARGET_ANDROID)
+   if (!hint.software && CSettings::Get().GetBool("videoplayer.usemediacodec"))
+   {
+diff --git a/xbmc/cores/dvdplayer/DVDCodecs/Video/DVDVideoCodecAmlogic.cpp b/xbmc/cores/dvdplayer/DVDCodecs/Video/DVDVideoCodecAmlogic.cpp
+index 141f0c8..16a8341 100644
+--- a/xbmc/cores/dvdplayer/DVDCodecs/Video/DVDVideoCodecAmlogic.cpp
++++ b/xbmc/cores/dvdplayer/DVDCodecs/Video/DVDVideoCodecAmlogic.cpp
+@@ -69,6 +69,13 @@ bool CDVDVideoCodecAmlogic::Open(CDVDStreamInfo &hints, CDVDCodecOptions &option
+     case AV_CODEC_ID_MPEG1VIDEO:
+     case AV_CODEC_ID_MPEG2VIDEO:
+     case AV_CODEC_ID_MPEG2VIDEO_XVMC:
++      if (m_hints.width <= 1280)
++      {
++        // amcodec struggles with VOB playback
++        // which can be handled via software
++        return false;
++        break;
++      }
+       m_mpeg2_sequence_pts = 0;
+       m_mpeg2_sequence = new mpeg2_sequence;
+       m_mpeg2_sequence->width  = m_hints.width;
+@@ -116,7 +123,9 @@ bool CDVDVideoCodecAmlogic::Open(CDVDStreamInfo &hints, CDVDCodecOptions &option
+     case AV_CODEC_ID_RV20:
+     case AV_CODEC_ID_RV30:
+     case AV_CODEC_ID_RV40:
+-      m_pFormatName = "am-rv";
++      // m_pFormatName = "am-rv";
++      // rmvb is not handled well by amcodec
++      return false;
+       break;
+     case AV_CODEC_ID_VC1:
+       m_pFormatName = "am-vc1";
+-- 
+1.9.1
+

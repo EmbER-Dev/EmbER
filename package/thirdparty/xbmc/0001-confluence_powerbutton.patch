@@ -1,5 +1,14 @@
+commit 089309eea72d52fb673777113320ecbc30059123
+Author: croniccorey <cronmod.dev@gmail.com>
+Date:   Tue Apr 29 18:25:54 2014 -0400
+Subject: [PATCH] Allow setting confluence powerbutton function
+
+---
+ addons/skin.confluence/720p/Home.xml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
 diff --git a/addons/skin.confluence/720p/Home.xml b/addons/skin.confluence/720p/Home.xml
-index f4aaf56..94741c9 100644
+index c3af1e4..5ebd753 100644
 --- a/addons/skin.confluence/720p/Home.xml
 +++ b/addons/skin.confluence/720p/Home.xml
 @@ -1068,7 +1068,7 @@
@@ -11,3 +20,6 @@ index f4aaf56..94741c9 100644
  				<texturefocus border="5">floor_buttonFO.png</texturefocus>
  				<texturenofocus border="5">floor_button.png</texturenofocus>
  				<onleft>21</onleft>
+--
+1.9.1
+

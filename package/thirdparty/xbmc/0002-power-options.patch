@@ -1,0 +1,306 @@
+From 618a0abff149d66229ff997d088e3834599088e9 Mon Sep 17 00:00:00 2001
+From: croniccorey <cronmod.dev@gmail.com>
+Date: Tue, 15 Apr 2014 21:01:41 -0400
+Subject: [PATCH] AML: Add AMLPowerSyscall class
+
+- Based on PivosPowerSyscall class
+---
+ configure.in                                   |  53 +++++++++++
+ xbmc/powermanagement/PowerManager.cpp          |   3 +
+ xbmc/powermanagement/linux/AMLPowerSyscall.cpp | 125 +++++++++++++++++++++++++
+ xbmc/powermanagement/linux/AMLPowerSyscall.h   |  51 ++++++++++
+ xbmc/powermanagement/linux/Makefile            |   3 +-
+ 5 files changed, 234 insertions(+), 1 deletion(-)
+ create mode 100644 xbmc/powermanagement/linux/AMLPowerSyscall.cpp
+ create mode 100644 xbmc/powermanagement/linux/AMLPowerSyscall.h
+
+diff --git a/configure.in b/configure.in
+index f9f5693..2651640 100644
+--- a/configure.in
++++ b/configure.in
+@@ -1512,6 +1512,59 @@ else
+   USE_SKIN_TOUCHED=0
+ fi
+ 
++# Amlogic Power options
++AC_ARG_ENABLE([powerdown],
++  [AS_HELP_STRING([--enable-powerdown],
++  [enable powerdown option (default is no)])],
++  [has_power=$enableval],
++  [has_power=no])
++
++if test "$has_power" = "yes"; then
++  HAS_POWERDOWN=1
++  AC_DEFINE([XBMC_POWERDOWN], [1], [Whether the system can preform powerdown.])
++else
++  HAS_POWERDOWN=0
++fi
++
++AC_ARG_ENABLE([suspend],
++  [AS_HELP_STRING([--enable-suspend],
++  [enable suspend option (default is no)])],
++  [has_suspend=$enableval],
++  [has_suspend=no])
++
++if test "$has_suspend" = "yes"; then
++  HAS_SUSPEND=1
++  AC_DEFINE([XBMC_SUSPEND], [1], [Whether the system can preform suspend.])
++else
++  HAS_SUSPEND=0
++fi
++
++AC_ARG_ENABLE([hibernate],
++  [AS_HELP_STRING([--enable-hibernate],
++  [enable hibernate option (default is no)])],
++  [has_hibernate=$enableval],
++  [has_hibernate=no])
++
++if test "$has_hibernate" = "yes"; then
++  HAS_HIBERNATE=1
++  AC_DEFINE([XBMC_HIBERNATE], [1], [Whether the system can preform hibernate.])
++else
++  HAS_HIBERNATE=0
++fi
++
++AC_ARG_ENABLE([reboot],
++  [AS_HELP_STRING([--enable-reboot],
++  [enable reboot option (default is no)])],
++  [has_reboot=$enableval],
++  [has_reboot=no])
++
++if test "$has_reboot" = "yes"; then
++  HAS_REBOOT=1
++  AC_DEFINE([XBMC_REBOOT], [1], [Whether the system can preform reboot.])
++else
++  HAS_REBOOT=0
++fi
++
+ # libssh
+ if test "x$use_ssh" = "xno"; then
+   AC_MSG_NOTICE($ssh_disabled)
+diff --git a/xbmc/powermanagement/PowerManager.cpp b/xbmc/powermanagement/PowerManager.cpp
+index 590a887..b2ebd6b 100644
+--- a/xbmc/powermanagement/PowerManager.cpp
++++ b/xbmc/powermanagement/PowerManager.cpp
+@@ -47,6 +47,7 @@
+ #include "linux/ConsoleDeviceKitPowerSyscall.h"
+ #include "linux/LogindUPowerSyscall.h"
+ #include "linux/UPowerSyscall.h"
++#include "linux/AMLPowerSyscall.h"
+ #if defined(HAS_HAL)
+ #include "linux/HALPowerSyscall.h"
+ #endif // HAS_HAL
+@@ -86,6 +87,8 @@ void CPowerManager::Initialize()
+     m_instance = new CLogindUPowerSyscall();
+   else if (CUPowerSyscall::HasUPower())
+     m_instance = new CUPowerSyscall();
++  else if (CAMLPowerSyscall::HasAMLPowerSyscall())
++    m_instance = new CAMLPowerSyscall();
+ #if defined(HAS_HAL)
+   else if(1)
+     m_instance = new CHALPowerSyscall();
+diff --git a/xbmc/powermanagement/linux/AMLPowerSyscall.cpp b/xbmc/powermanagement/linux/AMLPowerSyscall.cpp
+new file mode 100644
+index 0000000..1db5519
+--- /dev/null
++++ b/xbmc/powermanagement/linux/AMLPowerSyscall.cpp
+@@ -0,0 +1,125 @@
++/*
++ *      Copyright (C) 2012 Team XBMC
++ *      http://www.xbmc.org
++ *
++ *  This Program is free software; you can redistribute it and/or modify
++ *  it under the terms of the GNU General Public License as published by
++ *  the Free Software Foundation; either version 2, or (at your option)
++ *  any later version.
++ *
++ *  This Program is distributed in the hope that it will be useful,
++ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
++ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
++ *  GNU General Public License for more details.
++ *
++ *  You should have received a copy of the GNU General Public License
++ *  along with XBMC; see the file COPYING.  If not, see
++ *  <http://www.gnu.org/licenses/>.
++ *
++ */
++
++#include "system.h"
++#include "AMLPowerSyscall.h"
++#include "utils/AMLUtils.h"
++#include "utils/log.h"
++
++CAMLPowerSyscall::CAMLPowerSyscall()
++{
++#ifdef XBMC_POWERDOWN
++    m_CanPowerdown = true;
++#else
++    m_CanPowerdown = false;
++#endif
++#ifdef XBMC_SUSPEND
++    m_CanSuspend   = true;
++#else
++    m_CanSuspend   = false;
++#endif
++#ifdef XBMC_HIBERNATE
++  m_CanHibernate = true;
++#else
++  m_CanHibernate = false;
++#endif
++#ifdef XBMC_REBOOT
++  m_CanReboot    = true;
++#else
++  m_CanReboot    = false;
++#endif
++
++  m_OnResume  = false;
++  m_OnSuspend = false;
++}
++
++bool CAMLPowerSyscall::Powerdown()
++{
++  return true;
++}
++
++bool CAMLPowerSyscall::Suspend()
++{
++  m_OnSuspend = true;
++  return true;
++}
++
++bool CAMLPowerSyscall::Hibernate()
++{
++  return false;
++}
++
++bool CAMLPowerSyscall::Reboot()
++{
++  return true;
++}
++
++bool CAMLPowerSyscall::CanPowerdown()
++{
++  return m_CanPowerdown;
++}
++
++bool CAMLPowerSyscall::CanSuspend()
++{
++  return m_CanSuspend;
++}
++
++bool CAMLPowerSyscall::CanHibernate()
++{
++  return m_CanHibernate;
++}
++
++bool CAMLPowerSyscall::CanReboot()
++{
++  return m_CanReboot;
++}
++
++int CAMLPowerSyscall::BatteryLevel()
++{
++  return 0;
++}
++
++bool CAMLPowerSyscall::PumpPowerEvents(IPowerEventsCallback *callback)
++{
++  if (m_OnSuspend)
++  {
++    // do the CPowerManager::OnSleep() callback
++    callback->OnSleep();
++    m_OnResume  = true;
++    m_OnSuspend = false;
++    // wait for all our threads to do their thing
++    usleep(1 * 1000 * 1000);
++    aml_set_sysfs_str("/sys/power/state", "mem");
++    usleep(100 * 1000);
++  }
++  else if (m_OnResume)
++  {
++    // do the CPowerManager::OnWake() callback
++    callback->OnWake();
++    m_OnResume = false;
++  }
++
++  return true;
++}
++
++bool CAMLPowerSyscall::HasAMLPowerSyscall()
++{
++  return aml_present();
++}
+diff --git a/xbmc/powermanagement/linux/AMLPowerSyscall.h b/xbmc/powermanagement/linux/AMLPowerSyscall.h
+new file mode 100644
+index 0000000..7497265
+--- /dev/null
++++ b/xbmc/powermanagement/linux/AMLPowerSyscall.h
+@@ -0,0 +1,51 @@
++/*
++ *      Copyright (C) 2012 Team XBMC
++ *      http://www.xbmc.org
++ *
++ *  This Program is free software; you can redistribute it and/or modify
++ *  it under the terms of the GNU General Public License as published by
++ *  the Free Software Foundation; either version 2, or (at your option)
++ *  any later version.
++ *
++ *  This Program is distributed in the hope that it will be useful,
++ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
++ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
++ *  GNU General Public License for more details.
++ *
++ *  You should have received a copy of the GNU General Public License
++ *  along with XBMC; see the file COPYING.  If not, see
++ *  <http://www.gnu.org/licenses/>.
++ *
++ */
++
++#include "powermanagement/IPowerSyscall.h"
++
++class CAMLPowerSyscall : public IPowerSyscall
++{
++public:
++  CAMLPowerSyscall();
++  virtual ~CAMLPowerSyscall() {}
++
++  virtual bool Powerdown();
++  virtual bool Suspend();
++  virtual bool Hibernate();
++  virtual bool Reboot();
++
++  virtual bool CanPowerdown();
++  virtual bool CanSuspend();
++  virtual bool CanHibernate();
++  virtual bool CanReboot();
++  virtual int  BatteryLevel();
++  virtual bool PumpPowerEvents(IPowerEventsCallback *callback);
++
++  static bool HasAMLPowerSyscall();
++
++private:
++  bool m_CanPowerdown;
++  bool m_CanSuspend;
++  bool m_CanHibernate;
++  bool m_CanReboot;
++
++  bool m_OnResume;
++  bool m_OnSuspend;
++};
+diff --git a/xbmc/powermanagement/linux/Makefile b/xbmc/powermanagement/linux/Makefile
+index fc6f8b5..5af9822 100644
+--- a/xbmc/powermanagement/linux/Makefile
++++ b/xbmc/powermanagement/linux/Makefile
+@@ -2,7 +2,8 @@ SRCS=ConsoleDeviceKitPowerSyscall.cpp \
+      ConsoleUPowerSyscall.cpp \
+      HALPowerSyscall.cpp \
+      UPowerSyscall.cpp \
+-     LogindUPowerSyscall.cpp
++     LogindUPowerSyscall.cpp \
++     AMLPowerSyscall.cpp
+ 
+ LIB=powermanagement_linux.a
+ 
+-- 
+1.9.1
+
