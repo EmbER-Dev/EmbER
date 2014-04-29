@@ -184,7 +184,6 @@ config BR2_XBMC_COMPLETE_FB
 		- Splash should be located in "package/thirdparty/xbmc/fb_splashs"
 		- Compiler will append ".fb.lzo" to end of file name
 
-if 0 #TODO
 config BR2_XBMC_DEFAULT_SKIN
 	string "Default Skin"
 	default ""
@@ -198,7 +197,6 @@ config BR2_XBMC_DEFAULT_SKIN
 		- If this option is not set XBMC will use confluence
 		- The set skin must exist in the source tree
 		- Compiler will append "skin." to begining of skin name
-endif
 
 config BR2_XBMC_NO_CONFLUENCE
 	bool "Don't install confluence skin"
