@@ -1,10 +1,11 @@
 <advancedsettings>
+<!-- TODO
   <hidebattery>1</hidebattery>
   <hidegputemp>1</hidegputemp>
   <hidecpurev>1</hidecpurev>
   <hidecpuserial>1</hidecpuserial>
   <hidecputemp>1</hidecputemp>
-  <hidetotaluptime>1</hidetotaluptime>
+  <hidetotaluptime>1</hidetotaluptime> -->
   <showexitbutton>false</showexitbutton>
   <loglevel hide="false">2</loglevel>
 
@@ -13,6 +14,7 @@
     <minaudiocachelevel>50</minaudiocachelevel>
   </pvr>
 
+<!-- TODO
   <hidesettings>
     <setting>videoplayer.rendermethod</setting>
     <setting>videoplayer.adjustrefreshrate</setting>
@@ -23,7 +25,6 @@
     <setting>videoscreen.vsync</setting>
     <setting>videoscreen.testpattern</setting>
     <setting>videoscreen.haslcd</setting>
-    <!-- <setting>videoscreen.screen</setting> -->
     <setting>audiooutput.mode</setting>
     <setting>audiooutput.channellayout</setting>
     <setting>audiooutput.audiodevice</setting>
@@ -34,7 +35,7 @@
     <setting>audiooutput.dtshdpassthrough</setting>
     <setting>input.remoteaskeyboard</setting>
     <setting>powermanagement</setting>
-  </hidesettings>
+  </hidesettings> -->
 
   <video>
     <subsdelayrange>60</subsdelayrange>
@@ -44,7 +45,7 @@
   <network>
     <!-- 144Mbit/s max network bandwidth -->
     <readbufferfactor>4.0</readbufferfactor>
-    <!-- Allow caching for all network streams -->
-    <alwaysforcebuffer>1</alwaysforcebuffer>
+    <!-- Force caching for all network/local videos -->
+    <networkbuffermode>1</networkbuffermode>
   </network>
 </advancedsettings>
