@@ -1,0 +1,104 @@
+commit 79be86b170d82ede675e32a162fd9df4f936fe3d
+Author: croniccorey <cronmod.dev@gmail.com>
+Date:   Thu Jan 16 03:24:35 2014 -0500
+
+    ADVANCEDSETTINGS: Allow hiding some unneeded system info
+
+diff --git a/xbmc/settings/AdvancedSettings.cpp b/xbmc/settings/AdvancedSettings.cpp
+index eff43dd..c6336a6 100644
+--- a/xbmc/settings/AdvancedSettings.cpp
++++ b/xbmc/settings/AdvancedSettings.cpp
+@@ -423,6 +423,12 @@ void CAdvancedSettings::Initialize()
+   m_userAgent = g_sysinfo.GetUserAgent();
+ 
+   m_initialized = true;
++
++  m_hideTotaluptime = false;
++  m_hideBattery = false;
++  m_hideCPUrev = false;
++  m_hideCPUserial = false;
++  m_hideCPUtemp = false;
+ }
+ 
+ bool CAdvancedSettings::Load()
+@@ -882,6 +888,12 @@ void CAdvancedSettings::ParseSettingsFile(const CStdString &file)
+   XMLUtils::GetBoolean(pRootElement,"virtualshares", m_bVirtualShares);
+   XMLUtils::GetUInt(pRootElement, "packagefoldersize", m_addonPackageFolderSize);
+ 
++  XMLUtils::GetBoolean(pRootElement, "hidetotaluptime", m_hideTotaluptime);
++  XMLUtils::GetBoolean(pRootElement, "hidebattery", m_hideBattery);
++  XMLUtils::GetBoolean(pRootElement, "hidecpurev", m_hideCPUrev);
++  XMLUtils::GetBoolean(pRootElement, "hidecpuserial", m_hideCPUserial);
++  XMLUtils::GetBoolean(pRootElement, "hidecputemp", m_hideCPUtemp);
++
+   //Tuxbox
+   pElement = pRootElement->FirstChildElement("tuxbox");
+   if (pElement)
+diff --git a/xbmc/settings/AdvancedSettings.h b/xbmc/settings/AdvancedSettings.h
+index 3995f35..ed1514b 100644
+--- a/xbmc/settings/AdvancedSettings.h
++++ b/xbmc/settings/AdvancedSettings.h
+@@ -390,6 +390,12 @@ class CAdvancedSettings : public ISettingCallback, public ISettingsHandler
+     float GetDisplayLatency(float refreshrate);
+     bool m_initialized;
+ 
++    bool m_hideTotaluptime;
++    bool m_hideBattery;
++    bool m_hideCPUrev;
++    bool m_hideCPUserial;
++    bool m_hideCPUtemp;
++
+     void SetDebugMode(bool debug);
+     void SetExtraLogsFromAddon(ADDON::IAddon* addon);
+ 
+diff --git a/xbmc/windows/GUIWindowSystemInfo.cpp b/xbmc/windows/GUIWindowSystemInfo.cpp
+index 60aa49d..a19edfe 100644
+--- a/xbmc/windows/GUIWindowSystemInfo.cpp
++++ b/xbmc/windows/GUIWindowSystemInfo.cpp
+@@ -30,6 +30,7 @@
+ #endif
+ #include "utils/StringUtils.h"
+ #include "storage/MediaManager.h"
++#include "settings/AdvancedSettings.h"
+ 
+ #define CONTROL_BT_STORAGE  94
+ #define CONTROL_BT_DEFAULT  95
+@@ -100,8 +101,14 @@ void CGUIWindowSystemInfo::FrameMove()
+     SetControlLabel(i++, "%s %s", 13283, SYSTEM_KERNEL_VERSION);
+ #endif
+     SetControlLabel(i++, "%s: %s", 12390, SYSTEM_UPTIME);
++    if (!g_advancedSettings.m_hideTotaluptime)
++    {
+     SetControlLabel(i++, "%s: %s", 12394, SYSTEM_TOTALUPTIME);
+-    SetControlLabel(i++, "%s: %s", 12395, SYSTEM_BATTERY_LEVEL);
++    }
++    if (!g_advancedSettings.m_hideBattery)
++    {
++      SetControlLabel(i++, "%s: %s", 12395, SYSTEM_BATTERY_LEVEL);
++    }
+   }
+   else if (m_section == CONTROL_BT_STORAGE)
+   {
+@@ -154,10 +161,19 @@ void CGUIWindowSystemInfo::FrameMove()
+ #if defined(__arm__) && defined(TARGET_LINUX)
+     SET_CONTROL_LABEL(i++, g_sysinfo.GetCPUBogoMips());
+     SET_CONTROL_LABEL(i++, g_sysinfo.GetCPUHardware());
+-    SET_CONTROL_LABEL(i++, g_sysinfo.GetCPURevision());
+-    SET_CONTROL_LABEL(i++, g_sysinfo.GetCPUSerial());
++    if (!g_advancedSettings.m_hideCPUrev)
++    {
++      SET_CONTROL_LABEL(i++, g_sysinfo.GetCPURevision());
++    }
++    if (!g_advancedSettings.m_hideCPUserial)
++    {
++      SET_CONTROL_LABEL(i++, g_sysinfo.GetCPUSerial());
++    }
+ #endif
+-    SetControlLabel(i++, "%s %s", 22011, SYSTEM_CPU_TEMPERATURE);
++    if (!g_advancedSettings.m_hideCPUtemp)
++    {
++      SetControlLabel(i++, "%s %s", 22011, SYSTEM_CPU_TEMPERATURE);
++    }
+ #if !defined(__arm__) || defined(TARGET_RASPBERRY_PI)
+     SetControlLabel(i++, "%s %s", 13284, SYSTEM_CPUFREQUENCY);
+ #endif

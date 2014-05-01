@@ -9,7 +9,7 @@ Subject: [PATCH] Apply rambuffer patch (pr1388) PR 831 Inclusions (credit goes
 
 Enhancements to PR 831:
 
-- move variables over to advanced settings under <network> section ("alwaysforcebuffer" default false and "freememorycachepercent" default 50% max 80% with hard limit of 1GB and 0 value will force filecache. It also removes "cachemembuffersize" variable as it is no longer needed)
+- move variables over to advanced settings under <network> section ("freememorycachepercent" default 50% max 80% with hard limit of 1GB and 0 value will force filecache. It also removes "cachemembuffersize" variable as it is no longer needed)
 
 - Memory buffer is straight percentage of free ram (i.e. if 50% free ram is used ~75% of the 50% will be forward looking buffer and ~25% of the 50% will be back buffer)
 
