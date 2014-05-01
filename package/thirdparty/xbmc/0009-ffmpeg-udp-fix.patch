@@ -1,0 +1,31 @@
+From 88735ba63a2e50cd10bdff3db1f3477b1d298903 Mon Sep 17 00:00:00 2001
+From: croniccorey <cronmod.dev@gmail.com>
+Date: Sat, 28 Sep 2013 05:54:31 -0400
+Subject: [PATCH] udp: Fix receiving large udp packets
+
+Commit-author: michaelni
+Signed-off-by: Michael Niedermayer <michaelni@gmx.at>
+---
+ lib/ffmpeg/libavformat/udp.c | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/lib/ffmpeg/libavformat/udp.c b/lib/ffmpeg/libavformat/udp.c
+index 184ab81..3be9d12 100644
+--- a/lib/ffmpeg/libavformat/udp.c
++++ b/lib/ffmpeg/libavformat/udp.c
+@@ -585,7 +585,11 @@ static int udp_open(URLContext *h, const char *uri, int flags)
+     }
+     /* handling needed to support options picking from both AVOption and URL */
+     s->circular_buffer_size *= 188;
+-    h->max_packet_size = s->packet_size;
++    if (flags & AVIO_FLAG_WRITE) {
++        h->max_packet_size = s->packet_size;
++    } else {
++        h->max_packet_size = UDP_MAX_PKT_SIZE;
++    }
+     h->rw_timeout = s->timeout;
+ 
+     /* fill the dest addr */
+-- 
+1.9.1
+
