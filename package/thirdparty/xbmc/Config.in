@@ -127,18 +127,6 @@ config BR2_XBMC_ADV_SETTINGS
 		- Remote configuration should be located in "package/thirdparty/xbmc/settings"
 		- Compiler will append ".xml" to end of file name
 
-config BR2_XBMC_GUI_SETTINGS
-	string "GUI settings"
-	default ""
-	help
-	  This option will set the GUI settings to be used.
-
-	  NOTES:
-		- If this option is not set XBMC will use it's default GUI settings
-		- Selected keymap will be installed to "/usr/share/xbmc/system/guisettings.xml"
-		- Keymap should be located in "package/thirdparty/xbmc/settings"
-		- Compiler will append ".xml" to end of file name
-
 config BR2_XBMC_SPLASH
 	string "Splash Screen"
 	default ""

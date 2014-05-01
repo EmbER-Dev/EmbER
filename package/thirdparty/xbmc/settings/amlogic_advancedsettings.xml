@@ -41,9 +41,4 @@
     <enablesystemkeys>false</enablesystemkeys>
     <remoteaskeyboard>true</remoteaskeyboard>
   </input>
-
-  <powermanagement>
-    <shutdowntime>0</shutdowntime>
-    <shutdownstate>1</shutdownstate>
-  </powermanagement>
 </advancedsettings>

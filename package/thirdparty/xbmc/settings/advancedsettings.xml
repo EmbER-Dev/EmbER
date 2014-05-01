@@ -1,31 +1,11 @@
 <advancedsettings>
   <showexitbutton>false</showexitbutton>
   <loglevel hide="false">2</loglevel>
+
   <pvr>
     <minvideocachelevel>50</minvideocachelevel>
     <minaudiocachelevel>50</minaudiocachelevel>
   </pvr>
-
-<!-- TODO
-  <hidesettings>
-    <setting>videoplayer.rendermethod</setting>
-    <setting>videoplayer.adjustrefreshrate</setting>
-    <setting>videoplayer.pauseafterrefreshchange</setting>
-    <setting>videoplayer.usedisplayasclock</setting>
-    <setting>videoplayer.synctype</setting>
-    <setting>audiocds</setting>
-    <setting>videoscreen.vsync</setting>
-    <setting>videoscreen.testpattern</setting>
-    <setting>audiooutput.mode</setting>
-    <setting>audiooutput.channellayout</setting>
-    <setting>audiooutput.audiodevice</setting>
-    <setting>audiooutput.customdevice</setting>
-    <setting>audiooutput.passthroughdevice</setting>
-    <setting>audiooutput.custompassthrough</setting>
-    <setting>audiooutput.truehdpassthrough</setting>
-    <setting>audiooutput.dtshdpassthrough</setting>
-    <setting>input.remoteaskeyboard</setting>
-  </hidesettings> -->
 
   <video>
     <subsdelayrange>60</subsdelayrange>
@@ -33,9 +13,7 @@
   </video>
 
   <network>
-    <!-- 144Mbit/s max network bandwidth -->
     <readbufferfactor>4.0</readbufferfactor>
-    <!-- Force caching for all network/local videos -->
-    <networkbuffermode>1</networkbuffermode>
+    <buffermode>1</buffermode>
   </network>
 </advancedsettings>
