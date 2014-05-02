@@ -1,0 +1,6 @@
+config BR2_PACKAGE_XBMC_ADDON_WEATHER_UNDERGROUND
+    bool "weather.wunderground"
+    default y
+    help
+      Xbmc Weather Underground Addon
+
