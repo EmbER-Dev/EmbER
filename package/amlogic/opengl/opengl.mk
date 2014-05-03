@@ -4,23 +4,19 @@
 #
 #############################################################
 
-# Set initial value to "none", if it stays that way, report an error
-OPENGL_VERSION=none
-
-ifeq ($(BR2_PACKAGE_OPENGL_API20),y)
-OPENGL_VERSION=apiv20
-endif
-
-ifeq ($(BR2_PACKAGE_OPENGL_API19),y)
-OPENGL_VERSION=apiv19
-endif
-
-ifeq ($(BR2_PACKAGE_OPENGL_API17),y)
-OPENGL_VERSION=apiv17
-endif
-
-ifeq ($(BR2_PACKAGE_OPENGL_API9),y)
-OPENGL_VERSION=apiv9
+# If value sets "none", report an error
+ifeq ($(BR2_PACKAGE_OPENGL_API23),y)
+OPENGL_VERSION = apiv23
+else ifeq ($(BR2_PACKAGE_OPENGL_API20),y)
+OPENGL_VERSION = apiv20
+else ifeq ($(BR2_PACKAGE_OPENGL_API19),y)
+OPENGL_VERSION = apiv19
+else ifeq ($(BR2_PACKAGE_OPENGL_API17),y)
+OPENGL_VERSION = apiv17
+else ifeq ($(BR2_PACKAGE_OPENGL_API9),y)
+OPENGL_VERSION = apiv9
+else
+OPENGL_VERSION = none
 endif
 
 # If API version is not selected, report an error
