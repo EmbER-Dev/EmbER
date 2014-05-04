@@ -4,7 +4,7 @@
 #
 #################################################################################
 
-XBMC_VERSION = 2372235d6c1871bc444375b0dd6b46e50ac882c3
+XBMC_VERSION = 13.0-Gotham
 XBMC_SITE_METHOD = git
 XBMC_SITE = git://github.com/xbmc/xbmc.git
 XBMC_INSTALL_STAGING = YES
