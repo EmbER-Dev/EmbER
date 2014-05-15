@@ -34,12 +34,10 @@ BR2_PACKAGE_MPG123=y
 # BR2_PACKAGE_LIRC is not set
 BR2_PACKAGE_SPEEDTEST_CLI=y
 BR2_PACKAGE_XBMC=y
-BR2_XBMC_REMOTE_CONF="stvmc_remote"
-BR2_XBMC_KEYMAP="variant.stvmc.keyboard"
+BR2_XBMC_REMOTE_CONF="stvmx_remote"
+BR2_XBMC_KEYMAP="variant.stvmx.keyboard"
 BR2_XBMC_ADV_SETTINGS="stvmc_advancedsettings"
 BR2_XBMC_STARTING_FB="theaterinabox_starting"
-# BR2_XBMC_POWERDOWN is not set
-BR2_XBMC_SUSPEND=y
 # BR2_PACKAGE_BOBLIGHT_LIBUSB is not set
 BR2_PACKAGE_LZOP=y
 BR2_PACKAGE_GDB=y
