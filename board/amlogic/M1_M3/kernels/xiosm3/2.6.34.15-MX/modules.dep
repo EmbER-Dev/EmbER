@@ -1,0 +1,87 @@
+kernel/drivers/char/ipmi/ipmi_msghandler.ko:
+kernel/drivers/char/ipmi/ipmi_devintf.ko: kernel/drivers/char/ipmi/ipmi_msghandler.ko
+kernel/drivers/char/ipmi/ipmi_si.ko: kernel/drivers/char/ipmi/ipmi_msghandler.ko
+kernel/drivers/char/ipmi/ipmi_watchdog.ko: kernel/drivers/char/ipmi/ipmi_msghandler.ko
+kernel/drivers/char/ipmi/ipmi_poweroff.ko: kernel/drivers/char/ipmi/ipmi_msghandler.ko
+kernel/drivers/scsi/device_handler/scsi_dh_rdac.ko:
+kernel/drivers/scsi/device_handler/scsi_dh_hp_sw.ko:
+kernel/drivers/scsi/device_handler/scsi_dh_emc.ko:
+kernel/drivers/scsi/device_handler/scsi_dh_alua.ko:
+kernel/drivers/scsi/scsi_transport_spi.ko:
+kernel/drivers/scsi/scsi_transport_fc.ko:
+kernel/drivers/scsi/scsi_transport_iscsi.ko:
+kernel/drivers/scsi/scsi_transport_sas.ko:
+kernel/drivers/scsi/libsas/libsas.ko: kernel/drivers/scsi/scsi_transport_sas.ko
+kernel/drivers/scsi/scsi_transport_srp.ko:
+kernel/drivers/scsi/libfc/libfc.ko: kernel/drivers/scsi/scsi_transport_fc.ko
+kernel/drivers/scsi/fcoe/libfcoe.ko: kernel/drivers/scsi/libfc/libfc.ko kernel/drivers/scsi/scsi_transport_fc.ko
+kernel/drivers/scsi/st.ko:
+kernel/drivers/scsi/osst.ko:
+kernel/drivers/scsi/ch.ko:
+kernel/drivers/scsi/osd/libosd.ko:
+kernel/drivers/scsi/osd/osd.ko: kernel/drivers/scsi/osd/libosd.ko
+kernel/drivers/scsi/scsi_debug.ko:
+kernel/drivers/scsi/scsi_wait_scan.ko:
+kernel/drivers/input/serio/serport.ko:
+kernel/drivers/input/serio/serio_raw.ko:
+kernel/drivers/media/common/tuners/mt2060.ko:
+kernel/drivers/media/common/tuners/mt2266.ko:
+kernel/drivers/media/common/tuners/mxl5005s.ko:
+kernel/drivers/media/common/tuners/max2165.ko:
+kernel/drivers/media/dvb/frontends/dvb-pll.ko:
+kernel/drivers/media/dvb/frontends/stv0299.ko:
+kernel/drivers/media/dvb/frontends/stb6100.ko:
+kernel/drivers/media/dvb/frontends/dib3000mc.ko: kernel/drivers/media/dvb/frontends/dibx000_common.ko
+kernel/drivers/media/dvb/frontends/dibx000_common.ko:
+kernel/drivers/media/dvb/frontends/dib7000m.ko: kernel/drivers/media/dvb/frontends/dibx000_common.ko
+kernel/drivers/media/dvb/frontends/dib7000p.ko: kernel/drivers/media/dvb/frontends/dibx000_common.ko
+kernel/drivers/media/dvb/frontends/dib8000.ko: kernel/drivers/media/dvb/frontends/dibx000_common.ko
+kernel/drivers/media/dvb/frontends/mt312.ko:
+kernel/drivers/media/dvb/frontends/mt352.ko:
+kernel/drivers/media/dvb/frontends/zl10039.ko:
+kernel/drivers/media/dvb/frontends/zl10353.ko:
+kernel/drivers/media/dvb/frontends/cx22702.ko:
+kernel/drivers/media/dvb/frontends/tda10021.ko:
+kernel/drivers/media/dvb/frontends/lgdt330x.ko:
+kernel/drivers/media/dvb/frontends/lgdt3305.ko:
+kernel/drivers/media/dvb/frontends/dib0070.ko:
+kernel/drivers/media/dvb/frontends/s5h1411.ko:
+kernel/drivers/media/dvb/frontends/lgs8gxx.ko:
+kernel/drivers/media/dvb/frontends/atbm8830.ko:
+kernel/drivers/media/dvb/frontends/cx24116.ko:
+kernel/drivers/media/dvb/frontends/si21xx.ko:
+kernel/drivers/media/dvb/frontends/stv0288.ko:
+kernel/drivers/media/dvb/frontends/stb6000.ko:
+kernel/drivers/media/dvb/frontends/stv6110.ko:
+kernel/drivers/media/dvb/frontends/stv0900.ko:
+kernel/drivers/media/dvb/frontends/ds3000.ko:
+kernel/drivers/media/dvb/dvb-usb/dvb-usb-dibusb-common.ko: kernel/drivers/media/dvb/frontends/dib3000mc.ko kernel/drivers/media/dvb/frontends/dibx000_common.ko kernel/drivers/media/common/tuners/mt2060.ko kernel/drivers/media/dvb/frontends/dvb-pll.ko
+kernel/drivers/media/dvb/dvb-usb/dvb-usb-dibusb-mc.ko: kernel/drivers/media/dvb/dvb-usb/dvb-usb-dibusb-common.ko kernel/drivers/media/dvb/frontends/dib3000mc.ko kernel/drivers/media/dvb/frontends/dibx000_common.ko kernel/drivers/media/common/tuners/mt2060.ko kernel/drivers/media/dvb/frontends/dvb-pll.ko
+kernel/drivers/media/dvb/dvb-usb/dvb-usb-cxusb.ko: kernel/drivers/media/dvb/frontends/cx22702.ko kernel/drivers/media/dvb/frontends/lgdt330x.ko kernel/drivers/media/dvb/frontends/zl10353.ko kernel/drivers/media/dvb/frontends/dib0070.ko kernel/drivers/media/common/tuners/mxl5005s.ko kernel/drivers/media/common/tuners/max2165.ko kernel/drivers/media/dvb/frontends/mt352.ko kernel/drivers/media/dvb/frontends/lgs8gxx.ko kernel/drivers/media/dvb/frontends/dib7000p.ko kernel/drivers/media/dvb/frontends/atbm8830.ko kernel/drivers/media/dvb/frontends/dibx000_common.ko kernel/drivers/media/dvb/frontends/dvb-pll.ko
+kernel/drivers/media/dvb/dvb-usb/dvb-usb-dib0700.ko: kernel/drivers/media/dvb/frontends/lgdt3305.ko kernel/drivers/media/dvb/frontends/s5h1411.ko kernel/drivers/media/dvb/frontends/dib8000.ko kernel/drivers/media/common/tuners/mt2266.ko kernel/drivers/media/dvb/frontends/dib7000m.ko kernel/drivers/media/dvb/frontends/dib0070.ko kernel/drivers/media/dvb/frontends/dib7000p.ko kernel/drivers/media/dvb/frontends/dib3000mc.ko kernel/drivers/media/dvb/frontends/dibx000_common.ko kernel/drivers/media/common/tuners/mt2060.ko
+kernel/drivers/media/dvb/dvb-usb/dvb-usb-dw2102.ko: kernel/drivers/media/dvb/frontends/stv0288.ko kernel/drivers/media/dvb/frontends/stv0299.ko kernel/drivers/media/dvb/frontends/zl10039.ko kernel/drivers/media/dvb/frontends/stv0900.ko kernel/drivers/media/dvb/frontends/mt312.ko kernel/drivers/media/dvb/frontends/si21xx.ko kernel/drivers/media/dvb/frontends/ds3000.ko kernel/drivers/media/dvb/frontends/stb6000.ko kernel/drivers/media/dvb/frontends/cx24116.ko kernel/drivers/media/dvb/frontends/stb6100.ko kernel/drivers/media/dvb/frontends/stv6110.ko kernel/drivers/media/dvb/frontends/dvb-pll.ko
+kernel/drivers/media/dvb/siano/smsmdtv.ko:
+kernel/drivers/media/dvb/siano/smsdvb.ko: kernel/drivers/media/dvb/siano/smsmdtv.ko
+kernel/drivers/media/dvb/siano/smsusb.ko: kernel/drivers/media/dvb/siano/smsmdtv.ko
+kernel/drivers/amlogic/wifi/rtl8xxx_CU/8192cu.ko:
+kernel/drivers/amlogic/wifi/rtl8xxx_EU/8188eu.ko:
+kernel/drivers/amlogic/wifi/broadcm_40181/dhd.ko:
+kernel/drivers/amlogic/cmem/cmemk.ko:
+kernel/drivers/amlogic/mali/mali.ko:
+kernel/drivers/bluetooth/hci_vhci.ko: kernel/net/bluetooth/bluetooth.ko kernel/net/rfkill/rfkill.ko
+kernel/drivers/bluetooth/bcm203x.ko:
+kernel/drivers/bluetooth/bpa10x.ko: kernel/net/bluetooth/bluetooth.ko kernel/net/rfkill/rfkill.ko
+kernel/drivers/bluetooth/bfusb.ko: kernel/net/bluetooth/bluetooth.ko kernel/net/rfkill/rfkill.ko
+kernel/drivers/bluetooth/btusb.ko: kernel/net/bluetooth/bluetooth.ko kernel/net/rfkill/rfkill.ko
+kernel/drivers/bluetooth/ath3k.ko:
+kernel/drivers/bluetooth/btmrvl.ko: kernel/net/bluetooth/bluetooth.ko kernel/net/rfkill/rfkill.ko
+kernel/net/wireless/cfg80211.ko: kernel/net/rfkill/rfkill.ko
+kernel/net/wireless/lib80211.ko:
+kernel/net/bluetooth/bluetooth.ko: kernel/net/rfkill/rfkill.ko
+kernel/net/bluetooth/l2cap.ko: kernel/net/bluetooth/bluetooth.ko kernel/net/rfkill/rfkill.ko
+kernel/net/bluetooth/sco.ko: kernel/net/bluetooth/bluetooth.ko kernel/net/rfkill/rfkill.ko
+kernel/net/bluetooth/rfcomm/rfcomm.ko: kernel/net/bluetooth/l2cap.ko kernel/net/bluetooth/bluetooth.ko kernel/net/rfkill/rfkill.ko
+kernel/net/bluetooth/bnep/bnep.ko: kernel/net/bluetooth/l2cap.ko kernel/net/bluetooth/bluetooth.ko kernel/net/rfkill/rfkill.ko
+kernel/net/bluetooth/hidp/hidp.ko: kernel/net/bluetooth/l2cap.ko kernel/net/bluetooth/bluetooth.ko kernel/net/rfkill/rfkill.ko
+kernel/net/mac80211/mac80211.ko: kernel/net/wireless/cfg80211.ko kernel/net/rfkill/rfkill.ko
+kernel/net/rfkill/rfkill.ko:
