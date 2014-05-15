@@ -1,0 +1,48 @@
+<advancedsettings>
+  <hidebattery>1</hidebattery>
+  <hidecpurev>1</hidecpurev>
+  <hidecpuserial>1</hidecpuserial>
+  <hidetotaluptime>1</hidetotaluptime>
+  <showexitbutton>false</showexitbutton>
+  <loglevel hide="false">2</loglevel>
+  <cputempcommand>echo "$(cat /sys/class/saradc/saradc_ch6) C"</cputempcommand>
+
+  <pvr>
+    <minvideocachelevel>50</minvideocachelevel>
+    <minaudiocachelevel>50</minaudiocachelevel>
+  </pvr>
+
+  <video>
+    <subsdelayrange>60</subsdelayrange>
+    <audiodelayrange>60</audiodelayrange>
+  </video>
+
+  <network>
+    <readbufferfactor>4.0</readbufferfactor>
+    <buffermode>1</buffermode>
+  </network>
+
+  <audiooutput>
+    <ac3passthrough>false</ac3passthrough>
+    <dtspassthrough>false</dtspassthrough>
+    <truehdpassthrough>false</truehdpassthrough>
+    <dtshdpassthrough>false</dtshdpassthrough>
+    <audiodevice>ALSA:@</audiodevice>
+    <channels>1</channels>
+    <config>2</config>
+  </audiooutput>
+
+  <videoscreen>
+    <blankdisplays>false</blankdisplays>
+    <vsync>2</vsync>
+  </videoscreen>
+
+  <input>
+    <enablesystemkeys>false</enablesystemkeys>
+    <remoteaskeyboard>true</remoteaskeyboard>
+  </input>
+
+  <powermanagement>
+    <shutdownstate>1</shutdownstate>
+  </powermanagement>
+</advancedsettings>
