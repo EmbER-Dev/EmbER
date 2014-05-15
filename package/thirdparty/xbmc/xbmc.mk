@@ -61,7 +61,7 @@ endif
 ifneq ($(BR2_XBMC_KEYMAP),"")
 XBMC_KEYMAP = package/thirdparty/xbmc/keymaps/$(call qstrip,$(BR2_XBMC_KEYMAP)).xml
 else
-XBMC_KEYMAP = package/thirdparty/xbmc/keymaps/keyboard.xml
+XBMC_KEYMAP = package/thirdparty/xbmc/keymaps/variant.keyboard.xml
 endif
 
 ifneq ($(BR2_XBMC_ADV_SETTINGS),"")
