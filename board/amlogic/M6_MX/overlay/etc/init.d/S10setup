@@ -23,6 +23,7 @@ if [ "X$1" = "Xstart" ]; then
     echo "S10setup: Creating .sysconfig folder... "
     mkdir -p /root/.sysconfig/NetworkManager
     cp -a /etc/NetworkManager/* /root/.sysconfig/NetworkManager/
+    chmod 544 /root/.sysconfig/NetworkManager/dispatcher.d/*
   fi
   mount -o bind /root/.sysconfig/NetworkManager /etc/NetworkManager
 
