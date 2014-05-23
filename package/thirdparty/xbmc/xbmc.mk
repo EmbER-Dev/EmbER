@@ -4,7 +4,7 @@
 #
 #################################################################################
 
-XBMC_VERSION = 13.0-Gotham_r2
+XBMC_VERSION = $(call qstrip,$(BR2_PACKAGE_XBMC_REV))
 XBMC_SITE_METHOD = git
 XBMC_SITE = git://github.com/xbmc/xbmc.git
 XBMC_INSTALL_STAGING = YES

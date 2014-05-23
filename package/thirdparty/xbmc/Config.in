@@ -89,6 +89,18 @@ config BR2_PACKAGE_XBMC
 menu "XBMC Options"
 	depends on BR2_PACKAGE_XBMC
 
+comment "XBMC Build Options"
+
+config BR2_PACKAGE_XBMC_REV
+	string "Github Revision"
+	default "13.1-Gotham"
+	help
+	  This option will set the github revision.
+
+	  Github: "git://github.com/xbmc/xbmc.git"
+	  Default: "13.1-Gotham"
+	  Beware: Changing this could break patchs
+
 comment "XBMC Customization Options"
 
 config BR2_XBMC_REMOTE_CONF
