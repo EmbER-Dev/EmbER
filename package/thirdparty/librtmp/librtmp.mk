@@ -3,7 +3,7 @@
 #librtmp
 #
 #############################################################
-LIBRTMP_VERSION = a9f353c7ccf29d6305e13fedb77653b8681e9fc2
+LIBRTMP_VERSION = 79459a2b43f41ac44a2ec001139bcb7b1b8f7497
 LIBRTMP_SOURCE = rtmpdump-$(LIBRTMP_VERSION).tar.gz
 LIBRTMP_SITE_METHOD = git
 LIBRTMP_SITE = git://git.ffmpeg.org/rtmpdump
