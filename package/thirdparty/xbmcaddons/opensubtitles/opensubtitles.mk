@@ -3,7 +3,7 @@
 ## Xbmc Open Subtitles Addon
 #
 ###############################################################################
-OPENSUBTITLES_VERSION = 3e554d89ed6cca26438dc11c3e30b8cf50978a71
+OPENSUBTITLES_VERSION = a5e1a9decd520e73b8e52b30ebb0008f0e556684
 OPENSUBTITLES_SOURCE = opensubtitles-$(OPENSUBTITLES_VERSION).tar.gz
 OPENSUBTITLES_SITE = https://github.com/amet/service.subtitles.opensubtitles.git
 OPENSUBTITLES_SITE_METHOD = git
