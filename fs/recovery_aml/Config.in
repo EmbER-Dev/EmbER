@@ -68,6 +68,8 @@ config BR2_TARGET_ROOTFS_RECOVERY_AML_WIPE_USERDATA_NEVER
 
 endchoice
 
+source "fs/recovery_aml/Config-prodinfo.in"
+
 source "fs/recovery_aml/Config-logo.in"
 
 source "fs/recovery_aml/Config-advanced.in"

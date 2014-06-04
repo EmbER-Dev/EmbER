@@ -1,0 +1,18 @@
+
+menu "Product info"
+      depends on BR2_TARGET_ROOTFS_RECOVERY_AML
+
+config BR2_TARGET_ROOTFS_RECOVERY_PROD_NAME
+       string "Product name"
+       default ""
+       help
+	  Specify product name
+
+config BR2_TARGET_ROOTFS_RECOVERY_PROD_SWVER
+       string "Software version"
+       depends on !BR2_TARGET_ROOTFS_RECOVERY_PROD_NAME=""
+       default ""
+       help
+	  Specify software version
+
+endmenu

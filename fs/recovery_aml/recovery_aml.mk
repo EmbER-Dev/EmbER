@@ -109,6 +109,22 @@ endif
 # Aditional files to be included in package, by default only logo.img
 ADDITIONAL_FILES = logo.img
 
+###### Product information ######
+
+ifneq ($(strip $(BR2_TARGET_ROOTFS_RECOVERY_PROD_NAME)),"")
+ROOTFS_RECOVERY_AML_CMD += \
+    echo "Writing product information..." && \
+    mkdir -p $(BINARIES_DIR)/aml_recovery/system/etc/prodinfo && \
+    echo $(BR2_TARGET_ROOTFS_RECOVERY_PROD_NAME) > $(BINARIES_DIR)/aml_recovery/system/etc/prodinfo/prodname &&
+
+ifneq ($(strip $(BR2_TARGET_ROOTFS_RECOVERY_PROD_SWVER)),"")
+ROOTFS_RECOVERY_AML_CMD += \
+    echo $(BR2_TARGET_ROOTFS_RECOVERY_PROD_SWVER) > $(BINARIES_DIR)/aml_recovery/system/etc/prodinfo/prodsw &&
+endif
+endif
+
+###### END: Product information ######
+
 ###### Advanced options ######
 
 # Memory type
