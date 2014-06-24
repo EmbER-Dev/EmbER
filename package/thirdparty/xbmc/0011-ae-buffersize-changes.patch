@@ -1,0 +1,34 @@
+From ff2deaab74b85666ba01a96f68e4487bd74f6458 Mon Sep 17 00:00:00 2001
+From: croniccorey <cronmod.dev@gmail.com>
+Date: Mon, 23 Sep 2013 01:22:25 -0400
+Subject: [PATCH] AE: Buffersize changes
+
+---
+ xbmc/cores/AudioEngine/Sinks/AESinkALSA.cpp | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/xbmc/cores/AudioEngine/Sinks/AESinkALSA.cpp b/xbmc/cores/AudioEngine/Sinks/AESinkALSA.cpp
+index e08a335..082fafd 100644
+--- a/xbmc/cores/AudioEngine/Sinks/AESinkALSA.cpp
++++ b/xbmc/cores/AudioEngine/Sinks/AESinkALSA.cpp
+@@ -384,7 +384,7 @@ bool CAESinkALSA::InitializeHW(AEAudioFormat &format)
+    will cause problems with menu sounds. Buffer will be increased
+    after those are fixed.
+   */
+-  periodSize  = std::min(periodSize, (snd_pcm_uframes_t) sampleRate / 20);
++  periodSize  = std::min(periodSize, (snd_pcm_uframes_t) sampleRate / 50);
+   bufferSize  = std::min(bufferSize, (snd_pcm_uframes_t) sampleRate / 5);
+ #if defined(HAS_AMLPLAYER) || defined(HAS_LIBAMCODEC)
+   // must be pot for pivos.
+@@ -401,7 +401,7 @@ bool CAESinkALSA::InitializeHW(AEAudioFormat &format)
+   periodSize = CheckNP2(periodSize);
+ #endif
+ 
+-  bufferSize  = std::min(bufferSize, (snd_pcm_uframes_t)8192);
++  bufferSize  = std::max(bufferSize, (snd_pcm_uframes_t)8192);
+   periodSize  = bufferSize / ALSA_PERIODS;
+   periods     = ALSA_PERIODS;
+ 
+-- 
+1.9.3
+

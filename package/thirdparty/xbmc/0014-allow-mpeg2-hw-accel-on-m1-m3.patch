@@ -1,0 +1,45 @@
+From 0602e6857fabc62cf7ec734b3cb70c61dd0fd888 Tue Jun 24 23:07:32 2014
+From: croniccorey <cronmod.dev@gmail.com>
+Date: Tue Jun 24 23:07:32 2014 -0400
+Subject: AML: Allow mpeg2 HW accel on meson1/meson3
+
+---
+ xbmc/cores/dvdplayer/DVDCodecs/Video/DVDVideoCodecAmlogic.cpp | 14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
+
+diff --git a/xbmc/cores/dvdplayer/DVDCodecs/Video/DVDVideoCodecAmlogic.cpp b/xbmc/cores/dvdplayer/DVDCodecs/Video/DVDVideoCodecAmlogic.cpp
+index 16a8341..08271df 100644
+--- a/xbmc/cores/dvdplayer/DVDCodecs/Video/DVDVideoCodecAmlogic.cpp
++++ b/xbmc/cores/dvdplayer/DVDCodecs/Video/DVDVideoCodecAmlogic.cpp
+@@ -24,6 +24,7 @@
+ #include "DVDClock.h"
+ #include "DVDStreamInfo.h"
+ #include "AMLCodec.h"
++#include "utils/AMLUtils.h"
+ #include "utils/BitstreamConverter.h"
+ #include "utils/log.h"
+ 
+@@ -69,12 +70,15 @@ bool CDVDVideoCodecAmlogic::Open(CDVDStreamInfo &hints, CDVDCodecOptions &option
+     case AV_CODEC_ID_MPEG1VIDEO:
+     case AV_CODEC_ID_MPEG2VIDEO:
+     case AV_CODEC_ID_MPEG2VIDEO_XVMC:
+-      if (m_hints.width <= 1280)
++      if (aml_get_cputype() >= 6)
+       {
+-        // amcodec struggles with VOB playback
+-        // which can be handled via software
+-        return false;
+-        break;
++        if (m_hints.width <= 1280)
++        {
++          // amcodec struggles with VOB playback
++          // which can be handled via software
++          return false;
++          break;
++        }
+       }
+       m_mpeg2_sequence_pts = 0;
+       m_mpeg2_sequence = new mpeg2_sequence;
+-- 
+1.9.3
+

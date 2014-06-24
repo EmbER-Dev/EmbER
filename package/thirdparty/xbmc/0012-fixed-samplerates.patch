@@ -1,0 +1,45 @@
+From 1c4bed0239ba64136dbecd5c679a7d120ff5f19e Mon Sep 17 00:00:00 2001
+From: davilla <davilla@4pi.com>
+Date: Mon, 21 Jan 2013 11:30:47 -0500
+Subject: [PATCH] [aml] fixed, alsa/kernel lies, so map everything to 44100 or 48000
+
+---
+ xbmc/cores/AudioEngine/Sinks/AESinkALSA.cpp | 21 +++++++++++++++++++++
+ 1 file changed, 21 insertions(+)
+
+diff --git a/xbmc/cores/AudioEngine/Sinks/AESinkALSA.cpp b/xbmc/cores/AudioEngine/Sinks/AESinkALSA.cpp
+index 8a20fc4..f64cb51 100644
+--- a/xbmc/cores/AudioEngine/Sinks/AESinkALSA.cpp
++++ b/xbmc/cores/AudioEngine/Sinks/AESinkALSA.cpp
+@@ -305,6 +305,27 @@ bool CAESinkALSA::InitializeHW(const ALSAConfig &inconfig, ALSAConfig &outconfig
+   snd_pcm_hw_params_set_access(m_pcm, hw_params, SND_PCM_ACCESS_RW_INTERLEAVED);
+ 
+   unsigned int sampleRate   = inconfig.sampleRate;
++#if defined(HAS_LIBAMCODEC)
++  // alsa/kernel lies, so map everything to 44100 or 48000
++  switch(sampleRate)
++  {
++    case 11025:
++    case 22050:
++    case 88200:
++    case 176400:
++      sampleRate = 44100;
++      break;
++    case 8000:
++    case 16000:
++    case 24000:
++    case 32000:
++    case 96000:
++    case 192000:
++    case 384000:
++      sampleRate = 48000;
++      break;
++  }
++#endif
+   unsigned int channelCount = inconfig.channels;
+   snd_pcm_hw_params_set_rate_near    (m_pcm, hw_params, &sampleRate, NULL);
+   snd_pcm_hw_params_set_channels_near(m_pcm, hw_params, &channelCount);
+
+-- 
+1.9.3
+

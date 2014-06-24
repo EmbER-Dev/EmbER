@@ -1,0 +1,49 @@
+From bf4b56c3582211566883ab3d4a7bb87b80f6231b Tue Jun 24 18:41:00 2014
+From: croniccorey <cronmod.dev@gmail.com>
+Date: Tue Jun 24 18:41:00 2014 -0400
+Subject: AML: Force passthrough
+
+---
+ xbmc/cores/AudioEngine/Engines/ActiveAE/ActiveAESink.cpp | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
+
+diff --git a/xbmc/cores/AudioEngine/Engines/ActiveAE/ActiveAESink.cpp b/xbmc/cores/AudioEngine/Engines/ActiveAE/ActiveAESink.cpp
+index 56b72d3..74d5bf6 100644
+--- a/xbmc/cores/AudioEngine/Engines/ActiveAE/ActiveAESink.cpp
++++ b/xbmc/cores/AudioEngine/Engines/ActiveAE/ActiveAESink.cpp
+@@ -27,6 +27,10 @@
+ 
+ #include "settings/Settings.h"
+ 
++#if defined(HAS_LIBAMCODEC)
++#include "utils/AMLUtils.h"
++#endif
++
+ using namespace ActiveAE;
+ 
+ CActiveAESink::CActiveAESink(CEvent *inMsgEvent) :
+@@ -95,6 +99,10 @@ AEDeviceType CActiveAESink::GetDeviceType(const std::string &device)
+ 
+ bool CActiveAESink::HasPassthroughDevice()
+ {
++#if defined(HAS_LIBAMCODEC)
++  if (aml_present())
++    return true;
++#endif
+   for (AESinkInfoList::iterator itt = m_sinkInfoList.begin(); itt != m_sinkInfoList.end(); ++itt)
+   {
+     for (AEDeviceInfoList::iterator itt2 = itt->m_deviceInfoList.begin(); itt2 != itt->m_deviceInfoList.end(); ++itt2)
+@@ -109,6 +117,10 @@ bool CActiveAESink::HasPassthroughDevice()
+ 
+ bool CActiveAESink::SupportsFormat(const std::string &device, AEDataFormat format, int samplerate)
+ {
++#if defined(HAS_LIBAMCODEC)
++  if (aml_present())
++    return true;
++#endif
+   std::string dev = device;
+   std::string dri;
+   CAESinkFactory::ParseDevice(dev, dri);
+-- 
+1.9.3
+
