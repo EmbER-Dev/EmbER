@@ -27,7 +27,7 @@ index 56b72d3..74d5bf6 100644
  bool CActiveAESink::HasPassthroughDevice()
  {
 +#if defined(HAS_LIBAMCODEC)
-+  if (aml_present())
++  if (aml_get_cputype() > -1)
 +    return true;
 +#endif
    for (AESinkInfoList::iterator itt = m_sinkInfoList.begin(); itt != m_sinkInfoList.end(); ++itt)
@@ -38,7 +38,7 @@ index 56b72d3..74d5bf6 100644
  bool CActiveAESink::SupportsFormat(const std::string &device, AEDataFormat format, int samplerate)
  {
 +#if defined(HAS_LIBAMCODEC)
-+  if (aml_present())
++  if (aml_get_cputype() > -1)
 +    return true;
 +#endif
    std::string dev = device;
