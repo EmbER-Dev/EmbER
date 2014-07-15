@@ -1,0 +1,187 @@
+--- /dev/null
++++ busybox-1.22.1-shuf/coreutils/shuf.c
+@@ -0,0 +1,184 @@
++/* vi: set sw=4 ts=4: */
++/*
++ * shuf: Write a random permutation of the input lines to standard output.
++ *
++ * Copyright (C) 2014 by Bartosz Golaszewski <bartekgola at gmail.com>
++ *
++ * Licensed under GPLv2 or later, see file LICENSE in this source tree.
++ */
++
++//usage:#define shuf_trivial_usage
++//usage:       "[-e|-i LO-HI] [-n NUM] [-o FILE] [-z] [FILE|ARG...]"
++//usage:#define shuf_full_usage "\n\n"
++//usage:       "Write a random permutation of the input lines to standard output.\n"
++//usage:     "\n	-e	treat each ARG as an input line"
++//usage:     "\n	-i	treat each number LO through HI as an input line"
++//usage:     "\n	-n	output at most NUM lines"
++//usage:     "\n	-o	write result to FILE instead of standard output"
++//usage:     "\n	-z	end lines with 0 byte, not newline"
++
++#include "libbb.h"
++
++/* This is a NOEXEC applet. Be very careful! */
++
++#define OPT_e		(1<<0)		/* echo mode */
++#define OPT_i		(1<<1)		/* number range mode */
++#define OPT_n		(1<<2)		/* max output lines */
++#define OPT_o		(1<<3)		/* specify output file */
++#define OPT_z		(1<<4)		/* use zeros insted of '\n' as eol */
++#define OPT_STR		"ei:n:o:z"
++
++#define UINT_BUF_SIZE	16		/* enough to hold a 32-bit unsigned int */
++
++static int get_random(int fd)
++{
++	int r;
++
++	if (fd < 0) {
++		/* Paranoia #1 - Use rand() if /dev/urandom is missing. */
++		r = rand();
++	} else {
++		if (read(fd, &r, sizeof(r)) != sizeof(r)) {
++			/* Paranoia #2 - Use rand() if unable to read from /dev/urandom. */
++			r = rand();
++		} else {
++			/* Value read from urandom may be negative. */
++			r = r < 0 ? -r : r;
++		}
++	}
++
++	return r;
++}
++
++/*
++ * Use the Fisher-Yates shuffle algorithm on an array of lines.
++ */
++static void shuffle_lines(char **lines, size_t numlines)
++{
++	int i, r, fd;
++
++	fd = open("/dev/urandom", O_RDONLY);
++	if (fd < 0) {
++		/* Only call srand() if /dev/urandom is missing and
++		 * we'll use rand() later.
++		 */
++		srand(monotonic_us());
++	}
++
++	for (i = numlines-1; i > 0; --i) {
++		r = get_random(fd) % i;
++		lines[i] = (char*)((uintptr_t)lines[i] ^ (uintptr_t)lines[r]);
++		lines[r] = (char*)((uintptr_t)lines[i] ^ (uintptr_t)lines[r]);
++		lines[i] = (char*)((uintptr_t)lines[i] ^ (uintptr_t)lines[r]);
++	}
++
++	close(fd);
++}
++
++int shuf_main(int argc UNUSED_PARAM, char **argv) MAIN_EXTERNALLY_VISIBLE;
++int shuf_main(int argc UNUSED_PARAM, char **argv)
++{
++	char *line, **lines;
++	const char *input = "-";
++	size_t numlines;
++	int i;
++	unsigned opts;
++	char *opt_i_str, *opt_n_str, *opt_o_str;
++	unsigned lo, hi, maxlines = UINT_MAX;
++	char eol = '\n';
++
++	opts = getopt32(argv, OPT_STR, &opt_i_str, &opt_n_str, &opt_o_str);
++
++	if ((opts & OPT_e) && (opts & OPT_i)) {
++		bb_error_msg_and_die("cannot combine -e and -i options");
++	} else
++	if (opts & OPT_i) {
++		char *lo_s, *hi_s, *dash;
++
++		lo_s = opt_i_str;
++		dash = index(opt_i_str, '-');
++		if (dash == NULL) {
++			bb_error_msg_and_die(
++				"invalid input range \'%s\'", opt_i_str);
++		}
++
++		*dash = '\0';
++		hi_s = dash+1;
++		lo = bb_strtoul(lo_s, NULL, 10);
++		hi = bb_strtoul(hi_s, NULL, 10);
++	 	*dash = '-';
++		if ((errno == ERANGE) || (hi < lo)) {
++			bb_error_msg_and_die(
++				"invalid input range \'%s\'", opt_i_str);
++		}
++	}
++
++	if (opts & OPT_n) {
++		maxlines = bb_strtoul(opt_n_str, NULL, 10);
++		if (errno == ERANGE)
++			bb_error_msg_and_die("invalid line count: \'%s\'", opt_n_str);
++	}
++	if (opts & OPT_o)
++		xmove_fd(xopen(opt_o_str, O_WRONLY|O_CREAT|O_TRUNC), STDOUT_FILENO);
++	if (opts & OPT_z)
++		eol = '\0';
++
++	/* Prepare lines for shuffling - either: */
++	if (opts & OPT_e) {
++		/* make lines from command-line arguments, */
++		char **tmplines;
++
++		numlines = (argc-optind);
++		lines = xmalloc(numlines * sizeof(char*));
++		tmplines = lines;
++		for (i = optind; i < argc; ++i)
++			*tmplines++ = argv[i];
++	} else
++	if (opts & OPT_i) {
++		/* create a range of numbers, */
++		char buf[UINT_BUF_SIZE];
++
++		numlines = (hi+1) - lo;
++		lines = xmalloc(numlines * sizeof(char*));
++		for (i = 0; i < numlines; ++i) {
++			snprintf(buf, UINT_BUF_SIZE, "%u", lo++);
++			lines[i] = xstrdup(buf);
++		}
++	} else {
++		/* or run in default mode - read lines from stdin or
++		 * the input file.
++		 */
++		FILE *fd;
++
++		lines = NULL;
++		numlines = 0;
++		if (argc > optind) {
++			if ((argc - optind) != 1) {
++				bb_error_msg_and_die("extra operand \'%s\'",
++							argv[optind+1]);
++			}
++			input = argv[optind];
++		}
++
++		fd = xfopen_stdin(input);
++		for (;;) {
++			line = xmalloc_fgetline(fd);
++			if (!line)
++				break;
++			lines = xrealloc_vector(lines, 6, numlines);
++			lines[numlines++] = line;
++		}
++		fclose_if_not_stdin(fd);
++	}
++
++	shuffle_lines(lines, numlines);
++
++	for (i = 0; i < numlines; ++i) {
++		if (i >= maxlines)
++			break;
++		fputs(lines[i], stdout);
++		fputc(eol, stdout);
++	}
++
++	fflush_stdout_and_exit(EXIT_SUCCESS);
++}

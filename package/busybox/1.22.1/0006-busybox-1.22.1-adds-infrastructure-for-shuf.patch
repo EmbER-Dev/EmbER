@@ -1,0 +1,35 @@
+--- busybox-1.22.1/coreutils/Config.src
++++ busybox-1.22.1-shuf/coreutils/Config.src
+@@ -520,6 +520,12 @@ config SHA3SUM
+ 	help
+ 	  Compute and check SHA3 (512-bit) message digest
+ 
++config SHUF
++	bool "shuf"
++	default y
++	help
++	  Generate random permutations
++
+ config SLEEP
+ 	bool "sleep"
+ 	default y
+--- busybox-1.22.1-shuf/coreutils/Kbuild.src
++++ busybox-1.22.1-shuf/coreutils/Kbuild.src
+@@ -62,6 +62,7 @@ lib-$(CONFIG_SHA1SUM)   += md5_sha1_sum.o
+ lib-$(CONFIG_SHA256SUM) += md5_sha1_sum.o
+ lib-$(CONFIG_SHA512SUM) += md5_sha1_sum.o
+ lib-$(CONFIG_SHA3SUM)   += md5_sha1_sum.o
++lib-$(CONFIG_SHUF)	+= shuf.o
+ lib-$(CONFIG_SLEEP)     += sleep.o
+ lib-$(CONFIG_SPLIT)     += split.o
+ lib-$(CONFIG_SORT)      += sort.o
+--- busybox-1.22.1/include/applets.src.h
++++ busybox-1.22.1-shuf/include/applets.src.h
+@@ -319,6 +319,7 @@ IF_SHA3SUM(APPLET_NOEXEC(sha3sum, md5_sha1_sum, BB_DIR_USR_BIN, BB_SUID_DROP, sh
+ IF_SHA256SUM(APPLET_NOEXEC(sha256sum, md5_sha1_sum, BB_DIR_USR_BIN, BB_SUID_DROP, sha256sum))
+ IF_SHA512SUM(APPLET_NOEXEC(sha512sum, md5_sha1_sum, BB_DIR_USR_BIN, BB_SUID_DROP, sha512sum))
+ IF_SHOWKEY(APPLET(showkey, BB_DIR_USR_BIN, BB_SUID_DROP))
++IF_SHUF(APPLET_NOEXEC(shuf, shuf, BB_DIR_USR_BIN, BB_SUID_DROP, shuf))
+ IF_SLATTACH(APPLET(slattach, BB_DIR_SBIN, BB_SUID_DROP))
+ /* Do not make this applet NOFORK. It breaks ^C-ing of pauses in shells: */
+ IF_SLEEP(APPLET(sleep, BB_DIR_BIN, BB_SUID_DROP))
