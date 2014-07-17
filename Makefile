@@ -345,6 +345,10 @@ endif
 # and after overlay files are copied
 ROOT_PWD := $(call qstrip,$(BR2_TARGET_GENERIC_ROOT_PASSWD))
 ifneq ($(ROOT_PWD),)
+EXISTS_MKPASSWD = $(shell type -p mkpasswd)
+
+$(if $(EXISTS_MKPASSWD),, $(error mkpasswd command doesnt exist))
+
 TARGETS+=target-makepassword
 endif
 
@@ -573,6 +577,7 @@ endif
 TARGET_ROOT_PASSWD := $(call qstrip,$(BR2_TARGET_GENERIC_ROOT_PASSWD))
 TARGET_PASSWD_METHOD := $(call qstrip,$(BR2_TARGET_GENERIC_PASSWD_METHOD))
 ifneq ($(TARGET_ROOT_PASSWD),)
+
 TARGET_ROOT_PASSWD_HASH = $(shell mkpasswd -m "$(TARGET_PASSWD_METHOD)" "$(TARGET_ROOT_PASSWD)")
 
 target-makepassword:
