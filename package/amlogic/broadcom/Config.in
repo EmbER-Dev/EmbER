@@ -1,8 +1,54 @@
 config BR2_PACKAGE_BROADCOM
-	bool "broadcom wifi"
+	bool "Support for Broadcom WiFi modules"
 	default n
 	help
 	  This option will install FW and NVRAM files to support various
-	  broadcom wifi chips on Amlogic platforms.
+	  Broadcom wifi chips on Amlogic platforms.
 
 	  NOTE: The kernel side driver is required
+
+choice
+	prompt "Wifi module"
+	depends on BR2_PACKAGE_BROADCOM
+	default BR2_PACKAGE_BROADCOM_AP6330_AP6210
+
+config BR2_PACKAGE_BROADCOM_4330
+	bool "4330"
+
+config BR2_PACKAGE_BROADCOM_40181
+	bool "40181"
+
+config BR2_PACKAGE_BROADCOM_40183
+	bool "40183"
+
+config BR2_PACKAGE_BROADCOM_AP62X2
+	bool "ap62x2"
+
+config BR2_PACKAGE_BROADCOM_AP6181
+	bool "ap6181"
+
+config BR2_PACKAGE_BROADCOM_AP6210
+	bool "ap6210"
+
+config BR2_PACKAGE_BROADCOM_AP6330
+	bool "ap6330 (ap6210 and ap6330)"
+
+config BR2_PACKAGE_BROADCOM_AP6476
+	bool "ap6476"
+
+config BR2_PACKAGE_BROADCOM_AP6493
+	bool "ap6493"
+
+endchoice
+
+config BR2_PACKAGE_BROADCOM_MODULE
+	string
+	default "bcm4330"		if BR2_PACKAGE_BROADCOM_4330
+	default "bcm40181" 		if BR2_PACKAGE_BROADCOM_40181
+	default "bcm40183"		if BR2_PACKAGE_BROADCOM_40183
+	default "ap62x2"		if BR2_PACKAGE_BROADCOM_AP62X2
+	default "ap6181"		if BR2_PACKAGE_BROADCOM_AP6181
+	default "ap6210"		if BR2_PACKAGE_BROADCOM_AP6210
+	default "ap6330"		if BR2_PACKAGE_BROADCOM_AP6330
+	default "ap6476"		if BR2_PACKAGE_BROADCOM_AP6476
+	default "ap6493"		if BR2_PACKAGE_BROADCOM_AP6493

@@ -1,4 +1,4 @@
-#AP6330_Nvram_test_V1.0_20121130
+#AP6330_NVRAM_V1.0_20121130
 #Sample variables file for BCM94330 SD FC AGB board
 manfid=0x2d0
 prodid=0x0547
@@ -15,7 +15,7 @@ ag0=254
 aa2g=1
 ccode=ALL
 pa0itssit=0x20
-pa0b0=5487
+pa0b0=5587
 pa0b1=-633
 pa0b2=-158
 rssismf2g=0xa
@@ -26,15 +26,16 @@ rssismf5g=0x4
 rssismc5g=0x3
 rssisav5g=0x7
 #PA parameters for lower a-band
-pa1lob0=4728
+pa1lob0=4748
 pa1lob1=-566
 pa1lob2=-180
 #PA parameters for midband
-pa1b0=4792
-pa1b1=-613
+pa1b0=4762
+pa1b1=-593
 pa1b2=-172
 #PA parameters for high band
-pa1hib0=4686
+#pa1hib0=4596
+pa1hib0=4666
 pa1hib1=-619
 pa1hib2=-163
 rxpo5g=0
@@ -77,5 +78,5 @@ noise_cal_ref_2g=53
 noise_cal_po_2g=0
 noise_cal_ref_5g=52
 noise_cal_po_5g=5,0,0
-# 40183 OOB parameter: High level trigger
+# 4330 OOB parameter: High level trigger
 muxenab=0x10

@@ -1,4 +1,4 @@
-GB9663_Nvram_V1.0_09242012.txt
+#AP6493_NVRAM_V1.0_12142012
 manfid=0x2d0
 prodid=0x0532
 vendid=0x14e4
@@ -31,7 +31,7 @@ rssismc2g=0x3
 rssisav2g=0x7
 sromrev=3
 # 2.4G Tx Power
-maxp2ga0=76
+maxp2ga0=73
 cck2gpo=0x4444
 ofdm2gpo=0x66666666
 mcs2gpo0=0x8888
@@ -51,5 +51,5 @@ noise_cal_po_bias_2g=-4
 txalpfbyp2g=1
 cckdigfilttype=21
 #ofdmdigfilttype=2
-# 40183 OOB parameter: High level trigger
+# 4330 OOB parameter: High level trigger
 muxenab=0x10

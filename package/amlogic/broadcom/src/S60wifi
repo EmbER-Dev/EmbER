@@ -32,6 +32,12 @@ case "$1" in
         	ap62x2)
         		/sbin/insmod $lib_path/broadcm_40181/dhd.ko "firmware_path=/etc/wifi/ap62x2/fw_bcm43241b4_ag.bin nvram_path=/etc/wifi/ap62x2/nvram_ap62x2.txt" 
           	;;
+        	ap6476)
+        		/sbin/insmod $lib_path/broadcm_40181/dhd.ko "firmware_path=/etc/wifi/ap6476/fw_bcm43241a2.bin nvram_path=/etc/wifi/ap6476/nvram_ap6476.txt"
+          	;;
+        	ap6493)
+        		/sbin/insmod $lib_path/broadcm_40181/dhd.ko "firmware_path=/etc/wifi/ap6493/fw_bcm40183b2.bin nvram_path=/etc/wifi/ap6493/nvram_ap6493.txt"
+          	;;
         	*)
           	;;
         esac
@@ -39,7 +45,7 @@ case "$1" in
   stop)
         echo "Stopping wifi..."
         case "$wifi_type" in
-        	bcm40181 | bcm40183 | bcm4330 | ap6210 | ap6181 | ap6330 | ap62x2)
+        	bcm40181 | bcm40183 | bcm4330 | ap6210 | ap6181 | ap6330 | ap6330_6210 | ap62x2 | ap6476 | ap6493)
         		/sbin/modprobe -r dhd
           	;;
         	*)
@@ -50,32 +56,40 @@ case "$1" in
         echo "Restarting wifi..."
         case "$wifi_type" in
         	bcm40181)
-        		/sbin/modprobe -r dhd
+				/sbin/modprobe -r dhd
         		/sbin/insmod $lib_path/broadcm_40181/dhd.ko "firmware_path=/etc/wifi/40181/fw_bcm40181a2.bin nvram_path=/etc/wifi/40181/nvram.txt" 
           	;;
         	bcm40183)
-        		/sbin/modprobe -r dhd
+				/sbin/modprobe -r dhd
         		/sbin/insmod $lib_path/broadcm_40181/dhd.ko "firmware_path=/etc/wifi/40183/fw_bcm40183b2.bin nvram_path=/etc/wifi/40183/nvram.txt" 
           	;;
         	bcm4330)
-        		/sbin/modprobe -r dhd
+				/sbin/modprobe -r dhd
         		/sbin/insmod $lib_path/broadcm_40181/dhd.ko "firmware_path=/etc/wifi/4330/fw_bcm40183b2.bin nvram_path=/etc/wifi/4330/nvram.txt" 
           	;;
         	ap6210)
-        		/sbin/modprobe -r dhd
+				/sbin/modprobe -r dhd
         		/sbin/insmod $lib_path/broadcm_40181/dhd.ko "firmware_path=/etc/wifi/ap6210/fw_bcm40181b2.bin nvram_path=/etc/wifi/ap6210/nvram_ap6210.txt" 
           	;;
         	ap6181)
-        		/sbin/modprobe -r dhd
+				/sbin/modprobe -r dhd
         		/sbin/insmod $lib_path/broadcm_40181/dhd.ko "firmware_path=/etc/wifi/ap6181/fw_bcm40181b2.bin nvram_path=/etc/wifi/ap6181/nvram_ap6181.txt" 
           	;;
         	ap6330)
-        		/sbin/modprobe -r dhd
+				/sbin/modprobe -r dhd
         		/sbin/insmod $lib_path/broadcm_40181/dhd.ko "firmware_path=/etc/wifi/ap6330/fw_bcm40183b2.bin nvram_path=/etc/wifi/ap6330/nvram_ap6330.txt" 
           	;;
         	ap62x2)
-        		/sbin/modprobe -r dhd
+				/sbin/modprobe -r dhd
         		/sbin/insmod $lib_path/broadcm_40181/dhd.ko "firmware_path=/etc/wifi/ap62x2/fw_bcm43241b4_ag.bin nvram_path=/etc/wifi/ap62x2/nvram_ap62x2.txt" 
+          	;;
+        	ap6476)
+				/sbin/modprobe -r dhd
+        		/sbin/insmod $lib_path/broadcm_40181/dhd.ko "firmware_path=/etc/wifi/ap6476/fw_bcm43241a2.bin nvram_path=/etc/wifi/ap6476/nvram_ap6476.txt"
+          	;;
+        	ap6493)
+				/sbin/modprobe -r dhd
+        		/sbin/insmod $lib_path/broadcm_40181/dhd.ko "firmware_path=/etc/wifi/ap6493/fw_bcm40183b2.bin nvram_path=/etc/wifi/ap6493/nvram_ap6493.txt"
           	;;
         	*)
           	;;
