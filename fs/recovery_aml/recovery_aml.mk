@@ -198,6 +198,13 @@ ROOTFS_RECOVERY_AML_CMD += \
      $(BINARIES_DIR)/aml_recovery/META-INF/com/google/android/updater-script 2>/dev/null && \
     cp -f fs/recovery_aml/update-binary $(BINARIES_DIR)/aml_recovery/META-INF/com/google/android/ 2>/dev/null &&
 
+# Check if Broadcom module is enabled, if it is, write chip info
+# to /etc/bcm_wifi
+ifeq ($(BR2_PACKAGE_BROADCOM),y)
+ROOTFS_RECOVERY_AML_CMD += \
+	echo -n $(BR2_PACKAGE_BROADCOM_MODULE) > $(BINARIES_DIR)/aml_recovery/system/etc/bcm_wifi &&
+endif
+
 ifneq ($(BR2_TARGET_ROOTFS_RECOVERY_AML_IMGPACK),y)
 ROOTFS_RECOVERY_AML_CMD += \
     cp -f $(AML_LOGO) $(BINARIES_DIR)/aml_recovery/logo.img 2>/dev/null &&
