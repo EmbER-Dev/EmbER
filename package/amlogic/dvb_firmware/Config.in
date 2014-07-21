@@ -1,0 +1,6 @@
+config BR2_PACKAGE_DVB_FIRMWARE
+	bool "Download and install USB DVB Firmwares"
+	default n
+	help
+	  This option will download USB DVB firmwares from
+	  linuxtv.org and install them in /etc/firmware

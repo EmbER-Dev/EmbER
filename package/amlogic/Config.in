@@ -6,4 +6,5 @@ source "package/amlogic/ubootf16ref/Config.in"
 source "package/amlogic/libamplayer/Config.in"
 source "package/amlogic/amremote_config/Config.in"
 source "package/amlogic/broadcom/Config.in"
+source "package/amlogic/dvb_firmware/Config.in"
 endmenu
