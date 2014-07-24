@@ -16,7 +16,7 @@ echo "Caching ${IMAGE}. Please wait..."
 cp -f "${IMAGE}" /recovery/update.img || exit 1
 echo "Done."
 
-echo "--update_package=/cache/update.img" > /recovery/recovery/command || exit 1
+echo -e "--update_package=/cache/update.img\n--wipe_cache" > /recovery/recovery/command || exit 1
 
 echo "Rebooting into flash utility."
 reboot recovery
