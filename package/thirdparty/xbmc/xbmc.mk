@@ -44,7 +44,7 @@ XBMC_DEPENDENCIES += flac libmad libmpeg2 libogg \
   python lzo zlib libgcrypt openssl mysql_client sqlite fontconfig \
   freetype jasper jpeg libmodplug libpng libungif tiff libcurl \
   libmicrohttpd libssh2 boost fribidi ncurses pcre libnfs afpfs-ng \
-  libplist libshairport libbluray libcec \
+  libplist libshairplay libbluray libcec \
   readline expat libxml2 yajl samba libass opengl libusb-compat \
   avahi udev tinyxml taglib18 libssh libxslt
 
