@@ -222,6 +222,8 @@ config BR2_XBMC_DEFAULT_SKIN
 		- If this option is not set XBMC will use confluence
 		- The set skin must exist in the source tree
 		- Compiler will append "skin." to begining of skin name
+		- This will overwrite skin choice in custom settings.xml
+
 
 config BR2_XBMC_NO_CONFLUENCE
 	bool "Don't install confluence skin"

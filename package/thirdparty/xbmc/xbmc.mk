@@ -76,12 +76,6 @@ else
 XBMC_ADV_SETTINGS = package/thirdparty/xbmc/settings/advancedsettings.xml
 endif
 
-ifneq ($(BR2_XBMC_DEFAULT_SKIN),"")
-XBMC_DEFAULT_SKIN = skin.$(call qstrip,$(BR2_XBMC_DEFAULT_SKIN))
-else
-XBMC_DEFAULT_SKIN = skin.confluence
-endif
-
 ifneq ($(BR2_XBMC_SPLASH),"")
 XBMC_SPLASH_FILE = package/thirdparty/xbmc/logos/$(call qstrip,$(BR2_XBMC_SPLASH)).png
 else
@@ -157,7 +151,7 @@ define XBMC_INSTALL_REMOTE_CONF
 endef
 
 define XBMC_SET_DEFAULT_SKIN
-  sed -i '/#define DEFAULT_SKIN/c\#define DEFAULT_SKIN          "$(XBMC_DEFAULT_SKIN)"' $(XBMC_DIR)/xbmc/system.h
+  sed -i '/<default>skin./c\          <default>skin.$(call qstrip,$(BR2_XBMC_DEFAULT_SKIN))</default>' $(TARGET_DIR)/usr/share/xbmc/system/settings/settings.xml
 endef
 
 define XBMC_INSTALL_SPLASH
@@ -199,7 +193,6 @@ define XBMC_STRIP_BINARIES
   $(STRIPCMD) $(STRIP_STRIP_UNNEEDED) $(TARGET_DIR)/usr/lib/xbmc/xbmc.bin
 endef
 
-XBMC_PRE_CONFIGURE_HOOKS += XBMC_SET_DEFAULT_SKIN
 XBMC_PRE_CONFIGURE_HOOKS += XBMC_BOOTSTRAP
 XBMC_POST_INSTALL_TARGET_HOOKS += XBMC_INSTALL_ETC
 XBMC_POST_INSTALL_TARGET_HOOKS += XBMC_INSTALL_ADV_SETTINGS
@@ -219,6 +212,10 @@ endif
 
 ifneq ($(BR2_ENABLE_DEBUG),y)
 XBMC_POST_INSTALL_TARGET_HOOKS += XBMC_STRIP_BINARIES
+endif
+
+ifneq ($(BR2_XBMC_DEFAULT_SKIN),"")
+XBMC_POST_INSTALL_TARGET_HOOKS += XBMC_SET_DEFAULT_SKIN
 endif
 
 ifeq ($(BR2_XBMC_NO_CONFLUENCE),y)
