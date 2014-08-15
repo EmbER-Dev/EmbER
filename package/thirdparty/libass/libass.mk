@@ -10,5 +10,6 @@ LIBASS_INSTALL_STAGING = YES
 LIBASS_INSTALL_TARGET = YES
 LIBASS_DEPENDENCIES += libenca
 LIBASS_DEPENDENCIES += fontconfig
+LIBASS_DEPENDENCIES += fribidi
 
 $(eval $(call autotools-package,package/thirdparty,libass))
