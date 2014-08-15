@@ -176,7 +176,7 @@ endif
 
 ROOTFS_RECOVERY_AML_CMD += \
     tar -C $(BINARIES_DIR)/aml_recovery/system -xf $(BINARIES_DIR)/rootfs.tar && \
-    sed -i -f fs/recovery_aml/$(PARTITION_TYPE).sed $(BINARIES_DIR)/aml_recovery/system/etc/init.d/S10setup && \
+    sed -ci -f fs/recovery_aml/$(PARTITION_TYPE).sed $(BINARIES_DIR)/aml_recovery/system/etc/init.d/S10setup && \
     mkdir -p $(BINARIES_DIR)/aml_recovery/META-INF/com/google/android/ && \
     PYTHONDONTWRITEBYTECODE=1 $(HOST_DIR)/usr/bin/python fs/recovery_aml/android_scriptgen $(RECOVERY_AML_ARGS) -i -p $(BINARIES_DIR)/aml_recovery/system -o \
      $(BINARIES_DIR)/aml_recovery/META-INF/com/google/android/updater-script && \
