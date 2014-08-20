@@ -78,7 +78,7 @@ ifeq ($(BR2_TARGET_ROOTFS_RECOVERY_AML_UPDATE_ZIP_NAME_CUSTOM),y)
 endif
 
 ROOTFS_RECOVERY_AML_CMD = \
-    mkdir -p $(BINARIES_DIR)/aml_recovery/system &&
+    mkdir -p $(BINARIES_DIR)/aml_recovery/system 2>/dev/null &&
 
 # If we use imgpack, append ROOTFS_RECOVERY_AML_CMD with aditional commands
 ifeq ($(BR2_TARGET_ROOTFS_RECOVERY_AML_IMGPACK),y)
@@ -159,7 +159,7 @@ ifneq ($(strip $(BR2_TARGET_ROOTFS_RECOVERY_BOOTLOADER_IMG)),"")
 
 ROOTFS_RECOVERY_AML_CMD += \
     echo "Copy bootloader.img..." && \
-    cp -f $(BR2_TARGET_ROOTFS_RECOVERY_BOOTLOADER_IMG) $(BINARIES_DIR)/aml_recovery/bootloader.img && 
+    cp -f $(BR2_TARGET_ROOTFS_RECOVERY_BOOTLOADER_IMG) $(BINARIES_DIR)/aml_recovery/bootloader.img 2>/dev/null && 
 
 ADDITIONAL_FILES += " bootloader.img"
 endif
@@ -169,22 +169,22 @@ ifneq ($(strip $(BR2_TARGET_ROOTFS_RECOVERY_RECOVERY_IMG)),"")
 
 ROOTFS_RECOVERY_AML_CMD += \
     echo "Copy recovery.img..." && \
-    cp -f $(BR2_TARGET_ROOTFS_RECOVERY_RECOVERY_IMG) $(BINARIES_DIR)/aml_recovery/recovery.img && 
+    cp -f $(BR2_TARGET_ROOTFS_RECOVERY_RECOVERY_IMG) $(BINARIES_DIR)/aml_recovery/recovery.img 2>/dev/null && 
 
 ADDITIONAL_FILES += " recovery.img"
 endif
 
 ROOTFS_RECOVERY_AML_CMD += \
-    tar -C $(BINARIES_DIR)/aml_recovery/system -xf $(BINARIES_DIR)/rootfs.tar && \
-    sed -ci -f fs/recovery_aml/$(PARTITION_TYPE).sed $(BINARIES_DIR)/aml_recovery/system/etc/init.d/S10setup && \
-    mkdir -p $(BINARIES_DIR)/aml_recovery/META-INF/com/google/android/ && \
+    tar -C $(BINARIES_DIR)/aml_recovery/system -xf $(BINARIES_DIR)/rootfs.tar 2>/dev/null && \
+    sed -ci -f fs/recovery_aml/$(PARTITION_TYPE).sed $(BINARIES_DIR)/aml_recovery/system/etc/init.d/S10setup 2>/dev/null && \
+    mkdir -p $(BINARIES_DIR)/aml_recovery/META-INF/com/google/android/ 2>/dev/null && \
     PYTHONDONTWRITEBYTECODE=1 $(HOST_DIR)/usr/bin/python fs/recovery_aml/android_scriptgen $(RECOVERY_AML_ARGS) -i -p $(BINARIES_DIR)/aml_recovery/system -o \
-     $(BINARIES_DIR)/aml_recovery/META-INF/com/google/android/updater-script && \
-    cp -f fs/recovery_aml/update-binary $(BINARIES_DIR)/aml_recovery/META-INF/com/google/android/ &&
+     $(BINARIES_DIR)/aml_recovery/META-INF/com/google/android/updater-script 2>/dev/null && \
+    cp -f fs/recovery_aml/update-binary $(BINARIES_DIR)/aml_recovery/META-INF/com/google/android/ 2>/dev/null &&
 
 ifneq ($(BR2_TARGET_ROOTFS_RECOVERY_AML_IMGPACK),y)
 ROOTFS_RECOVERY_AML_CMD += \
-    cp -f $(AML_LOGO) $(BINARIES_DIR)/aml_recovery/logo.img &&
+    cp -f $(AML_LOGO) $(BINARIES_DIR)/aml_recovery/logo.img 2>/dev/null &&
 endif
 
 ifneq ($(qstrip $(BR2_TARGET_ROOTFS_RECOVERY_AML_APPEND_INITRD)),)
@@ -192,20 +192,20 @@ ifneq ($(qstrip $(BR2_TARGET_ROOTFS_RECOVERY_AML_APPEND_INITRD)),)
 ROOTFS_RECOVERY_AML_CMD += \
     echo "Appending initramfs to kernel..." && \
     cd $(BASE_DIR)/../$(BR2_TARGET_ROOTFS_RECOVERY_AML_APPEND_INITRD)/ && \
-    find . | cpio -o --format=newc | gzip > $(BINARIES_DIR)/aml_recovery/ramdisk-new.gz && \
+    find . | cpio -o --format=newc | gzip > $(BINARIES_DIR)/aml_recovery/ramdisk-new.gz 2>/dev/null && \
     cd $(BASE_DIR)/../ && \
     fs/recovery_aml/mkbootimg --kernel $(BINARIES_DIR)/uImage --ramdisk $(BINARIES_DIR)/aml_recovery/ramdisk-new.gz -o $(BINARIES_DIR)/aml_recovery/uImage && \
-    cp -f $(BINARIES_DIR)/aml_recovery/uImage $(BINARIES_DIR)/kernel &&  
+    cp -f $(BINARIES_DIR)/aml_recovery/uImage $(BINARIES_DIR)/kernel 2>/dev/null &&  
 else
 
 ROOTFS_RECOVERY_AML_CMD += \
-    cp -f $(BINARIES_DIR)/uImage $(BINARIES_DIR)/aml_recovery/ &&
+    cp -f $(BINARIES_DIR)/uImage $(BINARIES_DIR)/aml_recovery/ 2>/dev/null &&
 
 endif
 
 ROOTFS_RECOVERY_AML_CMD += \
-    find $(BINARIES_DIR)/aml_recovery/system/ -type l -delete && \
-    find $(BINARIES_DIR)/aml_recovery/system/ -type d -empty -exec sh -c 'echo "dummy" > "{}"/.empty' \; && \
+    find $(BINARIES_DIR)/aml_recovery/system/ -type l -delete 2>/dev/null && \
+    find $(BINARIES_DIR)/aml_recovery/system/ -type d -empty -exec sh -c 'echo "dummy" > "{}"/.empty' \; 2>/dev/null && \
     pushd $(BINARIES_DIR)/aml_recovery/ >/dev/null && \
     zip -m -q -r -y $(BINARIES_DIR)/aml_recovery/update-unsigned.zip $(ADDITIONAL_FILES) uImage META-INF system && \
     popd >/dev/null && \
