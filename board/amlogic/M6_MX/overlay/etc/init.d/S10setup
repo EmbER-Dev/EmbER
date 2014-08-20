@@ -27,6 +27,14 @@ if [ "X$1" = "Xstart" ]; then
   fi
   mount -o bind /root/.sysconfig/NetworkManager /etc/NetworkManager
 
+  # Remove old guisettings.xml on first boot (Compatibility fix for true 1080 patch)
+  if [ ! -f /root/.xbmc/temp/.1080 ] ; then
+     echo "S10setup: Remove old guisettings.xml if one exists... "
+     rm -rf /root/.xbmc/userdata/guisettings.xml
+     touch /root/.xbmc/temp/.1080
+     sync
+  fi
+
   # Boot with performance, then switch to lagfree (kernel bug)
   CPU=/sys/devices/system/cpu
   for i in $CPU/cpu0/cpufreq $CPU/cpu1/cpufreq; do

@@ -28,7 +28,8 @@ run_xbmc() {
         REMOTECONF=/root/.xbmc/remote.conf
     fi
     /usr/bin/amremote_config $REMOTECONF
-    fbset -g 1280 720 1280 1440 32
+    echo 1 > /sys/class/graphics/fb0/blank
+    fbset -g 1920 1080 1920 2160 32
     xbmc_pre
     while true; do
         /usr/lib/xbmc/xbmc.bin --standalone;
@@ -37,6 +38,9 @@ run_xbmc() {
             0)  echo "XBMC exit" >&2
                 ;;
             64) echo "XBMC exit with shutdown" >&2
+                echo 1 > /sys/class/graphics/fb0/blank
+                fbset -g 1280 720 1280 2880 32
+                echo 1 > /sys/class/graphics/fb0/free_scale
                 lzopcat /usr/share/splash/stopping.fb.lzo > /dev/fb0
                 echo 0 > /sys/class/graphics/fb0/blank
                 sync
@@ -46,10 +50,12 @@ run_xbmc() {
                     mount -o remount,ro ${dir%*/} 2>/dev/null
                 done
                 lzopcat /usr/share/splash/complete.fb.lzo > /dev/fb0
-                #poweroff (M6 use suspend)
                 echo 'mem' >/sys/power/state
                 ;;
             66) echo "XBMC exit with reboot" >&2
+                echo 1 > /sys/class/graphics/fb0/blank
+                fbset -g 1280 720 1280 2880 32
+                echo 1 > /sys/class/graphics/fb0/free_scale
                 lzopcat /usr/share/splash/stopping.fb.lzo > /dev/fb0
                 echo 0 > /sys/class/graphics/fb0/blank
                 sync
@@ -61,10 +67,10 @@ run_xbmc() {
                 reboot
                 ;;
             137) echo "XBMC was killed" >&2
-                dd if=/dev/zero of=/dev/fb0 bs=1280 count=2880 > /dev/null 2>&1
+                dd if=/dev/zero of=/dev/fb0 bs=1920 count=4320 > /dev/null 2>&1
                 ;;
             143) echo "XBMC was terminated" >&2
-                dd if=/dev/zero of=/dev/fb0 bs=1280 count=2880 > /dev/null 2>&1
+                dd if=/dev/zero of=/dev/fb0 bs=1920 count=4320 > /dev/null 2>&1
                 ;;
             *)  echo "XBMC crashed with exit code $exit_value.  Respawning.." >&2
                 sleep 1
@@ -75,7 +81,6 @@ run_xbmc() {
         exit $exit_value
     done
 }
-
 
 case "$1" in
     start)
