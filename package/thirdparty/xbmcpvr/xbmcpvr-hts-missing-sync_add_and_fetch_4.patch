@@ -10,4 +10,3 @@ index 002dbcf..e2cb320 100644
  
  $(LIB): libhts.la
  	cp -f .libs/libhts.a .
-

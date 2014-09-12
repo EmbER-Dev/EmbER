@@ -8,4 +8,3 @@ XBMCPVR_CONF_ENV += MYSQL_CONFIG=$(TARGET_DIR)/usr/bin/mysql_config
 XBMCPVR_CONF_OPT += --enable-addons-with-dependencies
 
 $(eval $(call autotools-package,package/thirdparty,xbmcpvr))
-
