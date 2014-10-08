@@ -24,6 +24,8 @@ if [ "X$1" = "Xstart" ]; then
     mkdir -p /root/.sysconfig/NetworkManager
     cp -a /etc/NetworkManager/* /root/.sysconfig/NetworkManager/
     chmod 544 /root/.sysconfig/NetworkManager/dispatcher.d/*
+    MAC=$(cat /sys/class/net/eth0/address)
+    echo -e "[keyfile]\nunmanaged-devices=mac:$MAC" >> /root/.sysconfig/NetworkManager/NetworkManager.conf
   fi
   mount -o bind /root/.sysconfig/NetworkManager /etc/NetworkManager
 
