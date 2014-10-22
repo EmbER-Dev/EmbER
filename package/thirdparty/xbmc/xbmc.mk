@@ -46,7 +46,7 @@ XBMC_DEPENDENCIES += flac libmad libmpeg2 libogg \
   libmicrohttpd libssh2 boost fribidi ncurses pcre libnfs afpfs-ng \
   libplist libshairplay libbluray libcec \
   readline expat libxml2 yajl samba libass opengl libusb-compat \
-  avahi udev tinyxml taglib18 libssh libxslt
+  avahi udev tinyxml taglib18 libssh libxslt xbmcffmpeg
 
 ifeq ($(BR2_ARM_AMLOGIC),y)
 XBMC_DEPENDENCIES += libamplayer
