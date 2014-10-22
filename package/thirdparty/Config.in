@@ -23,4 +23,5 @@ source "package/thirdparty/xbmc/Config.in"
 source "package/thirdparty/xbmcskins/Config.in"
 source "package/thirdparty/xbmcaddons/Config.in"
 source "package/thirdparty/xbmcpvr/Config.in"
+source "package/thirdparty/xbmcffmpeg/Config.in"
 endmenu

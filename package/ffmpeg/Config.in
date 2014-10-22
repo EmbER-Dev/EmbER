@@ -5,6 +5,7 @@ menuconfig BR2_PACKAGE_FFMPEG
 	bool "ffmpeg"
 	depends on BR2_LARGEFILE
 	depends on BR2_INET_IPV6
+	depends on !BR2_PACKAGE_XBMCFFMPEG
 	help
 	  FFmpeg is a complete, cross-platform solution to record, convert
 	  and stream audio and video.
