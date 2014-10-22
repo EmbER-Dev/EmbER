@@ -3,10 +3,6 @@
 if [ "X$1" = "Xstart" ]; then
   echo "S10setup: start"
 
-  # Remount / RW
-  echo "S10setup: remount / rw"
-  mount -o remount,rw /
-
 ##Compiler will insert mount commands##
 
   # Move existing data to new location (Compatibility fix for coming from older builds)
@@ -16,6 +12,11 @@ if [ "X$1" = "Xstart" ]; then
     mv /root/xios/root/.xbmc /root/
     rm -rf /root/xios
     sync
+  fi
+
+  if [ ! -d /root/Data ] ; then
+    echo "S10setup: Creating Data folder... "
+    mkdir -pm 777 /root/Data
   fi
 
   # Check if NetworkManager system folder exists on userdata
@@ -39,13 +40,13 @@ if [ "X$1" = "Xstart" ]; then
 
   # Boot with performance, then switch to ondemand (kernel bug)
   CPU=/sys/devices/system/cpu/cpu0/cpufreq
-    echo "S10setup: set cpu scaling governor"
-    echo "ondemand" > $CPU/scaling_governor
-    # If M1 or M3, limit to 600Mhz to keep audio hw from stalling
-    echo "S10setup: set cpu scaling min/max"
-    echo "600000" > $CPU/scaling_min_freq
-    # M1/M3 devices max out at 800Mhz
-    echo "800000" > $CPU/scaling_max_freq
+  echo "S10setup: set cpu scaling governor"
+  echo "ondemand" > $CPU/scaling_governor
+  echo "S10setup: set cpu scaling min/max"
+  # M1/M3 devices, limit to 600Mhz to keep audio hw from stalling
+  echo "600000" > $CPU/scaling_min_freq
+  # M1/M3 devices max out at 800Mhz
+  echo "800000" > $CPU/scaling_max_freq
 
   echo "S10setup: done"
 fi

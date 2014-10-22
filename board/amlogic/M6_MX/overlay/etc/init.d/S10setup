@@ -3,10 +3,6 @@
 if [ "X$1" = "Xstart" ]; then
   echo "S10setup: start"
 
-  # Remount / RW
-  echo "S10setup: remount / rw"
-  mount -o remount,rw /
-
 ##Compiler will insert mount commands##
 
   # Move existing data to new location (Compatibility fix for coming from older builds)
@@ -16,6 +12,11 @@ if [ "X$1" = "Xstart" ]; then
     mv /root/xios/root/.xbmc /root/
     rm -rf /root/xios
     sync
+  fi
+
+  if [ ! -d /root/Data ] ; then
+    echo "S10setup: Creating Data folder... "
+    mkdir -pm 777 /root/Data
   fi
 
   # Check if NetworkManager system folder exists on userdata
@@ -46,7 +47,7 @@ if [ "X$1" = "Xstart" ]; then
     # M6 devices min freq 200Mhz
     echo "200000" > $i/scaling_min_freq
     # M6 devices max out at 1.2-1.5Ghz depending on uboot
-    echo "1200000" > $i/scaling_max_freq
+    echo "1320000" > $i/scaling_max_freq
   done
 
   echo "S10setup: done"

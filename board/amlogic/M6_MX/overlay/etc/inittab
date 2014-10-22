@@ -15,17 +15,17 @@
 
 # Startup the system
 ::sysinit:/bin/mount -t proc none /proc
-::sysinit:/bin/mount -o remount,rw /
-::sysinit:/bin/mkdir -p /dev/pts
-::sysinit:/bin/mkdir -p /dev/shm
+::sysinit:/bin/mkdir /dev/shm
+::sysinit:/bin/mkdir /dev/pts
 ::sysinit:/bin/ln -sf /proc/self/mounts /etc/mtab
-::sysinit:/bin/mount -o remount,ro /
-# root is ro from here on. see /etc/fstab
-#
 ::sysinit:/bin/mount -a
+::sysinit:/bin/mount -o defaults,noatime -t tmpfs tmpfs /var
+::sysinit:/bin/mount -o ro,defaults,noatime -t squashfs /usr.sqsh /usr
+::sysinit:modprobe mali
 ::sysinit:/bin/hostname -F /etc/hostname
 ::sysinit:/sbin/ifconfig lo 127.0.0.1 up
 ::sysinit:/sbin/route add -net 127.0.0.0 netmask 255.0.0.0 lo
+# ::sysinit:echo "auto3" > /sys/class/aml_keys/aml_keys/version
 # now run any rc scripts
 ::sysinit:/etc/init.d/rcS
 
@@ -35,7 +35,6 @@ tty2::respawn:/sbin/getty 38400 tty2
 
 # Put a getty on the serial port
 ttyS0::respawn:/sbin/getty -L ttyS0 115200 vt100 # UNSUPPORT GENERIC_SERIAL
-#ttyS0::respawn:/bin/sh				  # AMLOGIC_GENERAL_SERIAL
 
 # Logging junk
 null::sysinit:/bin/touch /var/log/messages
@@ -46,12 +45,9 @@ tty3::respawn:/usr/bin/tail -f /var/log/messages
 # Stuff to do for the 3-finger salute
 ::ctrlaltdel:/sbin/reboot
 
-# Stuff to do when restarting the init process
-::restart:/sbin/init
-
 # Stuff to do before rebooting
-::shutdown:/etc/init.d/S21hwclock stop
-::shutdown:/usr/bin/killall -q klogd
-::shutdown:/usr/bin/killall -q syslogd
-::shutdown:/bin/umount -a -r
-::shutdown:/sbin/swapoff -a
+null::shutdown:/usr/bin/killall klogd
+null::shutdown:/usr/bin/killall syslogd
+null::shutdown:/etc/init.d/rcK
+null::shutdown:/bin/umount -a -r
+null::shutdown:/sbin/swapoff -a
