@@ -6,7 +6,7 @@
 
 XBMC_VERSION = $(call qstrip,$(BR2_PACKAGE_XBMC_REV))
 XBMC_SITE_METHOD = git
-XBMC_SITE = git://github.com/xbmc/xbmc.git
+XBMC_SITE = git://github.com/CoreTech-Development/xbmc.git
 XBMC_INSTALL_STAGING = YES
 XBMC_INSTALL_TARGET = YES
 

@@ -93,12 +93,12 @@ comment "XBMC Build Options"
 
 config BR2_PACKAGE_XBMC_REV
 	string "Github Revision"
-	default "13.2-Gotham"
+	default "xbmc-13.2"
 	help
 	  This option will set the github revision.
 
-	  Github: "git://github.com/xbmc/xbmc.git"
-	  Default: "13.2-Gotham"
+	  Github: "git://github.com/CoreTech-Development/xbmc.git"
+	  Default: "xbmc-13.2"
 	  Beware: Changing this could break patchs
 
 comment "XBMC Customization Options"

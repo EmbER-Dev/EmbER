@@ -15,7 +15,7 @@ index c3af1e4..5ebd753 100644
  				<height>45</height>
  				<label>31003</label>
  				<font>-</font>
--				<onclick>ActivateWindow(ShutdownMenu)</onclick>
+-				<onclick>Quit</onclick>
 +				####Compiler will set function####
  				<texturefocus border="5">floor_buttonFO.png</texturefocus>
  				<texturenofocus border="5">floor_button.png</texturenofocus>
