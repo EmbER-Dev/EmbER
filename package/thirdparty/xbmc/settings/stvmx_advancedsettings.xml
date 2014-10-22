@@ -4,23 +4,58 @@
   <hidecpuserial>1</hidecpuserial>
   <hidetotaluptime>1</hidetotaluptime>
   <showexitbutton>false</showexitbutton>
-  <loglevel hide="false">2</loglevel>
+  <loglevel hide="true">-1</loglevel>
   <cputempcommand>echo "$(cat /sys/class/saradc/temperature) C"</cputempcommand>
+  <fanartres>720</fanartres>
+  <imageres>640</imageres>
+  <packagefoldersize>80</packagefoldersize>
+  <skiploopfilter>8</skiploopfilter>
+  <sleepbeforeflip>0.85</sleepbeforeflip>
+
+  <gui>
+    <nofliptimeout>1000</nofliptimeout>
+  </gui>
 
   <pvr>
-    <minvideocachelevel>50</minvideocachelevel>
-    <minaudiocachelevel>50</minaudiocachelevel>
+    <cacheindvdplayer>true</cacheindvdplayer>
+    <minvideocachelevel>5</minvideocachelevel>
+    <minaudiocachelevel>20</minaudiocachelevel>
   </pvr>
 
-  <video>
-    <subsdelayrange>60</subsdelayrange>
-    <audiodelayrange>60</audiodelayrange>
-  </video>
-
   <network>
-    <readbufferfactor>4.0</readbufferfactor>
+    <readbufferfactor>1.8</readbufferfactor>
     <buffermode>1</buffermode>
   </network>
+
+  <video>
+    <defaultplayer>dvdplayer</defaultplayer>
+    <subsdelayrange>120</subsdelayrange>
+    <audiodelayrange>120</audiodelayrange>
+    <fpsdetect>0</fpsdetect>
+  </video>
+
+  <videolibrary>
+    <recentlyaddeditems>100</recentlyaddeditems>
+    <cleanonupdate>true</cleanonupdate>
+    <hideemptyseries>true</hideemptyseries>
+    <hideallitems>true</hideallitems>
+    <dateadded>0</dateadded>
+    <importwatchedstate>true</importwatchedstate>
+    <importresumepoint>true</importresumepoint>
+  </videolibrary>
+
+  <videoscanner>
+    <ignoreerrors>true</ignoreerrors>
+  </videoscanner>
+
+  <videoscreen>
+    <blankdisplays>false</blankdisplays>
+    <vsync>1</vsync>
+  </videoscreen>
+
+  <audio>
+    <defaultplayer>paplayer</defaultplayer>
+  </audio>
 
   <audiooutput>
     <eac3passthrough>false</eac3passthrough>
@@ -30,12 +65,11 @@
     <audiodevice>ALSA:@</audiodevice>
     <channels>1</channels>
     <config>2</config>
+    <normalizelevels>true</normalizelevels>
+    <stereoupmix>false</stereoupmix>
+    <processquality>50</processquality>
+    <streamsilence>-1</streamsilence>
   </audiooutput>
-
-  <videoscreen>
-    <blankdisplays>false</blankdisplays>
-    <vsync>2</vsync>
-  </videoscreen>
 
   <input>
     <enablesystemkeys>false</enablesystemkeys>
