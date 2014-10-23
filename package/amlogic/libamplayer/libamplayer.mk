@@ -6,12 +6,8 @@
 
 ifeq ($(BR2_PACKAGE_LIBAMPLAYER_SOURCE),y)
 LIBAMPLAYER_VERSION = $(subst ",,$(BR2_PACKAGE_LIBAMPLAYER_SOURCE_VERSION))
-else ifeq ($(BR2_BOARD_TYPE_AMLOGIC_M1),y)
-LIBAMPLAYER_VERSION = m1
-else ifeq ($(BR2_BOARD_TYPE_AMLOGIC_M3),y)
-LIBAMPLAYER_VERSION = m3
 else
-LIBAMPLAYER_VERSION = m6
+LIBAMPLAYER_VERSION = 20140824
 endif
 
 LIBAMPLAYER_SOURCE = libamplayer-$(LIBAMPLAYER_VERSION).tar.gz
@@ -41,28 +37,27 @@ endif
 ifeq ($(BR2_PACKAGE_LIBAMPLAYER),y)
 LIBAMPLAYER_DEPENDENCIES += alsa-lib librtmp pkg-config
 AMFFMPEG_DIR = $(BUILD_DIR)/libamplayer-$(LIBAMPLAYER_VERSION)/amffmpeg
-ifeq ($(BR2_BOARD_TYPE_AMLOGIC_M1),y)
-AMFFMPEG_EXTRA_INCLUDES += -I$(AMFFMPEG_DIR)/../amavutils/include
-else
 AMAVUTILS_DIR = $(BUILD_DIR)/libamplayer-$(LIBAMPLAYER_VERSION)/amavutils
 AMFFMPEG_EXTRA_LDFLAGS += --extra-ldflags="-lamavutils"
 endif
+
+ifeq ($(BR2_BOARD_TYPE_AMLOGIC_M6),y)
+define LIBAMPLAYER_SETUP_PREBUILTS
+ cp -rf $(@D)/amavutils/libamavutils.so.m6 $(@D)/amavutils/libamavutils.so
+ cp -rf $(@D)/usr/lib/libamadec.so.m6 $(@D)/usr/lib/libamadec.so
+ cp -rf $(@D)/usr/lib/libamplayer.so.m6 $(@D)/usr/lib/libamplayer.so
+ cp -rf $(@D)/usr/lib/libamcodec.so.0.0.m6 $(@D)/usr/lib/libamcodec.so.0.0
+endef
+else
+define LIBAMPLAYER_SETUP_PREBUILTS
+ cp -rf $(@D)/amavutils/libamavutils.so.m1_m3 $(@D)/amavutils/libamavutils.so
+ cp -rf $(@D)/usr/lib/libamadec.so.m1_m3 $(@D)/usr/lib/libamadec.so
+ cp -rf $(@D)/usr/lib/libamplayer.so.m1_m3 $(@D)/usr/lib/libamplayer.so
+ cp -rf $(@D)/usr/lib/libamcodec.so.0.0.m1_m3 $(@D)/usr/lib/libamcodec.so.0.0
+endef
 endif
 
-define LIBAMPLAYER_SETUP_M1_PREBUILTS
- cp -rf $(@D)/usr/lib/libamcontroler.so.prebuilt $(@D)/usr/lib/libamcontroler.so
-endef
-
-define LIBAMPLAYER_SETUP_M3_M6_PREBUILTS
- cp -rf $(@D)/amavutils/libamavutils.so.prebuilt $(@D)/amavutils/libamavutils.so
-endef
-
-define LIBAMPLAYER_SETUP_COMMON_PREBUILTS
- cp -rf $(@D)/usr/lib/libamadec.so.prebuilt $(@D)/usr/lib/libamadec.so
- cp -rf $(@D)/usr/lib/libamplayer.so.prebuilt $(@D)/usr/lib/libamplayer.so
-endef
-
-define LIBAMPLAYER_COMMON_SOURCE_BUILD_CLEANUP
+define LIBAMPLAYER_SOURCE_BUILD_CLEANUP
  rm -rf $(STAGING_DIR)/lib/libam*.*
  rm -rf $(STAGING_DIR)/usr/lib/libam*.*
  rm -rf $(TARGET_DIR)/lib/libam*.*
@@ -75,7 +70,7 @@ define LIBAMPLAYER_COMMON_BUILD_CMDS
  $(call AMFFMPEG_INSTALL_STAGING_CMDS)
 endef
 
-define LIBAMPLAYER_COMMON_SOURCE_BUILD_CMDS
+define LIBAMPLAYER_SOURCE_BUILD_CMDS
  $(call LIBAMPLAYER_COMMON_BUILD_CMDS)
  if [ -d $(STAGING_DIR)/usr/include/amlplayer ]; then rm -rf $(STAGING_DIR)/usr/include/amlplayer/.*; \
  rm -rf $(STAGING_DIR)/usr/include/amlplayer/*; rmdir $(STAGING_DIR)/usr/include/amlplayer; fi;
@@ -88,38 +83,24 @@ define LIBAMPLAYER_COMMON_SOURCE_BUILD_CMDS
   SRC="$(@D)/amplayer" -C $(@D)/amplayer
 endef
 
-define LIBAMPLAYER_COMMON_PREBUILT_BUILD_CMDS
- $(call LIBAMPLAYER_SETUP_COMMON_PREBUILTS)
+define LIBAMPLAYER_PREBUILT_BUILD_CMDS
+ $(call LIBAMPLAYER_SETUP_PREBUILTS)
  $(call LIBAMPLAYER_COMMON_BUILD_CMDS)
 endef
 
 ifeq ($(BR2_PACKAGE_LIBAMPLAYER_PREBUILT),y)
-ifeq ($(BR2_BOARD_TYPE_AMLOGIC_M1),y)
 define LIBAMPLAYER_BUILD_CMDS
- $(call LIBAMPLAYER_SETUP_M1_PREBUILTS)
- $(call LIBAMPLAYER_COMMON_PREBUILT_BUILD_CMDS)
-endef
-else
-define LIBAMPLAYER_BUILD_CMDS
- $(call LIBAMPLAYER_SETUP_M3_M6_PREBUILTS)
+ $(call LIBAMPLAYER_SETUP_PREBUILTS)
  $(call AMAVUTILS_INSTALL_STAGING_CMDS)
- $(call LIBAMPLAYER_COMMON_PREBUILT_BUILD_CMDS)
-endef
-endif
-else
-ifeq ($(BR2_BOARD_TYPE_AMLOGIC_M1),y)
-define LIBAMPLAYER_BUILD_CMDS
- $(call LIBAMPLAYER_COMMON_SOURCE_BUILD_CLEANUP)
- $(call LIBAMPLAYER_COMMON_SOURCE_BUILD_CMDS)
+ $(call LIBAMPLAYER_PREBUILT_BUILD_CMDS)
 endef
 else
 define LIBAMPLAYER_BUILD_CMDS
- $(call LIBAMPLAYER_COMMON_SOURCE_BUILD_CLEANUP)
+ $(call LIBAMPLAYER_SOURCE_BUILD_CLEANUP)
  $(call AMAVUTILS_BUILD_CMDS)
  $(call AMAVUTILS_INSTALL_STAGING_CMDS)
- $(call LIBAMPLAYER_COMMON_SOURCE_BUILD_CMDS)
+ $(call LIBAMPLAYER_SOURCE_BUILD_CMDS)
 endef
-endif
 endif
 
 define LIBAMPLAYER_INSTALL_PREBUILT_STAGING_CMDS
@@ -158,17 +139,17 @@ else
 FIRMWARE = firmware
 endif
 
-define LIBAMPLAYER_INSTALL_PREBUILT_COMMON_CMDS
+define LIBAMPLAYER_INSTALL_PREBUILT_CMDS
  $(call AMFFMPEG_INSTALL_TARGET_CMDS)
  mkdir -p $(TARGET_DIR)/lib/firmware
  install -m 644 $(@D)/lib/$(FIRMWARE)/*.bin $(TARGET_DIR)/lib/firmware
  mkdir -p $(TARGET_DIR)/usr/lib
- install -m 755 $(@D)/usr/lib/*.so* $(TARGET_DIR)/usr/lib
+ install -m 755 $(@D)/usr/lib/libam*.so $(TARGET_DIR)/usr/lib
+ install -m 755 $(@D)/usr/lib/libamcodec.so.0.0 $(TARGET_DIR)/usr/lib
  cd $(TARGET_DIR)/usr/lib/; ln -sf libamcodec.so.0.0 libamcodec.so
- rm -rf $(TARGET_DIR)/usr/lib/libam*.so.prebuilt
 endef
 
-define LIBAMPLAYER_INSTALL_SOURCE_COMMON_CMDS
+define LIBAMPLAYER_INSTALL_SOURCE_CMDS
  $(call AMFFMPEG_INSTALL_TARGET_CMDS)
  mkdir -p $(TARGET_DIR)/lib/firmware
  install -m 644 $(@D)/amadec/$(FIRMWARE)/*.bin $(TARGET_DIR)/lib/firmware
@@ -180,28 +161,15 @@ define LIBAMPLAYER_INSTALL_SOURCE_COMMON_CMDS
 endef
 
 ifeq ($(BR2_PACKAGE_LIBAMPLAYER_PREBUILT),y)
-ifeq ($(BR2_BOARD_TYPE_AMLOGIC_M1),y)
 define LIBAMPLAYER_INSTALL_TARGET_CMDS
- $(call LIBAMPLAYER_INSTALL_PREBUILT_COMMON_CMDS)
+ $(call AMAVUTILS_INSTALL_TARGET_CMDS)
+ $(call LIBAMPLAYER_INSTALL_PREBUILT_CMDS)
 endef
 else
 define LIBAMPLAYER_INSTALL_TARGET_CMDS
  $(call AMAVUTILS_INSTALL_TARGET_CMDS)
- $(call LIBAMPLAYER_INSTALL_PREBUILT_COMMON_CMDS)
- rm -rf $(TARGET_DIR)/lib/libamavutils.so.prebuilt
+ $(call LIBAMPLAYER_INSTALL_SOURCE_CMDS)
 endef
-endif
-else
-ifeq ($(BR2_BOARD_TYPE_AMLOGIC_M1),y)
-define LIBAMPLAYER_INSTALL_TARGET_CMDS
- $(call LIBAMPLAYER_INSTALL_SOURCE_COMMON_CMDS)
-endef
-else
-define LIBAMPLAYER_INSTALL_TARGET_CMDS
- $(call AMAVUTILS_INSTALL_TARGET_CMDS)
- $(call LIBAMPLAYER_INSTALL_SOURCE_COMMON_CMDS)
-endef
-endif
 endif
 
 $(eval $(call generic-package))
