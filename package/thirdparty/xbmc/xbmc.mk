@@ -151,7 +151,7 @@ define XBMC_INSTALL_REMOTE_CONF
 endef
 
 define XBMC_SET_DEFAULT_SKIN
-  sed -ci '/<default>skin./c\          <default>skin.$(call qstrip,$(BR2_XBMC_DEFAULT_SKIN))</default>' $(TARGET_DIR)/usr/share/xbmc/system/settings/settings.xml
+  sed -i '/<default>skin./c\          <default>skin.$(call qstrip,$(BR2_XBMC_DEFAULT_SKIN))</default>' $(TARGET_DIR)/usr/share/xbmc/system/settings/settings.xml
 endef
 
 define XBMC_INSTALL_SPLASH
@@ -176,7 +176,7 @@ define XBMC_CLEAN_UNUSED_ADDONS
 endef
 
 define XBMC_SET_CONFLUENCE_POWER_BUTTON
-  sed -ci '/				####Compiler will set function####/c\				<onclick>$(CONFLUENCE_POWER_BUTTON_FUNCTION)</onclick>' $(TARGET_DIR)/usr/share/xbmc/addons/skin.confluence/720p/Home.xml
+  sed -i '/				####Compiler will set function####/c\				<onclick>$(CONFLUENCE_POWER_BUTTON_FUNCTION)</onclick>' $(TARGET_DIR)/usr/share/xbmc/addons/skin.confluence/720p/Home.xml
 endef
 
 define XBMC_CLEAN_CONFLUENCE_SKIN

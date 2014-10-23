@@ -1,0 +1,41 @@
+commit 59eef49ec6c07a884eb7869188cbec70418e50d3
+Author: croniccorey <cronmod.dev@gmail.com>
+Date:   Fri Aug 15 13:18:02 2014 -0400
+
+    RECOVERY_AML/XBMC: Retain ownership and permissions when using sed
+
+diff --git a/fs/recovery_aml/recovery_aml.mk b/fs/recovery_aml/recovery_aml.mk
+index 43828cc..c412be5 100644
+--- a/fs/recovery_aml/recovery_aml.mk
++++ b/fs/recovery_aml/recovery_aml.mk
+@@ -192,7 +192,7 @@ endif
+ 
+ ROOTFS_RECOVERY_AML_CMD += \
+     tar -C $(BINARIES_DIR)/aml_recovery/system -xf $(BINARIES_DIR)/rootfs.tar 2>/dev/null && \
+-    sed -i -f fs/recovery_aml/$(PARTITION_TYPE).sed $(BINARIES_DIR)/aml_recovery/system/etc/init.d/S10setup 2>/dev/null && \
++    sed -ci -f fs/recovery_aml/$(PARTITION_TYPE).sed $(BINARIES_DIR)/aml_recovery/system/etc/init.d/S10setup 2>/dev/null && \
+     mkdir -p $(BINARIES_DIR)/aml_recovery/META-INF/com/google/android/ 2>/dev/null && \
+     PYTHONDONTWRITEBYTECODE=1 $(HOST_DIR)/usr/bin/python fs/recovery_aml/android_scriptgen $(RECOVERY_AML_ARGS) -i -p $(BINARIES_DIR)/aml_recovery/system -o \
+      $(BINARIES_DIR)/aml_recovery/META-INF/com/google/android/updater-script 2>/dev/null && \
+diff --git a/package/thirdparty/xbmc/xbmc.mk b/package/thirdparty/xbmc/xbmc.mk
+index b626485..cc8b757 100644
+--- a/package/thirdparty/xbmc/xbmc.mk
++++ b/package/thirdparty/xbmc/xbmc.mk
+@@ -151,7 +151,7 @@ define XBMC_INSTALL_REMOTE_CONF
+ endef
+ 
+ define XBMC_SET_DEFAULT_SKIN
+-  sed -i '/<default>skin./c\          <default>skin.$(call qstrip,$(BR2_XBMC_DEFAULT_SKIN))</default>' $(TARGET_DIR)/usr/share/xbmc/system/settings/settings.xml
++  sed -ci '/<default>skin./c\          <default>skin.$(call qstrip,$(BR2_XBMC_DEFAULT_SKIN))</default>' $(TARGET_DIR)/usr/share/xbmc/system/settings/settings.xml
+ endef
+ 
+ define XBMC_INSTALL_SPLASH
+@@ -176,7 +176,7 @@ define XBMC_CLEAN_UNUSED_ADDONS
+ endef
+ 
+ define XBMC_SET_CONFLUENCE_POWER_BUTTON
+-  sed -i '/				####Compiler will set function####/c\				<onclick>$(CONFLUENCE_POWER_BUTTON_FUNCTION)</onclick>' $(TARGET_DIR)/usr/share/xbmc/addons/skin.confluence/720p/Home.xml
++  sed -ci '/				####Compiler will set function####/c\				<onclick>$(CONFLUENCE_POWER_BUTTON_FUNCTION)</onclick>' $(TARGET_DIR)/usr/share/xbmc/addons/skin.confluence/720p/Home.xml
+ endef
+ 
+ define XBMC_CLEAN_CONFLUENCE_SKIN
