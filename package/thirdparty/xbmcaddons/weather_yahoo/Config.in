@@ -1,0 +1,6 @@
+config BR2_PACKAGE_XBMC_ADDON_WEATHER_YAHOO
+    bool "weather.yahoo"
+    default y
+    help
+      Xbmc Yahoo Weather Addon
+
