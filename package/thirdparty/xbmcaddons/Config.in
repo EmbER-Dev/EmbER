@@ -5,8 +5,6 @@ comment "XBMC services"
 
 source "package/thirdparty/xbmcaddons/opensubtitles/Config.in"
 
-source "package/thirdparty/xbmcaddons/weather_underground/Config.in"
-
 source "package/thirdparty/xbmcaddons/weather_yahoo/Config.in"
 
 comment "XBMC scripts"
