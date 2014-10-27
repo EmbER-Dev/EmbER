@@ -29,6 +29,7 @@ run_xbmc() {
     fi
     /usr/bin/amremote_config $REMOTECONF
     echo 1 > /sys/class/graphics/fb0/blank
+    echo 0 > /sys/class/graphics/fb0/free_scale
     fbset -g 1920 1080 1920 2160 32
     xbmc_pre
     while true; do
@@ -39,8 +40,9 @@ run_xbmc() {
                 ;;
             64) echo "XBMC exit with shutdown" >&2
                 echo 1 > /sys/class/graphics/fb0/blank
-                fbset -g 1280 720 1280 1440 32
+                echo 0 0 1279 719 > /sys/class/graphics/fb0/free_scale_axis
                 echo 1 > /sys/class/graphics/fb0/free_scale
+                fbset -g 1280 720 1280 1440 32
                 lzopcat /usr/share/splash/stopping.fb.lzo > /dev/fb0
                 echo 0 > /sys/class/graphics/fb0/blank
                 sync
@@ -54,8 +56,9 @@ run_xbmc() {
                 ;;
             66) echo "XBMC exit with reboot" >&2
                 echo 1 > /sys/class/graphics/fb0/blank
-                fbset -g 1280 720 1280 1440 32
+                echo 0 0 1279 719 > /sys/class/graphics/fb0/free_scale_axis
                 echo 1 > /sys/class/graphics/fb0/free_scale
+                fbset -g 1280 720 1280 1440 32
                 lzopcat /usr/share/splash/stopping.fb.lzo > /dev/fb0
                 echo 0 > /sys/class/graphics/fb0/blank
                 sync
