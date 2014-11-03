@@ -68,20 +68,6 @@ kernel/drivers/amlogic/wifi/rtl8xxx_EU/8188eu.ko:
 kernel/drivers/amlogic/wifi/broadcm_40181/dhd.ko:
 kernel/drivers/amlogic/cmem/cmemk.ko:
 kernel/drivers/amlogic/mali/mali.ko:
-kernel/drivers/bluetooth/hci_vhci.ko: kernel/net/bluetooth/bluetooth.ko kernel/net/rfkill/rfkill.ko
-kernel/drivers/bluetooth/bcm203x.ko:
-kernel/drivers/bluetooth/bpa10x.ko: kernel/net/bluetooth/bluetooth.ko kernel/net/rfkill/rfkill.ko
-kernel/drivers/bluetooth/bfusb.ko: kernel/net/bluetooth/bluetooth.ko kernel/net/rfkill/rfkill.ko
-kernel/drivers/bluetooth/btusb.ko: kernel/net/bluetooth/bluetooth.ko kernel/net/rfkill/rfkill.ko
-kernel/drivers/bluetooth/ath3k.ko:
-kernel/drivers/bluetooth/btmrvl.ko: kernel/net/bluetooth/bluetooth.ko kernel/net/rfkill/rfkill.ko
-kernel/net/wireless/cfg80211.ko: kernel/net/rfkill/rfkill.ko
+kernel/net/wireless/cfg80211.ko:
 kernel/net/wireless/lib80211.ko:
-kernel/net/bluetooth/bluetooth.ko: kernel/net/rfkill/rfkill.ko
-kernel/net/bluetooth/l2cap.ko: kernel/net/bluetooth/bluetooth.ko kernel/net/rfkill/rfkill.ko
-kernel/net/bluetooth/sco.ko: kernel/net/bluetooth/bluetooth.ko kernel/net/rfkill/rfkill.ko
-kernel/net/bluetooth/rfcomm/rfcomm.ko: kernel/net/bluetooth/l2cap.ko kernel/net/bluetooth/bluetooth.ko kernel/net/rfkill/rfkill.ko
-kernel/net/bluetooth/bnep/bnep.ko: kernel/net/bluetooth/l2cap.ko kernel/net/bluetooth/bluetooth.ko kernel/net/rfkill/rfkill.ko
-kernel/net/bluetooth/hidp/hidp.ko: kernel/net/bluetooth/l2cap.ko kernel/net/bluetooth/bluetooth.ko kernel/net/rfkill/rfkill.ko
-kernel/net/mac80211/mac80211.ko: kernel/net/wireless/cfg80211.ko kernel/net/rfkill/rfkill.ko
-kernel/net/rfkill/rfkill.ko:
+kernel/net/mac80211/mac80211.ko: kernel/net/wireless/cfg80211.ko
