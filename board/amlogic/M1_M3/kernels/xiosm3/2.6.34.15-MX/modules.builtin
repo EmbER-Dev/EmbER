@@ -21,7 +21,6 @@ kernel/fs/nls/nls_base.ko
 kernel/fs/nls/nls_cp437.ko
 kernel/fs/nls/nls_iso8859-1.ko
 kernel/fs/nls/nls_utf8.ko
-kernel/fs/ntfs/ntfs.ko
 kernel/fs/squashfs/squashfs.ko
 kernel/fs/ubifs/ubifs.ko
 kernel/fs/udf/udf.ko
