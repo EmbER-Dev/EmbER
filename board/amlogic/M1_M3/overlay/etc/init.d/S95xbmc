@@ -30,7 +30,7 @@ run_xbmc() {
     /usr/bin/amremote_config $REMOTECONF
     echo 1 > /sys/class/graphics/fb0/blank
     echo 0 > /sys/class/graphics/fb0/free_scale
-    fbset -g 1920 1080 1920 2160 32
+    fbset -g 1280 720 1280 1440 32
     xbmc_pre
     while true; do
         /usr/lib/xbmc/xbmc.bin --standalone;
@@ -70,10 +70,10 @@ run_xbmc() {
                 reboot
                 ;;
             137) echo "XBMC was killed" >&2
-                dd if=/dev/zero of=/dev/fb0 bs=1920 count=4320 > /dev/null 2>&1
+                dd if=/dev/zero of=/dev/fb0 bs=1280 count=2880 > /dev/null 2>&1
                 ;;
             143) echo "XBMC was terminated" >&2
-                dd if=/dev/zero of=/dev/fb0 bs=1920 count=4320 > /dev/null 2>&1
+                dd if=/dev/zero of=/dev/fb0 bs=1280 count=2880 > /dev/null 2>&1
                 ;;
             *)  echo "XBMC crashed with exit code $exit_value.  Respawning.." >&2
                 sleep 1
