@@ -5,7 +5,12 @@
     if [[ "`cat /sys/devices/platform/mtd/$i/name`" == "userdata" ]]; then\
       USERDATA="/dev/"`ls /sys/devices/platform/mtd/$i | grep -o mtdblock[0-9]`\
       break\
+    fi\
+  done\
+\
+  # Find /cache via mtd partition name\
   echo "S10setup: find /cache partition"\
+  for i in `ls /dev/mtd* | grep -o "mtd[0-9]$"`; do\
     if [[ "`cat /sys/devices/platform/mtd/$i/name`" == "cache" ]]; then\
       CACHE="/dev/"`ls /sys/devices/platform/mtd/$i | grep -o mtdblock[0-9]`\
       break\
