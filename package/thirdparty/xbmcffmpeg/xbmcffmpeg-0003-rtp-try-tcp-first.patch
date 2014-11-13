@@ -1,0 +1,24 @@
+commit f400cd414571a029fab26ed5858c5278a0158433
+Author: croniccorey <cronmod.dev@gmail.com>
+Date: Thu Nov 13 04:00:43 2014 -0500
+Subject: [PATCH] fixed ffmpeg-rtp, try tcp first
+
+---
+ lib/ffmpeg/libavformat/rtsp.h                 |  4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/libavformat/rtsp.h b/libavformat/rtsp.h
+index d159793..edee438 100644
+--- a/libavformat/rtsp.h
++++ b/libavformat/rtsp.h
+@@ -35,8 +35,8 @@
+  * Network layer over which RTP/etc packet data will be transported.
+  */
+ enum RTSPLowerTransport {
+-    RTSP_LOWER_TRANSPORT_UDP = 0,           /**< UDP/unicast */
+-    RTSP_LOWER_TRANSPORT_TCP = 1,           /**< TCP; interleaved in RTSP */
++    RTSP_LOWER_TRANSPORT_TCP = 0,           /**< TCP; interleaved in RTSP */
++    RTSP_LOWER_TRANSPORT_UDP = 1,           /**< UDP/unicast */
+     RTSP_LOWER_TRANSPORT_UDP_MULTICAST = 2, /**< UDP/multicast */
+     RTSP_LOWER_TRANSPORT_NB,
+     RTSP_LOWER_TRANSPORT_HTTP = 8,          /**< HTTP tunneled - not a proper

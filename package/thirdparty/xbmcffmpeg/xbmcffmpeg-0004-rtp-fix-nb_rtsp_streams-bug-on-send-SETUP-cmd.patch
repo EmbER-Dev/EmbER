@@ -1,0 +1,22 @@
+commit 9efbe84f0aac4c86701f68da1b05287dece4d8a1
+Author: croniccorey <cronmod.dev@gmail.com>
+Date: Thu Nov 13 03:59:02 2014 -0500
+Subject: [PATCH] fixed ffmpeg-rtp, nb_rtsp_streams bug on send SETUP cmd
+
+---
+ lib/ffmpeg/libavformat/rtsp.c               |  2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/libavformat/rtsp.c b/libavformat/rtsp.c
+index 5212dde..96d3878 100644
+--- a/libavformat/rtsp.c
++++ b/libavformat/rtsp.c
+@@ -481,7 +481,7 @@ static void sdp_parse_line(AVFormatContext *s, SDPParseState *s1,
+         break;
+     case 'a':
+         if (av_strstart(p, "control:", &p)) {
+-            if (s->nb_streams == 0) {
++            if (rt->nb_rtsp_streams == 0) {
+                 if (!strncmp(p, "rtsp://", 7))
+                     av_strlcpy(rt->control_uri, p,
+                                sizeof(rt->control_uri));
