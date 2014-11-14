@@ -1,0 +1,56 @@
+#!/bin/sh
+#####################################
+## MX Linux INT2EXT4 -- 11/13/2014 ##
+##   Written by CronicCorey @xda   ##
+##           S90int2ext4           ##
+#####################################
+
+prepare() {
+  echo "S90int2ext4: Prepare"
+  if [ -e /dev/cardblksd1 ] && [ $(blkid -s TYPE -o value /dev/cardblksd1) == ext4 ]; then
+    EXT_DATA=cardblksd1
+  elif [ -e /dev/mmcblk0p1 ] && [ $(blkid -s TYPE -o value /dev/mmcblk0p1) == ext4 ]; then
+    EXT_DATA=mmcblk0p1
+  else
+    exit
+  fi
+
+  INT_DATA=$(mount | grep /root | cut -d ' ' -f1)
+  umount /root /etc/NetworkManager
+}
+
+setup() {
+  echo "S90int2ext4: Setup"
+  mkdir -m 755 /old_root
+  mount $INT_DATA /old_root
+  mount -t ext4 -o nosuid,nodev,noatime,nodiratime,barrier=0,nobh,data=writeback,noauto_da_alloc /dev/$EXT_DATA /root
+  mount -o bind /old_root/.sysconfig/NetworkManager /etc/NetworkManager
+  chown root:root /root
+  chmod 755 /root
+
+  if [ ! -e /root/.int2ext4 ]; then
+    touch /old_root/.int2ext4
+  fi
+
+  if [ -e /old_root/.int2ext4 ]; then
+    cp -r /old_root/. /root
+    rm -rf /old_root/.int2ext4 /root/.sysconfig
+  fi
+}
+
+cleanup() {
+  echo "S90int2ext4: Cleanup"
+  umount /media/$EXT_DATA
+  umount /old_root
+  rmdir /old_root
+  sync
+}
+
+if [ "$1" = "start" ]; then
+  echo "S90int2ext4: Start"
+  prepare
+  setup
+  cleanup
+  echo "S90int2ext4: Done"
+fi
+
