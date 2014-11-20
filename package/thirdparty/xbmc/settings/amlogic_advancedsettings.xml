@@ -18,7 +18,7 @@
 
   <pvr>
     <cacheindvdplayer>true</cacheindvdplayer>
-    <minvideocachelevel>5</minvideocachelevel>
+    <minvideocachelevel>10</minvideocachelevel>
     <minaudiocachelevel>20</minaudiocachelevel>
   </pvr>
 
@@ -67,7 +67,7 @@
     <config>2</config>
     <normalizelevels>true</normalizelevels>
     <stereoupmix>false</stereoupmix>
-    <processquality>50</processquality>
+    <processquality>30</processquality>
     <streamsilence>-1</streamsilence>
   </audiooutput>
 

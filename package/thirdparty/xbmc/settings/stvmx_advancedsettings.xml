@@ -5,7 +5,6 @@
   <hidetotaluptime>1</hidetotaluptime>
   <showexitbutton>false</showexitbutton>
   <loglevel hide="true">-1</loglevel>
-  <cputempcommand>echo "$(cat /sys/class/saradc/temperature) C"</cputempcommand>
   <fanartres>720</fanartres>
   <imageres>640</imageres>
   <packagefoldersize>80</packagefoldersize>
@@ -18,7 +17,7 @@
 
   <pvr>
     <cacheindvdplayer>true</cacheindvdplayer>
-    <minvideocachelevel>5</minvideocachelevel>
+    <minvideocachelevel>10</minvideocachelevel>
     <minaudiocachelevel>20</minaudiocachelevel>
   </pvr>
 
@@ -67,7 +66,7 @@
     <config>2</config>
     <normalizelevels>true</normalizelevels>
     <stereoupmix>false</stereoupmix>
-    <processquality>50</processquality>
+    <processquality>30</processquality>
     <streamsilence>-1</streamsilence>
   </audiooutput>
 
