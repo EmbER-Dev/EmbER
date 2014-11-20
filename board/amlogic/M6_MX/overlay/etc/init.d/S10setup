@@ -17,6 +17,7 @@ if [ "X$1" = "Xstart" ]; then
   if [ ! -d /root/Data ] ; then
     echo "S10setup: Creating Data folder... "
     mkdir -pm 777 /root/Data
+    sync
   fi
 
   # Check if NetworkManager system folder exists on userdata
@@ -27,6 +28,7 @@ if [ "X$1" = "Xstart" ]; then
     chmod 544 /root/.sysconfig/NetworkManager/dispatcher.d/*
     MAC=$(cat /sys/class/net/eth0/address)
     echo -e "[keyfile]\nunmanaged-devices=mac:$MAC" >> /root/.sysconfig/NetworkManager/NetworkManager.conf
+    sync
   fi
   mount -o bind /root/.sysconfig/NetworkManager /etc/NetworkManager
 
