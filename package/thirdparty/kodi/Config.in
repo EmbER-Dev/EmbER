@@ -1,5 +1,5 @@
-config BR2_PACKAGE_XBMC
-	bool "xbmc"
+config BR2_PACKAGE_KODI
+	bool "kodi"
 	depends on BR2_PACKAGE_UDEV
 	select BR2_PACKAGE_ALSA_UTILS
 	select BR2_PACKAGE_ALSA_UTILS_ALSAMIXER
@@ -83,88 +83,88 @@ config BR2_PACKAGE_XBMC
 	select BR2_PACKAGE_AMREMOTE_CONFIG if BR2_ARM_AMLOGIC
 	select BR2_PACKAGE_XBMC_ADDON_NM
 	help
-	xbmc
+	kodi
 
-		http://xbmc.org
+		http://kodi.tv
 
-menu "XBMC Options"
-	depends on BR2_PACKAGE_XBMC
+menu "Kodi Options"
+	depends on BR2_PACKAGE_KODI
 
-comment "XBMC Build Options"
+comment "Kodi Build Options"
 
-config BR2_PACKAGE_XBMC_REV
+config BR2_PACKAGE_KODI_REV
 	string "Github Revision"
-	default "xbmc-13.2"
+	default "kodi-14.0"
 	help
 	  This option will set the github revision.
 
 	  Github: "git://github.com/CoreTech-Development/xbmc.git"
-	  Default: "xbmc-13.2"
+	  Default: "kodi-14.0"
 	  Beware: Changing this could break patchs
 
-comment "XBMC Customization Options"
+comment "Kodi Customization Options"
 
-config BR2_XBMC_REMOTE_CONF
+config BR2_KODI_REMOTE_CONF
 	string "Remote Configuration"
 	default ""
 	help
 	  This option will set the IR remote configuration.
 
 	  NOTES:
-		- If this option is not set XBMC will use it's default remote configuration
-		- Selected configuration will be installed to "/etc/xbmc/remote.conf"
-		- Remote configuration should be located in "package/thirdparty/xbmc/remotes"
+		- If this option is not set Kodi will use it's default remote configuration
+		- Selected configuration will be installed to "/etc/kodi/remote.conf"
+		- Remote configuration should be located in "package/thirdparty/kodi/remotes"
 		- Compiler will append ".conf" to end of file name
 
-config BR2_XBMC_KEYMAP
+config BR2_KODI_KEYMAP
 	string "Keymap"
 	default ""
 	help
 	  This option will set the keymap to be used.
 
 	  NOTES:
-		- If this option is not set XBMC will use it's default keymap
-		- Selected keymap will be installed to "/usr/share/xbmc/system/keymaps"
-		- Keymap should be located in "package/thirdparty/xbmc/keymaps"
+		- If this option is not set Kodi will use it's default keymap
+		- Selected keymap will be installed to "/usr/share/kodi/system/keymaps"
+		- Keymap should be located in "package/thirdparty/kodi/keymaps"
 		- Compiler will append ".xml" to end of file name
 
-config BR2_XBMC_SETTINGS
-	string "Default XBMC settings"
+config BR2_KODI_SETTINGS
+	string "Default Kodi settings"
 	default ""
 	help
 	  This option will set pre-configured settings to be used.
 
 	  NOTES:
-		- If this option is not set XBMC will use it's default settings
-		- Settings XML will be installed to "/usr/share/xbmc/system/settings/settings.xml"
-		- Settings XML should be located in "package/thirdparty/xbmc/settings"
+		- If this option is not set Kodi will use it's default settings
+		- Settings XML will be installed to "/usr/share/kodi/system/settings/settings.xml"
+		- Settings XML should be located in "package/thirdparty/kodi/settings"
 		- Compiler will append ".xml" to end of file name
 
-config BR2_XBMC_ADV_SETTINGS
+config BR2_KODI_ADV_SETTINGS
 	string "Advanced settings"
 	default ""
 	help
 	  This option will set the advanced settings to be used.
 
 	  NOTES:
-		- If this option is not set XBMC will use it's default advanced settings
-		- Advanced settings XML will be installed to "/usr/share/xbmc/system/advancedsettings.xml"
-		- Advanced settings XML should be located in "package/thirdparty/xbmc/settings"
+		- If this option is not set Kodi will use it's default advanced settings
+		- Advanced settings XML will be installed to "/usr/share/kodi/system/advancedsettings.xml"
+		- Advanced settings XML should be located in "package/thirdparty/kodi/settings"
 		- Compiler will append ".xml" to end of file name
 
-config BR2_XBMC_SPLASH
+config BR2_KODI_SPLASH
 	string "Splash Screen"
 	default ""
 	help
 	  This option changes the boot splash.
 
 	  NOTES: 
-		- If this option is not set XBMC will use it's default splash
+		- If this option is not set Kodi will use it's default splash
 		- Selected image should be 1280x720 and .PNG format
-		- Splash should be located in "package/thirdparty/xbmc/logos"
+		- Splash should be located in "package/thirdparty/kodi/logos"
 		- Compiler will append ".png" to end of file name
 
-config BR2_XBMC_OVERLAY_FB
+config BR2_KODI_OVERLAY_FB
 	bool "Use FB splash's from overlay"
 	default n
 	help
@@ -172,45 +172,45 @@ config BR2_XBMC_OVERLAY_FB
 	  (Only use if splash's are included in overlay)
 
 	  NOTES: 
-		- If this option is set XBMC will not install fb splash's
+		- If this option is set Kodi will not install fb splash's
 		- If no splash's are included in overlay then none will be installed 
 
-if !BR2_XBMC_OVERLAY_FB
-config BR2_XBMC_STARTING_FB
+if !BR2_KODI_OVERLAY_FB
+config BR2_KODI_STARTING_FB
 	string "Starting FB splash"
 	default ""
 	help
 	  This option changes the starting fb splash.
 
 	  NOTES: 
-		- If this option is not set XBMC will use it's default starting fb splash
-		- Splash should be located in "package/thirdparty/xbmc/fb_splashs"
+		- If this option is not set Kodi will use it's default starting fb splash
+		- Splash should be located in "package/thirdparty/kodi/fb_splashs"
 		- Compiler will append ".fb.lzo" to end of file name
 
-config BR2_XBMC_STOPPING_FB
+config BR2_KODI_STOPPING_FB
 	string "Stopping FB splash"
 	default ""
 	help
 	  This option changes the stopping fb splash.
 
 	  NOTES: 
-		- If this option is not set XBMC will use it's default stopping fb splash
-		- Splash should be located in "package/thirdparty/xbmc/fb_splashs"
+		- If this option is not set Kodi will use it's default stopping fb splash
+		- Splash should be located in "package/thirdparty/kodi/fb_splashs"
 		- Compiler will append ".fb.lzo" to end of file name
 
-config BR2_XBMC_COMPLETE_FB
+config BR2_KODI_COMPLETE_FB
 	string "Complete FB splash"
 	default ""
 	help
 	  This option changes the complete fb splash.
 
 	  NOTES: 
-		- If this option is not set XBMC will use it's default complete fb splash
-		- Splash should be located in "package/thirdparty/xbmc/fb_splashs"
+		- If this option is not set Kodi will use it's default complete fb splash
+		- Splash should be located in "package/thirdparty/kodi/fb_splashs"
 		- Compiler will append ".fb.lzo" to end of file name
 endif
 
-config BR2_XBMC_DEFAULT_SKIN
+config BR2_KODI_DEFAULT_SKIN
 	string "Default Skin"
 	default ""
 	help
@@ -220,40 +220,40 @@ config BR2_XBMC_DEFAULT_SKIN
 	  	- none
 
 	  NOTES: 
-		- If this option is not set XBMC will use confluence
+		- If this option is not set Kodi will use confluence
 		- The set skin must exist in the source tree
 		- Compiler will append "skin." to begining of skin name
 		- This will overwrite skin choice in custom settings.xml
 
 
-config BR2_XBMC_NO_CONFLUENCE
+config BR2_KODI_NO_CONFLUENCE
 	bool "Don't install confluence skin"
-	depends on !BR2_XBMC_DEFAULT_SKIN=""
+	depends on !BR2_KODI_DEFAULT_SKIN=""
 	default n
 	help
-	  This option will remove confluence skin from XBMC.
+	  This option will remove confluence skin from Kodi.
 
-comment "XBMC Power Options"
+comment "Kodi Power Options"
 
-config BR2_XBMC_POWERDOWN
+config BR2_KODI_POWERDOWN
 	bool "Powerdown"
 	default y
 	help
 	  Enable Powerdown option.
 
-config BR2_XBMC_SUSPEND
+config BR2_KODI_SUSPEND
 	bool "Suspend"
 	default n
 	help
 	  Enable Suspend option.
 
-config BR2_XBMC_HIBERNATE
+config BR2_KODI_HIBERNATE
 	bool "Hibernate"
 	default n
 	help
 	  Enable Hibernate option.
 
-config BR2_XBMC_REBOOT
+config BR2_KODI_REBOOT
 	bool "Reboot"
 	default y
 	help
@@ -261,29 +261,29 @@ config BR2_XBMC_REBOOT
 
 choice
 	prompt "Confluence GUI power button function"
-	default BR2_XBMC_SET_CONFLUENCE_POWER_BUTTON_MENU
-	depends on !BR2_XBMC_NO_CONFLUENCE
+	default BR2_KODI_SET_CONFLUENCE_POWER_BUTTON_MENU
+	depends on !BR2_KODI_NO_CONFLUENCE
 	help
 	  This will set the function of the GUI power button
 
-config BR2_XBMC_SET_CONFLUENCE_POWER_BUTTON_MENU
+config BR2_KODI_SET_CONFLUENCE_POWER_BUTTON_MENU
 	bool "Power menu"
 
-config BR2_XBMC_SET_CONFLUENCE_POWER_BUTTON_POWERDOWN
+config BR2_KODI_SET_CONFLUENCE_POWER_BUTTON_POWERDOWN
 	bool "Powerdown"
-	depends on BR2_XBMC_POWERDOWN
+	depends on BR2_KODI_POWERDOWN
 
-config BR2_XBMC_SET_CONFLUENCE_POWER_BUTTON_SUSPEND
+config BR2_KODI_SET_CONFLUENCE_POWER_BUTTON_SUSPEND
 	bool "Suspend"
-	depends on BR2_XBMC_SUSPEND
+	depends on BR2_KODI_SUSPEND
 
-config BR2_XBMC_SET_CONFLUENCE_POWER_BUTTON_HIBERNATE
+config BR2_KODI_SET_CONFLUENCE_POWER_BUTTON_HIBERNATE
 	bool "Hibernate"
-	depends on BR2_XBMC_HIBERNATE
+	depends on BR2_KODI_HIBERNATE
 
-config BR2_XBMC_SET_CONFLUENCE_POWER_BUTTON_REBOOT
+config BR2_KODI_SET_CONFLUENCE_POWER_BUTTON_REBOOT
 	bool "Reboot"
-	depends on BR2_XBMC_REBOOT
+	depends on BR2_KODI_REBOOT
 
 endchoice
 

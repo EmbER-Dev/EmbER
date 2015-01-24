@@ -1,6 +1,6 @@
-From 618a0abff149d66229ff997d088e3834599088e9 Mon Sep 17 00:00:00 2001
+commit 5a293c032c7c71472371a6863b87264f2b0aba96 Mon Jan 12 11:37:45 2015
 From: croniccorey <cronmod.dev@gmail.com>
-Date: Tue, 15 Apr 2014 21:01:41 -0400
+Date: Mon Jan 12 11:37:45 2015 -0500
 Subject: [PATCH] AML: Add AMLPowerSyscall class
 
 - Based on PivosPowerSyscall class
@@ -15,11 +15,11 @@ Subject: [PATCH] AML: Add AMLPowerSyscall class
  create mode 100644 xbmc/powermanagement/linux/AMLPowerSyscall.h
 
 diff --git a/configure.in b/configure.in
-index f9f5693..2651640 100644
+index ea9d388..440149a 100644
 --- a/configure.in
 +++ b/configure.in
-@@ -1512,6 +1512,59 @@ else
-   USE_SKIN_TOUCHED=0
+@@ -1443,6 +1443,59 @@ else
+   USE_TOUCH_SKIN=0
  fi
  
 +# Amlogic Power options
@@ -79,7 +79,7 @@ index f9f5693..2651640 100644
  if test "x$use_ssh" = "xno"; then
    AC_MSG_NOTICE($ssh_disabled)
 diff --git a/xbmc/powermanagement/PowerManager.cpp b/xbmc/powermanagement/PowerManager.cpp
-index 590a887..b2ebd6b 100644
+index 5900f98..3a01903 100644
 --- a/xbmc/powermanagement/PowerManager.cpp
 +++ b/xbmc/powermanagement/PowerManager.cpp
 @@ -47,6 +47,7 @@
@@ -87,18 +87,18 @@ index 590a887..b2ebd6b 100644
  #include "linux/LogindUPowerSyscall.h"
  #include "linux/UPowerSyscall.h"
 +#include "linux/AMLPowerSyscall.h"
- #if defined(HAS_HAL)
- #include "linux/HALPowerSyscall.h"
- #endif // HAS_HAL
-@@ -86,6 +87,8 @@ void CPowerManager::Initialize()
+ #endif // HAS_DBUS
+ #elif defined(TARGET_WINDOWS)
+ #include "powermanagement/windows/Win32PowerSyscall.h"
+@@ -83,6 +84,8 @@ void CPowerManager::Initialize()
      m_instance = new CLogindUPowerSyscall();
    else if (CUPowerSyscall::HasUPower())
      m_instance = new CUPowerSyscall();
 +  else if (CAMLPowerSyscall::HasAMLPowerSyscall())
 +    m_instance = new CAMLPowerSyscall();
- #if defined(HAS_HAL)
-   else if(1)
-     m_instance = new CHALPowerSyscall();
+   else
+ #endif // HAS_DBUS
+     m_instance = new CFallbackPowerSyscall();
 diff --git a/xbmc/powermanagement/linux/AMLPowerSyscall.cpp b/xbmc/powermanagement/linux/AMLPowerSyscall.cpp
 new file mode 100644
 index 0000000..1db5519
@@ -288,12 +288,12 @@ index 0000000..7497265
 +  bool m_OnSuspend;
 +};
 diff --git a/xbmc/powermanagement/linux/Makefile b/xbmc/powermanagement/linux/Makefile
-index fc6f8b5..5af9822 100644
+index e9d95fb..2268256 100644
 --- a/xbmc/powermanagement/linux/Makefile
 +++ b/xbmc/powermanagement/linux/Makefile
-@@ -2,7 +2,8 @@ SRCS=ConsoleDeviceKitPowerSyscall.cpp \
+@@ -1,7 +1,8 @@
+ SRCS=ConsoleDeviceKitPowerSyscall.cpp \
       ConsoleUPowerSyscall.cpp \
-      HALPowerSyscall.cpp \
       UPowerSyscall.cpp \
 -     LogindUPowerSyscall.cpp
 +     LogindUPowerSyscall.cpp \
@@ -301,6 +301,3 @@ index fc6f8b5..5af9822 100644
  
  LIB=powermanagement_linux.a
  
--- 
-1.9.1
-
