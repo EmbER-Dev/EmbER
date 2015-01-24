@@ -1,5 +1,5 @@
 menu "XBMC addons"
-    depends on BR2_PACKAGE_XBMC
+    depends on BR2_PACKAGE_KODI
 
 comment "XBMC services"
 
