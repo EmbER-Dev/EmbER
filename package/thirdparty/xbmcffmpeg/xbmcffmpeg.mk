@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-XBMCFFMPEG_VERSION = 2.3.2-Helix-alpha3
+XBMCFFMPEG_VERSION = 2.4.4-Helix
 XBMCFFMPEG_SITE = https://github.com/xbmc/FFmpeg.git
 XBMCFFMPEG_SITE_METHOD = git
 XBMCFFMPEG_INSTALL_STAGING = YES
