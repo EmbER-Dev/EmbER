@@ -5,15 +5,6 @@ if [ "X$1" = "Xstart" ]; then
 
 ##Compiler will insert mount commands##
 
-  # Move existing data to new location (Compatibility fix for coming from older builds)
-  if [ -e /root/xios ]; then
-    echo "S10setup: Move userdata to correct location"
-    rm -rf /root/.xbmc
-    mv /root/xios/root/.xbmc /root/
-    rm -rf /root/xios
-    sync
-  fi
-
   if [ ! -d /root/Data ] ; then
     echo "S10setup: Creating Data folder... "
     mkdir -pm 777 /root/Data
@@ -31,13 +22,6 @@ if [ "X$1" = "Xstart" ]; then
     sync
   fi
   mount -o bind /root/.sysconfig/NetworkManager /etc/NetworkManager
-
-  # Remove old guisettings.xml on first boot (Compatibility for removal of 1080 patch)
-  if [ -f /root/.xbmc/temp/.1080 ] ; then
-     echo "S10setup: Remove old guisettings.xml if one exists... "
-     rm -rf /root/.xbmc/userdata/guisettings.xml /root/.xbmc/temp/.1080
-     sync
-  fi
 
   # Boot with performance, then switch to ondemand (kernel bug)
   CPU=/sys/devices/system/cpu/cpu0/cpufreq

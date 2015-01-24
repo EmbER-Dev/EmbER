@@ -1,44 +1,44 @@
 #!/bin/sh
 #
-# Start XBMC....
+# Start Kodi....
 #
 
-xbmc_pre() {
-    if [ -f /root/.xbmc/S94xbmc-pre ]; then
-        echo "S94xbmc-pre:"
-        /root/.xbmc/S94xbmc-pre
-        echo "S94xbmc-pre: done"
+kodi_pre() {
+    if [ -f /root/.kodi/S94kodi-pre ]; then
+        echo "S94kodi-pre:"
+        /root/.kodi/S94kodi-pre
+        echo "S94kodi-pre: done"
     fi
 }
 
-xbmc_post() {
-      if [ -f /root/.xbmc/S96xbmc-post ]; then
-          echo "S96xbmc-post:"
-          /root/.xbmc/S96xbmc-post
-          echo "S96xbmc-post: done"
+kodi_post() {
+      if [ -f /root/.kodi/S96kodi-post ]; then
+          echo "S96kodi-post:"
+          /root/.kodi/S96kodi-post
+          echo "S96kodi-post: done"
       fi
 }
 
-run_xbmc() {
+run_kodi() {
     export LD_LIBRARY_PATH=/usr/lib:/usr/lib/mysql:/lib
-    export XBMC_HOME=/usr/share/xbmc
+    export KODI_HOME=/usr/share/kodi
     export GCONV_PATH=/usr/lib/gconv
-    REMOTECONF=/etc/xbmc/remote.conf
-    if [ -f /root/.xbmc/remote.conf ]; then
-        REMOTECONF=/root/.xbmc/remote.conf
+    REMOTECONF=/etc/kodi/remote.conf
+    if [ -f /root/.kodi/remote.conf ]; then
+        REMOTECONF=/root/.kodi/remote.conf
     fi
     /usr/bin/amremote_config $REMOTECONF
     echo 1 > /sys/class/graphics/fb0/blank
     echo 0 > /sys/class/graphics/fb0/free_scale
-    fbset -g 1920 1080 1920 2160 32
-    xbmc_pre
+    fbset -g 1280 720 1280 1440 32
+    kodi_pre
     while true; do
-        /usr/lib/xbmc/xbmc.bin --standalone;
+        /usr/lib/kodi/kodi.bin --standalone;
         exit_value=$?
         case "$exit_value" in
-            0)  echo "XBMC exit" >&2
+            0)  echo "Kodi exit" >&2
                 ;;
-            64) echo "XBMC exit with shutdown" >&2
+            64) echo "Kodi exit with shutdown" >&2
                 echo 1 > /sys/class/graphics/fb0/blank
                 echo 0 0 1279 719 > /sys/class/graphics/fb0/free_scale_axis
                 echo 1 > /sys/class/graphics/fb0/free_scale
@@ -54,7 +54,7 @@ run_xbmc() {
                 lzopcat /usr/share/splash/complete.fb.lzo > /dev/fb0
                 echo 'mem' >/sys/power/state
                 ;;
-            66) echo "XBMC exit with reboot" >&2
+            66) echo "Kodi exit with reboot" >&2
                 echo 1 > /sys/class/graphics/fb0/blank
                 echo 0 0 1279 719 > /sys/class/graphics/fb0/free_scale_axis
                 echo 1 > /sys/class/graphics/fb0/free_scale
@@ -69,30 +69,30 @@ run_xbmc() {
                 done
                 reboot
                 ;;
-            137) echo "XBMC was killed" >&2
-                dd if=/dev/zero of=/dev/fb0 bs=1920 count=4320 > /dev/null 2>&1
+            137) echo "Kodi was killed" >&2
+                dd if=/dev/zero of=/dev/fb0 bs=1280 count=2880 > /dev/null 2>&1
                 ;;
-            143) echo "XBMC was terminated" >&2
-                dd if=/dev/zero of=/dev/fb0 bs=1920 count=4320 > /dev/null 2>&1
+            143) echo "Kodi was terminated" >&2
+                dd if=/dev/zero of=/dev/fb0 bs=1280 count=2880 > /dev/null 2>&1
                 ;;
-            *)  echo "XBMC crashed with exit code $exit_value.  Respawning.." >&2
+            *)  echo "Kodi crashed with exit code $exit_value.  Respawning.." >&2
                 sleep 1
                 continue
                 ;;
         esac
-        xbmc_post
+        kodi_post
         exit $exit_value
     done
 }
 
 case "$1" in
     start)
-        echo "Starting XBMC..."
-        run_xbmc 2>&1 | logger -t XBMC &
+        echo "Starting Kodi..."
+        run_kodi 2>&1 | logger -t Kodi &
         ;;
     stop)
-        echo -n "Stopping XBMC..."
-        killall xbmc.bin
+        echo -n "Stopping Kodi..."
+        killall kodi.bin
         ;;
     restart|reload)
         "$0" stop
