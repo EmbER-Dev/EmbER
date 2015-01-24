@@ -1,6 +1,0 @@
-config BR2_PACKAGE_XBMC_ADDON_OPENSUBTITLES
-    bool "service.subtitles.opensubtitles"
-    default y
-    help
-      Xbmc Open Subtitles Addon
-

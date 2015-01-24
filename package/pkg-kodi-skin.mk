@@ -1,5 +1,5 @@
 ################################################################################
-# XBMC Skin package infrastructure
+# Kodi Skin package infrastructure
 #
 # This file implements an infrastructure that eases development of
 # package .mk files. It should be used for packages that do not rely
@@ -189,8 +189,8 @@ $(BUILD_DIR)/%/.stamp_dircleaned:
 	rm -Rf $(@D)
 
 ################################################################################
-# inner-xbmc-skin -- generates the make targets needed to build a
-# XBMC Skin package
+# inner-kodi-skin -- generates the make targets needed to build a
+# Kodi Skin package
 #
 #  argument 1 is the lowercase package name
 #  argument 2 is the uppercase package name, including an HOST_ prefix
@@ -201,7 +201,7 @@ $(BUILD_DIR)/%/.stamp_dircleaned:
 #  argument 5 is the type (target or host)
 ################################################################################
 
-define inner-xbmc-skin
+define inner-kodi-skin
 
 # Define default values for various package-related variables, if not
 # already defined. For some variables (version, source, site and
@@ -478,7 +478,7 @@ $(2)_KCONFIG_VAR = BR2_LINUX_KERNEL
 else ifeq ($(4),boot/)
 $(2)_KCONFIG_VAR = BR2_TARGET_$(2)
 else
-$(2)_KCONFIG_VAR = BR2_PACKAGE_XBMC_SKIN_$(2)
+$(2)_KCONFIG_VAR = BR2_PACKAGE_Kodi_SKIN_$(2)
 endif
 
 # legal-info: declare dependencies and set values used later for the manifest
@@ -567,13 +567,13 @@ DL_TOOLS_DEPENDENCIES += $(firstword $(call suitable-extractor,$($(2)_SOURCE)))
 endif
 
 endif # $(2)_KCONFIG_VAR
-endef # inner-xbmc-skin
+endef # inner-kodi-skin
 
 ################################################################################
-# xbmc-skin -- the target generator macro for XBMC Skin packages
+# kodi-skin -- the target generator macro for Kodi Skin packages
 ################################################################################
 
 # In the case of target packages, keep the package name "pkg"
-xbmc-skin = $(call inner-xbmc-skin,$(call pkgname),$(call UPPERCASE,$(call pkgname)),$(call UPPERCASE,$(call pkgname)),$(call pkgparentdir),target)
+kodi-skin = $(call inner-kodi-skin,$(call pkgname),$(call UPPERCASE,$(call pkgname)),$(call UPPERCASE,$(call pkgname)),$(call pkgparentdir),target)
 
 # :mode=makefile:

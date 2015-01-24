@@ -1,0 +1,6 @@
+config BR2_PACKAGE_KODI_ADDON_OPENSUBTITLES
+    bool "service.subtitles.opensubtitles"
+    default y
+    help
+      Kodi Open Subtitles Addon
+

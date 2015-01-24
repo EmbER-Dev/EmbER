@@ -1,0 +1,14 @@
+menu "Kodi addons"
+    depends on BR2_PACKAGE_KODI
+
+comment "Kodi services"
+
+source "package/thirdparty/kodiaddons/opensubtitles/Config.in"
+
+source "package/thirdparty/kodiaddons/weather_yahoo/Config.in"
+
+comment "Kodi scripts"
+
+source "package/thirdparty/kodiaddons/nm/Config.in"
+
+endmenu

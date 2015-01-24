@@ -1,5 +1,5 @@
 ################################################################################
-# XBMC Addon package infrastructure
+# Kodi Addon package infrastructure
 #
 # This file implements an infrastructure that eases development of
 # package .mk files. It should be used for packages that do not rely
@@ -189,8 +189,8 @@ $(BUILD_DIR)/%/.stamp_dircleaned:
 	rm -Rf $(@D)
 
 ################################################################################
-# inner-xbmc-addon -- generates the make targets needed to build a
-# XBMC Addon package
+# inner-kodi-addon -- generates the make targets needed to build a
+# Kodi Addon package
 #
 #  argument 1 is the lowercase package name
 #  argument 2 is the uppercase package name, including an HOST_ prefix
@@ -201,7 +201,7 @@ $(BUILD_DIR)/%/.stamp_dircleaned:
 #  argument 5 is the type (target or host)
 ################################################################################
 
-define inner-xbmc-addon
+define inner-kodi-addon
 
 # Define default values for various package-related variables, if not
 # already defined. For some variables (version, source, site and
@@ -478,7 +478,7 @@ $(2)_KCONFIG_VAR = BR2_LINUX_KERNEL
 else ifeq ($(4),boot/)
 $(2)_KCONFIG_VAR = BR2_TARGET_$(2)
 else
-$(2)_KCONFIG_VAR = BR2_PACKAGE_XBMC_ADDON_$(2)
+$(2)_KCONFIG_VAR = BR2_PACKAGE_KODI_ADDON_$(2)
 endif
 
 # legal-info: declare dependencies and set values used later for the manifest
@@ -567,13 +567,13 @@ DL_TOOLS_DEPENDENCIES += $(firstword $(call suitable-extractor,$($(2)_SOURCE)))
 endif
 
 endif # $(2)_KCONFIG_VAR
-endef # inner-xbmc-addon
+endef # inner-kodi-addon
 
 ################################################################################
-# xbmc-addon -- the target generator macro for XBMC Addon packages
+# kodi-addon -- the target generator macro for Kodi Addon packages
 ################################################################################
 
 # In the case of target packages, keep the package name "pkg"
-xbmc-addon = $(call inner-xbmc-addon,$(call pkgname),$(call UPPERCASE,$(call pkgname)),$(call UPPERCASE,$(call pkgname)),$(call pkgparentdir),target)
+kodi-addon = $(call inner-kodi-addon,$(call pkgname),$(call UPPERCASE,$(call pkgname)),$(call UPPERCASE,$(call pkgname)),$(call pkgparentdir),target)
 
 # :mode=makefile:

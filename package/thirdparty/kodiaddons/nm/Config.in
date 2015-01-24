@@ -1,0 +1,5 @@
+config BR2_PACKAGE_KODI_ADDON_NM
+    bool "script.linux.nm"
+    help
+      Kodi WiFi Manager Addon
+
