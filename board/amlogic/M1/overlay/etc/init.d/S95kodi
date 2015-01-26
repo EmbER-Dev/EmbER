@@ -1,0 +1,105 @@
+#!/bin/sh
+#
+# Start Kodi....
+#
+
+kodi_pre() {
+    if [ -f /root/.kodi/S94kodi-pre ]; then
+        echo "S94kodi-pre:"
+        /root/.kodi/S94kodi-pre
+        echo "S94kodi-pre: done"
+    fi
+}
+
+kodi_post() {
+      if [ -f /root/.kodi/S96kodi-post ]; then
+          echo "S96kodi-post:"
+          /root/.kodi/S96kodi-post
+          echo "S96kodi-post: done"
+      fi
+}
+
+run_kodi() {
+    export LD_LIBRARY_PATH=/usr/lib:/usr/lib/mysql:/lib
+    export KODI_HOME=/usr/share/kodi
+    export GCONV_PATH=/usr/lib/gconv
+    REMOTECONF=/etc/kodi/remote.conf
+    if [ -f /root/.kodi/remote.conf ]; then
+        REMOTECONF=/root/.kodi/remote.conf
+    fi
+    /usr/bin/amremote_config $REMOTECONF
+    echo 1 > /sys/class/graphics/fb0/blank
+    echo 0 > /sys/class/graphics/fb0/free_scale
+    fbset -g 1280 720 1280 1440 32
+    kodi_pre
+    while true; do
+        /usr/lib/kodi/kodi.bin --standalone;
+        exit_value=$?
+        case "$exit_value" in
+            0)  echo "Kodi exit" >&2
+                ;;
+            64) echo "Kodi exit with shutdown" >&2
+                echo 1 > /sys/class/graphics/fb0/blank
+                echo 0 0 1279 719 > /sys/class/graphics/fb0/free_scale_axis
+                echo 1 > /sys/class/graphics/fb0/free_scale
+                fbset -g 1280 720 1280 1440 32
+                lzopcat /usr/share/splash/stopping.fb.lzo > /dev/fb0
+                echo 0 > /sys/class/graphics/fb0/blank
+                sync
+                /etc/init.d/S21hwclock stop
+                mount -o remount,ro /root
+                for dir in /media/*/; do
+                    mount -o remount,ro ${dir%*/} 2>/dev/null
+                done
+                poweroff
+                ;;
+            66) echo "Kodi exit with reboot" >&2
+                echo 1 > /sys/class/graphics/fb0/blank
+                echo 0 0 1279 719 > /sys/class/graphics/fb0/free_scale_axis
+                echo 1 > /sys/class/graphics/fb0/free_scale
+                fbset -g 1280 720 1280 1440 32
+                lzopcat /usr/share/splash/stopping.fb.lzo > /dev/fb0
+                echo 0 > /sys/class/graphics/fb0/blank
+                sync
+                /etc/init.d/S21hwclock stop
+                mount -o remount,ro /root
+                for dir in /media/*/; do
+                     mount -o remount,ro ${dir%*/} 2>/dev/null
+                done
+                reboot
+                ;;
+            137) echo "Kodi was killed" >&2
+                dd if=/dev/zero of=/dev/fb0 bs=1280 count=2880 > /dev/null 2>&1
+                ;;
+            143) echo "Kodi was terminated" >&2
+                dd if=/dev/zero of=/dev/fb0 bs=1280 count=2880 > /dev/null 2>&1
+                ;;
+            *)  echo "Kodi crashed with exit code $exit_value.  Respawning.." >&2
+                sleep 1
+                continue
+                ;;
+        esac
+        kodi_post
+        exit $exit_value
+    done
+}
+
+case "$1" in
+    start)
+        echo "Starting Kodi..."
+        run_kodi 2>&1 | logger -t Kodi &
+        ;;
+    stop)
+        echo -n "Stopping Kodi..."
+        killall kodi.bin
+        ;;
+    restart|reload)
+        "$0" stop
+        "$0" start
+        ;;
+    *)
+        echo $"Usage: $0 {start|stop|restart}"
+        exit 1
+esac
+
+exit $?

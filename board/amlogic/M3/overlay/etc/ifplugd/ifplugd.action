@@ -1,0 +1,51 @@
+#!/bin/sh
+# $Id: ifplugd.action 99 2004-02-08 20:17:59Z lennart $
+
+# This file is part of ifplugd.
+#
+# ifplugd is free software; you can redistribute it and/or modify it under
+# the terms of the GNU General Public License as published by the Free
+# Software Foundation; either version 2 of the License, or (at your
+# option) any later version.
+#
+# ifplugd is distributed in the hope that it will be useful, but WITHOUT
+# ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or
+# FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License
+# for more details.
+#
+# You should have received a copy of the GNU General Public License
+# along with ifplugd; if not, write to the Free Software Foundation,
+# Inc., 59 Temple Place, Suite 330, Boston, MA 02111-1307 USA.
+
+NTPD=/etc/init.d/S49ntp
+
+set -e
+
+if [ -z "$1" ] || [ -z "$2" ]; then
+	echo "Wrong arguments" > /dev/stderr
+	exit 1
+fi
+
+bring_up_iface()
+{
+	COUNT=0
+	while ! ifup $1 && test $((++COUNT)) -lt 3; do
+	  echo waiting on $1
+	  sleep 1
+	done
+}
+
+if [ "$2" = "up" ]; then
+	sysctl -w net.core.rmem_max=33554432
+	sysctl -w net.core.netdev_max_backlog=2000
+	sysctl -w net.ipv4.udp_mem='262144 327680 393216'
+	sysctl -w net.ipv4.tcp_mem='262144 327680 393216'
+	bring_up_iface $1
+	$NTPD restart
+fi
+
+if [ "$2" = "down" ]; then
+	ifdown $1
+fi
+
+exit 1
