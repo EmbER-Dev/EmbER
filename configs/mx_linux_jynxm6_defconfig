@@ -38,6 +38,11 @@ BR2_PACKAGE_KODI=y
 BR2_KODI_REMOTE_CONF="stvmx_remote"
 BR2_KODI_KEYMAP="variant.stvmx.keyboard"
 BR2_KODI_ADV_SETTINGS="stvmx_advancedsettings"
+BR2_KODI_SETTINGS="mx_settings"
+BR2_KODI_SPLASH="jynxboxm6_splash"
+BR2_KODI_STARTING_FB="jynxboxm6_starting"
+BR2_KODI_STOPPING_FB="jynxboxm6_stopping"
+BR2_KODI_COMPLETE_FB="jynxboxm6_complete"
 # BR2_PACKAGE_BOBLIGHT_LIBUSB is not set
 BR2_PACKAGE_LZOP=y
 BR2_PACKAGE_GDB=y
