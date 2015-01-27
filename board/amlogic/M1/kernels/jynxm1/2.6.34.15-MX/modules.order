@@ -61,7 +61,5 @@ kernel/drivers/media/dvb/dvb-usb/dvb-usb-cxusb.ko
 kernel/drivers/media/dvb/dvb-usb/dvb-usb-dib0700.ko
 kernel/drivers/media/dvb/dvb-usb/dvb-usb-dw2102.ko
 kernel/drivers/media/dvb/siano/smsmdtv.ko
-kernel/drivers/media/dvb/siano/smsdvb.ko
-kernel/drivers/media/dvb/siano/smsusb.ko
 kernel/drivers/amlogic/cmem/cmemk.ko
 kernel/drivers/amlogic/mali/mali.ko
